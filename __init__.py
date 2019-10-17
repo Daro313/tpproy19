@@ -17,4 +17,4 @@ def login():
     return render_template('home_login.html')
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True)
