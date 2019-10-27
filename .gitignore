@@ -1,5 +1,7 @@
-/proyecto-orquesta
 venv/
-__pycache__
-/tags
+__pycache__/
+tags
+tags/
+env/
+*tags*
 
