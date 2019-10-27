@@ -1,0 +1,54 @@
+{% block title %}creacion de usuario{% endblock %}
+{% block body %}
+
+<div name="form-create-user">
+  <label for="email">
+  <input id="email" type="text" v-model="email">
+
+  <label for="nombre">
+  <input id="nombre" type="text" v-model="nombre">
+
+  <label for="apellido">
+  <input id="apellido" type="text" v-model="apellido">
+
+  <label for="username">
+  <input id="username" type="text" v-model="username">
+
+  <label for="password">
+  <input id="password" type="text" v-model="password">
+
+  <label for="rol">
+  <input id="rol" type="text" v-model="rol">
+
+  <button id="crear-usuario">Agregar usuario</button>
+
+
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><Paste>
+var app = new Vue({
+  el: 'form-create-user',
+	delimiters: ['[[', ']]'],
+  data: {
+    nombre: '',
+    apellido: '',
+    username: '',
+    password: '',
+    email: '',
+
+    selected: 'A',
+    rol: [
+      { text: 'profesor', value: 'profesor' },
+      { text: 'admin', value: 'admin' },
+      { text: 'preceptor', value: 'preceptor' }
+      { text: 'alumno', value: 'alumno' }
+    ]
+  }
+  methods: {
+  }
+})
+{% endblock %}
