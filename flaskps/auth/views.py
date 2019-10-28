@@ -2,7 +2,7 @@ from flask import render_template
 from flask import request
 from flask_login import login_required
 
-from models import User
+from flaskps.models import User
 
 from . import auth
 
@@ -29,16 +29,17 @@ def create_user():
     """
     Si los datos son validos crea un nuevo usuario
     """
-    print('sdfasdfas')
-    data = requst.data
-    User.query.create(**data)
+    # TODO: generar logica para agregar usuario
+    # validar campos
 
-def create(self, *args, **kwargs)
-    
-    User.query.create(
-        email=data['email'],
-        username=data['username']
-    )
+    # data = requst.data
+    # User.query.create(**data)
+    #
+    # User.query.create(
+    #     email=data['email'],
+    #     username=data['username'],
+    # )
 
-    import ipdb;ipdb.set_trace()
-    return render_template('user/list.html', tittle='lista de usuarios')
+    #import ipdb;ipdb.set_trace()
+    #return render_template('user/list.html', tittle='lista de usuarios')
+    pass
