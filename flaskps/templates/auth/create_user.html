@@ -1,15 +1,15 @@
 {% block title %}creacion de usuario{% endblock %}
 {% block body %}
 
-<div name="form-create-user">
+<div id="form-create-user" name="create_user_form">
   <label for="email">
   <input id="email" type="text" v-model="email">
 
-  <label for="nombre">
-  <input id="nombre" type="text" v-model="nombre">
+  <label for="name">
+  <input id="name" type="text" v-model="name">
 
-  <label for="apellido">
-  <input id="apellido" type="text" v-model="apellido">
+  <label for="surname">
+  <input id="surname" type="text" v-model="surname">
 
   <label for="username">
   <input id="username" type="text" v-model="username">
@@ -20,9 +20,9 @@
   <label for="rol">
   <input id="rol" type="text" v-model="rol">
 
-  <button id="crear-usuario">Agregar usuario</button>
+  <button id="crear-usuario" @click="submit()">Agregar usuario</button>
 
-
+  [[ name ]]
 </div>
 
 {% endblock %}
@@ -30,25 +30,41 @@
 {% block javascript %}
 <!-- development version, includes helpful console warnings -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><Paste>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
 var app = new Vue({
-  el: 'form-create-user',
+  el: '#form-create-user',
 	delimiters: ['[[', ']]'],
   data: {
-    nombre: '',
-    apellido: '',
+    name: '',
+    surname: '',
     username: '',
     password: '',
     email: '',
-
-    selected: 'A',
+    submit_url: '/create_user',
+    selected_rol: 'admin',
     rol: [
       { text: 'profesor', value: 'profesor' },
       { text: 'admin', value: 'admin' },
-      { text: 'preceptor', value: 'preceptor' }
-      { text: 'alumno', value: 'alumno' }
-    ]
-  }
+    ],
+  },
   methods: {
+    submit: function () {
+      axios
+        .post('/create_user', {
+          name: this.name,
+          surname: this.surname,
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          rol: this.selected_rol,
+        })
+        .catch((response) => {
+          alert(response);
+        });
+    },
   }
 })
+</script>
 {% endblock %}
