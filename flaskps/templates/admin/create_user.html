@@ -17,12 +17,20 @@
   <label for="password">
   <input id="password" type="text" v-model="password">
 
-  <label for="rol">
-  <input id="rol" type="text" v-model="rol">
-
+  <select name="role" v-model="role">
+    <option name="" value="" selected>NINGUNO</option>
+    <option name="" value="admin">ADMIN</option>
+    <option name="" value="profesor">PROFESOR</option>
+    <option name="" value="preceptor">PRECEPTOR</option>
+  </select>
+  <!-- TODO: eliminar si no se necesitan agregar nuevos roles
+  <select name="role"  v-model="role">
+    <option v-for="role in roles" v-bind:value="role.id">
+      [[ role.name ]]
+    </option>
+  </select>
+  -->
   <button id="crear-usuario" @click="submit()">Agregar usuario</button>
-
-  [[ name ]]
 </div>
 
 {% endblock %}
@@ -42,12 +50,8 @@ var app = new Vue({
     username: '',
     password: '',
     email: '',
-    submit_url: '/create_user',
-    selected_rol: 'admin',
-    rol: [
-      { text: 'profesor', value: 'profesor' },
-      { text: 'admin', value: 'admin' },
-    ],
+    role: '',
+    success_create_msg: '',
   },
   methods: {
     submit: function () {
@@ -58,10 +62,13 @@ var app = new Vue({
           username: this.username,
           password: this.password,
           email: this.email,
-          rol: this.selected_rol,
+          rol: this.role,
         })
-        .catch((response) => {
-          alert(response);
+        .then(() => {
+          this.success_create_msg = response.msg;
+        })
+        .catch(() => {
+          alert("No se pudo crear el usario");
         });
     },
   }

@@ -32,6 +32,9 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
     active = db.Column(db.Boolean, default=True)
+    # TODO: eliminar rol cuando se creen roles en el modelo
+    # esto es una relacion role
+    rol = db.Column(db.String(60), index=True)
 
     @property
     def password(self):
@@ -66,8 +69,6 @@ class Role(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
-    description = db.Column(db.String(200))
-    users = db.relationship('User', backref='role', lazy='dynamic')
 
     def __repr__(self):
         return '<Role: {}>'.format(self.name)
@@ -83,7 +84,7 @@ class Courses(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
-    users = db.relationship('User', backref='department', lazy='dynamic')
+    # users = db.relationship('User', backref='course', lazy='dynamic')
 
     def __repr__(self):
         return '<Courses: {}>'.format(self.name)
