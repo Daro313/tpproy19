@@ -6,3 +6,5 @@ env/
 *tags*
 *.pyc
 env2/
+runserver.sh
+runshell.sh
