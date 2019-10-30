@@ -50,6 +50,14 @@ class User(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    @property
+    def is_active(self):
+        return self.active
+
+    # @property
+    # def display_rol(self):
+    #     return ' | '.join(str(self.rol))
+
     def __repr__(self):
         return '<Usuario: {}>'.format(self.username)
 

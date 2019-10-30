@@ -14,7 +14,7 @@ def user_create_form():
     """
     Muestra el template de creacion de usuario
     """
-    return render_template('admin/create_user.html', title="creacion de usuario")
+    return render_template('admin/create_user.html')
 
 
 @admin.route('/create_user', methods=['POST'])
@@ -47,7 +47,18 @@ def create_user():
     )
     user.password = password
     db.session.add(user)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except:
+        db.session.rollback()
+        return render_template('admin/create_user.html'), 403
 
-    return render_template(
-        'admin/create_user.html', title="se creo el usario con exito")
+    return render_template('admin/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
+
+
+
+
+# @app.errorhandler(404)
+#def page_not_found(e):
+#    # note that we set the 404 status explicitly
+#    return render_template('404.html'), 404

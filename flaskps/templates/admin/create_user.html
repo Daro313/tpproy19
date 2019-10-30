@@ -1,38 +1,50 @@
+{% extends "base.html" %}
 {% block title %}creacion de usuario{% endblock %}
-{% block body %}
+{% block content %}
 
-<div id="form-create-user" name="create_user_form">
-  <label for="email">
-  <input id="email" type="text" v-model="email">
 
-  <label for="name">
-  <input id="name" type="text" v-model="name">
+<div id="form-create-user" class="container">
+  <div class="row">
+    <div class="col-md">
+      <h3> Creacion de usuarios </h3>
+      <div class="form-group" name="create_user_form">
+        <label for="email"> Email </label>
+        <input id="email" class="form-control" type="text" v-model="email" required>
 
-  <label for="surname">
-  <input id="surname" type="text" v-model="surname">
+        <label for="name"> Nombre </label>
+        <input id="name" class="form-control" type="text" v-model="name" required>
 
-  <label for="username">
-  <input id="username" type="text" v-model="username">
+        <label for="surname"> Apellido </label>
+        <input id="surname" class="form-control" type="text" v-model="surname" required>
 
-  <label for="password">
-  <input id="password" type="text" v-model="password">
+        <label for="username"> Nombre de usuario </label>
+        <input id="username" class="form-control" type="text" v-model="username" required>
 
-  <select name="role" v-model="role">
-    <option name="" value="" selected>NINGUNO</option>
-    <option name="" value="admin">ADMIN</option>
-    <option name="" value="profesor">PROFESOR</option>
-    <option name="" value="preceptor">PRECEPTOR</option>
-  </select>
-  <!-- TODO: eliminar si no se necesitan agregar nuevos roles
-  <select name="role"  v-model="role">
-    <option v-for="role in roles" v-bind:value="role.id">
-      [[ role.name ]]
-    </option>
-  </select>
-  -->
-  <button id="crear-usuario" @click="submit()">Agregar usuario</button>
+        <label for="password"> Contraseña </label>
+        <input id="password" class="form-control" type="text" v-model="password" required>
+
+        <label for="role"> Rol </label>
+        <select class="custom-select custom-select-sm" name="role" v-model="role" required>
+          <option name="" value="" selected>NINGUNO</option>
+          <option name="" value="admin">ADMIN</option>
+          <option name="" value="profesor">PROFESOR</option>
+          <option name="" value="preceptor">PRECEPTOR</option>
+        </select>
+        <!-- TODO: eliminar si no se necesitan agregar nuevos roles
+        <select name="role"  v-model="role">
+          <option v-for="role in roles" v-bind:value="role.id">
+            [[ role.name ]]
+          </option>
+        </select>
+        -->
+        <button class="btn btn-success" id="crear-usuario" @click="submit()">Agregar usuario</button>
+        <div v-if="success_create_msg">
+          [[ success_create_msg ]]
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock %}
 
 {% block javascript %}
@@ -51,10 +63,11 @@ var app = new Vue({
     password: '',
     email: '',
     role: '',
-    success_create_msg: '',
+    success_create_msg: false,
   },
   methods: {
     submit: function () {
+      this.success_create_msg = false;
       axios
         .post('/create_user', {
           name: this.name,
@@ -64,11 +77,11 @@ var app = new Vue({
           email: this.email,
           rol: this.role,
         })
-        .then(() => {
-          this.success_create_msg = response.msg;
+        .then((response) => {
+          this.success_create_msg = response.headers.msg;
         })
-        .catch(() => {
-          alert("No se pudo crear el usario");
+        .catch((response) => {
+          alert("no se pudo creare el usuario");
         });
     },
   }
