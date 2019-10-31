@@ -9,16 +9,16 @@ from . import users
 def update_user_template():
     pass
 
-@users.route('user/create_form')
+@users.route('/user/create_form')
 # @login_required descomentar despues de crear el primer usuario
 def user_create_form():
     """
     Muestra el template de creacion de usuario
     """
-    return render_template('user/create_user.html')
+    return render_template('users/create_user.html')
 
 
-@users.route('user/create', methods=['POST'])
+@users.route('/user/create', methods=['POST'])
 def create():
     """
     Si los datos son validos crea un nuevo usuario
@@ -52,9 +52,9 @@ def create():
         db.session.commit()
     except:
         db.session.rollback()
-        return render_template('user/create_user.html'), 403
+        return render_template('users/create_user.html'), 403
 
-    return render_template('user/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
+    return render_template('users/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
 
 
 @users.route('/user/update/<user_id>', methods=['POST'])

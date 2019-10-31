@@ -69,7 +69,7 @@ var app = new Vue({
     submit: function () {
       this.success_create_msg = false;
       axios
-        .post('user/create', {
+        .post('/user/create', {
           name: this.name,
           surname: this.surname,
           username: this.username,
