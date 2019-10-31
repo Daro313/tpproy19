@@ -1,19 +1,29 @@
-from flask import render_template
-from flask import request
-from flask_login import login_required
+from flask import render_template, redirect, request
+from flask_login import login_required, login_manager, login_user
+
+from flaskps.models import User
 
 from . import auth
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/auth/login', methods=['GET', 'POST'])
 def login():
     """
     Muestra el template de login
     """
+
     if request.method == 'POST':
-        return "do_the_login()"
-    else:
-        return render_template('auth/login.html', title="login")
+        import ipdb;ipdb.set_trace()
+
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        if email:
+            user = User.query.filter_by(email=email).first()
+            if user.verify_password(password):
+                login_user(user)
+                return redirect('/dashboard')
+    return render_template('auth/login.html', title="login")
 
 
 def logout():
@@ -21,3 +31,9 @@ def logout():
     Deslogea usuario de la session
     """
     pass
+
+
+#@perm.current_user_loader
+#def load_current_user():
+#    if 'user_id' in session:
+#        return User.query.get(session['user_id'])

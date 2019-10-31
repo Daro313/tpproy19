@@ -17,7 +17,7 @@ from flaskps import db, login_manager
 roles = ['profesor', 'preceptor', 'admin']
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """
     Create an User table
     """
