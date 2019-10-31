@@ -95,7 +95,7 @@ def list():
         if active:
             active = True if active == "True" else False
             users = users.filter_by(active=active)
-    users.paginate(1,OFFSET,False).items
+    users.paginate(1,5,False).items
     return render_template('users/list.html', user_list=users)
 
 
