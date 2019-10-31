@@ -83,9 +83,18 @@ def update(user_id):
     return redirect('/user/list')
 
 
-@users.route('/user/list', methods=['GET'])
+@users.route('/user/list', methods=['GET', 'POST'])
 def list():
-    users = User.query.all()
+    users = User.query.filter_by()
+    if request.method == 'POST':
+        form = request.form
+        username = form.get('username')
+        active = form.get('active')
+        if username:
+            users = users.filter_by(username=username)
+        if active:
+            active = True if active == "True" else False
+            users = users.filter_by(active=active)
     return render_template('users/list.html', user_list=users)
 
 
