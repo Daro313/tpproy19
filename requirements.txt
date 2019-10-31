@@ -3,5 +3,4 @@ Flask==1.0.2
 Jinja2==2.6
 PyMySQL==0.9.3
 Flask-Session==0.3
-
 >>>>>>> bcc9959a8cfc4c522c17c6b8f8eb264e517bc951
