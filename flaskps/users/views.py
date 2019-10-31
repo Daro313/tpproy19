@@ -47,9 +47,12 @@ def detail(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('users/detail.html', user=user)
 
-def delete_user():
-    pass
-
+@users.route('/user/delete/<user_id>', methods=['POST'])
+def delete(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
+    db.session.delete(user)
+    db.session.commit()
+    return redirect('/user/list')
 def activate_user():
     pass
 

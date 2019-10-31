@@ -8,7 +8,7 @@
       <th>Apellido</th>
       <th>Email</th>
       <th>Nombre de usuario</th>
-      <th>Rol</th> 
+      <th>Rol</th>
       <th>Activo</th>
       <th>Acciones</th>
     </tr>
@@ -28,7 +28,10 @@
         <td>{{ user.username}}</td>
         <td>{{ user.rol }}</td>
         <td>{{ user.active }}</td>
-        <td>Eliminar | dar_de_baja<td>
+        <td><form method="POST" action="{{ url_for('users.delete', user_id=user.id) }}">
+            <input type="submit" value="Eliminar">
+            </form>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
