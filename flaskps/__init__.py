@@ -7,7 +7,7 @@ from flaskps.resources import auth
 from flaskps.resources import student
 
 app = Flask(__name__)
-app.secret_key = 'many random bytes'
+app.secret_key = '\xa6\xbaG\x80\xc9-$s\xd5~\x031N\x8f\xd9/\x88\xd0\xba#B\x9c\xcd_'
 
 app.config['MYSQL_HOST'] = 'https://sql.proyecto2019.linti.unlp.edu.ar/'
 app.config['MYSQL_USER'] = 'grupo8'
