@@ -1,12 +1,11 @@
-Jinja2==2.10.3
-MarkupSafe==1.1.1
-pbr==5.1.1
-pytz==2019.1
-six==1.12.0
-sqlparse==0.3.0
-stevedore==1.30.0
-virtualenv==16.1.0
-virtualenv-clone==0.4.0
-virtualenvwrapper==4.8.2
-virtualenvwrapper-win==1.2.5
-Werkzeug==0.16.0
+Flask==1.0.2
+<<<<<<< HEAD
+Jinja2==2.6
+PyMySQL==0.9.3
+Flask-Session==0.3
+Flask-SQLAlchemy==0.16
+SQLAlchemy==0.7.9
+=======
+PyMySQL==0.9.3
+Flask-Session==0.3
+>>>>>>> bcc9959a8cfc4c522c17c6b8f8eb264e517bc951

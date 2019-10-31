@@ -1,7 +1,12 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
 from flaskps.models.user import User
+from flaskps.models.student import Student
 
+def getPanel():
+    Student.db = get_db()
+    students = Student.all()
+    return render_template('auth/panel.html', students=students )
 
 def login():
     return render_template('auth/login.html')
