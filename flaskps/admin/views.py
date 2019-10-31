@@ -11,25 +11,22 @@ from . import admin
 @admin.route('/admin/configuration', methods=['GET', 'POST'])
 def configuration():
     conf = Configurations.query.first()
-    import ipdb;ipdb.set_trace()
     if request.method == 'POST':
         data = request.form
         offset = data.get('offset')
         active = data.get('active')
 
         if offset:
-            conf.offset_paginator = offset
+            conf.offset_paginator = int(offset)
         if active:
-            active = True if active == "True" else False
+            conf.active = True if active == "True" else False
+
+        db.session.commit()
         return render_template('/home/dashboard.html')
     return render_template('admin/config.html', configuration=conf)
 
 
-
-
-
-
-# @app.errorhandler(404)
-#def page_not_found(e):
-#    # note that we set the 404 status explicitly
-#    return render_template('404.html'), 404
+@admin.route('/out_of_services')
+def page_not_found():
+    # note that we set the 404 status explicitly
+    return render_template('admin/fuera_de_servicio.html'), 500

@@ -38,6 +38,7 @@
         </select>
         -->
         <button class="btn btn-success" id="crear-usuario" @click="submit()">Agregar usuario</button>
+        <button role="link" onclick="window.location='/user/list'" class="btn btn-light" name="button">Volver</button>
         <div v-if="success_create_msg">
           [[ success_create_msg ]]
         </div>
