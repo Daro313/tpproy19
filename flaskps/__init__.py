@@ -9,10 +9,10 @@ from flaskps.resources import student
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'proyecto'
+app.config['MYSQL_HOST'] = 'https://sql.proyecto2019.linti.unlp.edu.ar/'
+app.config['MYSQL_USER'] = 'grupo8'
+app.config['MYSQL_PASSWORD'] = 'MTFhMWVmMDkxYmE2'
+app.config['MYSQL_DB'] = 'grupo8'
 
 #Inicio
 app.add_url_rule("/", 'home', home_controller.index)
