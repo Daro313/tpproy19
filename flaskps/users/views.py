@@ -2,7 +2,7 @@ from flask import render_template, redirect, request
 from flask_login import login_required
 
 from flaskps import db
-from flaskps.models import User
+from flaskps.models import User, Configurations
 
 from . import users
 
@@ -95,7 +95,11 @@ def list():
         if active:
             active = True if active == "True" else False
             users = users.filter_by(active=active)
-    users.paginate(1,OFFSET,False).items
+
+    conf = Configurations.query.first()
+
+    users = users.paginate(1, conf.offset_paginator, False).items
+
     return render_template('users/list.html', user_list=users)
 
 

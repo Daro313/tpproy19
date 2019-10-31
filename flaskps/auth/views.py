@@ -13,7 +13,6 @@ def login():
     """
 
     if request.method == 'POST':
-        import ipdb;ipdb.set_trace()
 
         email = request.form.get("email")
         password = request.form.get("password")

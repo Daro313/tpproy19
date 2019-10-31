@@ -35,4 +35,7 @@ def create_app(config_name):
     from .users import users as users_blueprint
     app.register_blueprint(users_blueprint)
 
+    from .configurations import configurations as configurations_blueprint
+    app.register_blueprint(configurations_blueprint)
+
     return app
