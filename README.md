@@ -65,3 +65,16 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
     │       └── a1a1d8b30202_.py
     ├── requirements.txt
     └── run.py
+
+
+# relaciones
+https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html
+ejemplo de modelo a sql
+CREATE TABLE invoices (
+   id INTEGER NOT NULL,
+   custid INTEGER,
+   invno INTEGER,
+   amount INTEGER,
+   PRIMARY KEY (id),
+   FOREIGN KEY(custid) REFERENCES customers (id)
+)
