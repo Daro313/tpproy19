@@ -1,6 +1,6 @@
 from flask import render_template
 from flask_login import login_required
-from flaskps.models import Configurations
+from flaskps.configurations.models import Configurations
 
 from . import home
 
@@ -9,6 +9,7 @@ from . import home
 def homepage():
     """
     Render the homepage template on the / route
+    check if home is available
     """
     conf = Configurations.query.first()
     return render_template('home/index.html', conf=conf)

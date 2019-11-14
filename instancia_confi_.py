@@ -1,6 +1,6 @@
 
 from alembic import op
-from flaskps.models import Configurations
+from flaskps.configurations.models import Configurations
 from flaskps import db
 
 revision = 'crea_config'

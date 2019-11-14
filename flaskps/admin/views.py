@@ -3,7 +3,7 @@ from flask import request
 from flask_login import login_required
 
 from flaskps import db
-from flaskps.models import Configurations
+from flaskps.configurations.models import Configurations
 
 from . import admin
 

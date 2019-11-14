@@ -2,7 +2,8 @@ from flask import render_template, redirect, request
 from flask_login import login_required
 
 from flaskps import db
-from flaskps.models import User, Configurations
+from flaskps.users.models import User
+from flaskps.configurations.models import Configurations
 
 from . import users
 
