@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" id="user_list">
+  <form class="" action="/user/list" method="POST">
+    <input type="text" name="username" value="" placeholder="Nombre de usuario">
+    <select class="" name="active">
+      <option value="" selected>Todos</option>
+      <option value="True">Activos</option>
+      <option value="False">Inactivos</option>
+    </select>
+    <input type="submit" name="" value="Buscar">
+  </form>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Nombre de usuario</th>
+      <th>Rol</th>
+      <th>Activo</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for user in user_list %}
+        {% if user.active %}
+          <tr>
+        {% else %}
+          <tr class="table-danger">
+        {% endif %}
+        <td>
+          <a href="{{ url_for('users.detail', username=user.username) }}">{{ user.first_name }}</a>
+        </td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.username}}</td>
+        <td>{{ user.rol }}</td>
+        <td>{{ user.active }}</td>
+        <td><form method="POST" action="{{ url_for('users.delete', user_id=user.id) }}">
+            <input type="submit" value="Eliminar">
+            </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button role="link" onclick="window.location='/user/create_form'" class="btn btn-info" name="button">Nuevo Usuario</button>
+  <button role="link" onclick="window.location='/dashboard'" class="btn btn-light" name="button">Volver</button>
+</div>
+{% endblock %}

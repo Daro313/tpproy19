@@ -1,0 +1,458 @@
+{% extends "base.html" %}
+
+    {% block head %}
+        <script>
+            //Carga el menu por defecto en la primer opcion
+            window.onload = load;
+            function load() {
+                var subItems = document.getElementsByClassName('subItem');
+                var menuItems = document.getElementsByClassName('menuItem');
+                var panelTitle = document.getElementById('panel-title');
+
+                for(var i = 0; i < subItems.length; i++) {
+                    subItems[i].style.display = 'none';
+                    menuItems[i].style.background = '#fff';
+                    menuItems[i].style.color = '#121212';
+                }
+                panelTitle.innerHTML = menuItems[0].innerHTML;
+                subItems[0].style.display = 'block';
+                menuItems[0].style.background = '#ddd';
+            }
+        </script>
+    {% endblock %}
+
+    {% block navbar %}
+        <!-- Cabecera -->
+        <header>
+            <!-- Navegación -->
+            <nav class="navbar navbar-expand-lg navbar-light navbar-static-top no-shadow panel-nav uns">
+                <a class="navbar-brand">Panel Administrador</a>
+            </nav>
+            <!-- /Navegación -->
+        </header>
+        <!-- /Cabecera -->
+    {% endblock %}
+
+    {% block content %}
+        <!-- Contenido Principal -->
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Columna 2-->
+                    <div class="col-sm-2 p-0">
+                        <div class="card p-0 no-shadow panel-menu">
+                            <div class="row justify-content-center uns">
+                                <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item menuItem"><i class="fas fa-check-circle icon-rounded"></i><a href="/admin/configuration">Configuracion</a></li>
+                                <li class="list-group-item menuItem"><i class="fas fa-users icon-rounded"></i><a href="/user/list">Usuarios</a></li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(2)"><i class="fas fa-guitar icon-rounded"></i>----------</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(3)"><i class="fas fa-clipboard-list icon-rounded"></i>----------</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(4)"><i class="fas fa-sticky-note icon-rounded"></i>----------</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /Columna 2 -->
+                    <!-- Columna 10 -->
+                    <div class="col-sm-10 pt-3">
+                        <h1 id="panel-title"></h1>
+                        <hr class="mb-4 pb-5">
+                        <hr>
+                        <!-- Seccion: Asistencia -->
+                        <section class="subItem">
+                            <div class="row">
+                                <!-- Filtros -->
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <!-- Filtro de tipo -->
+                                        <div class="col-md-12">
+                                            <h3>Clases</h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="card cursor-p text-center py-4 mb-3 btn-info ho-7 inner-shadow-1">
+                                                        Instrumentos
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card cursor-p text-center py-4 mb-3 btn-default ho-7">
+                                                        Coro
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card cursor-p text-center py-4 mb-3 btn-secondary ho-7">
+                                                        Lenguaje
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card cursor-p text-center py-4 mb-3 btn-success ho-7">
+                                                        Taller
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                        <!-- Filtro de nucleo -->
+                                        <div class="col-md-12">
+                                            <!-- Tabla Nucleos -->
+                                            <div class="table-responsive">
+                                                <h3>Núcleos</h3>
+                                                <table class="table table-striped" id="tablaInstrumentos">
+                                                    <thead class="thead-dark">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Ubicación</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="cursor-p ho-7 table-select">
+                                                            <td scope="row" class="id-tabla">001</td>
+                                                            <td>Centro A</td>
+                                                            <td>Av 53 123</td>
+                                                        </tr>
+                                                        <tr class="cursor-p ho-7 table-select table-selected">
+                                                            <td scope="row" class="id-tabla">001</td>
+                                                            <td>Centro A</td>
+                                                            <td>Av 53 123</td>
+                                                        </tr>
+                                                        <tr class="cursor-p ho-7 table-select">
+                                                            <td scope="row" class="id-tabla">001</td>
+                                                            <td>Centro A</td>
+                                                            <td>Av 53 123</td>
+                                                        </tr>
+                                                        <tr class="cursor-p ho-7 table-select">
+                                                            <td scope="row" class="id-tabla">001</td>
+                                                            <td>Centro A</td>
+                                                            <td>Av 53 123</td>
+                                                        </tr>
+                                                        <tr class="cursor-p ho-7 table-select">
+                                                            <td scope="row" class="id-tabla">001</td>
+                                                            <td>Centro A</td>
+                                                            <td>Av 53 123</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Listado de alumnos -->
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3>Alumnos</h3>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Seleccione dia en que se dictó la clase</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="browser-default custom-select">
+                                                <option selected disabled>Seleccionar</option>
+                                                <option value="Lunes">Clase del día Lunes</option>
+                                                <option value="Martes">Clase del día Martes</option>
+                                                <option value="Miércoles">Clase del día Miércoles</option>
+                                                <option value="Jueves">Clase del día Jueves</option>
+                                                <option value="Viernes">Clase del día Viernes</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group mb-3">
+                                                <input disabled type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row my-4">
+                                        <div class="col-md-12">
+                                            <!-- Tabla alumnos -->
+                                            <div class="table-responsive">
+                                                <table class="table table-striped" id="tablaInstrumentos">
+                                                    <thead class="thead-dark">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Instrumento</th>
+                                                            <th scope="col">Nivel</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row" class="id-tabla">001</th>
+                                                            <td>Damian, Díaz</td>
+                                                            <td>Piano</td>
+                                                            <td><span class="btn btn-success btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td scope="row" class="id-tabla">002</td>
+                                                            <td>Marianella, Casanello</td>
+                                                            <td>Chelo</td>
+                                                            <td><span class="btn btn-danger btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td scope="row" class="id-tabla">003</td>
+                                                            <td>Agustin, Iriarte</td>
+                                                            <td>Violín</td>
+                                                            <td><span class="btn btn-pink btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /Tabla alumnos -->
+                                        </div>
+                                        <!-- /Col 12-->
+                                    </div>
+                                    <!-- /Row-->
+                                </div>
+                                <!-- /Listado de alumnos Col 6-->
+                            </div>
+                        </section>
+                        <!-- /Seccion: Asistencia -->
+
+                        <!-- Seccion: Ver alumnos -->
+                        <section class="subItem">
+                            <!-- /Row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h3>Filtros</h3>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="browser-default custom-select">
+                                        <option selected>Tipo de clase</option>
+                                        <option value="Lunes">Viola</option>
+                                        <option value="Martes">Chelo</option>
+                                        <option value="Miércoles">Violín</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="browser-default custom-select">
+                                        <option selected>Núcleo</option>
+                                        <option value="Lunes">Viola</option>
+                                        <option value="Martes">Chelo</option>
+                                        <option value="Miércoles">Violín</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="browser-default custom-select">
+                                        <option selected>Nivel</option>
+                                        <option value="Lunes">Viola</option>
+                                        <option value="Martes">Chelo</option>
+                                        <option value="Miércoles">Violín</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <!-- Listado de alumnos -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Tabla alumnos -->
+                                    <div class="table-responsive">
+                                        <h3>Alumnos</h3>
+                                        <table class="table table-striped" id="tablaInstrumentos">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Instrumento</th>
+                                                    <th scope="col">Nivel</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="id-tabla">001</th>
+                                                    <td>Damian, Díaz</td>
+                                                    <td>Piano</td>
+                                                    <td><span class="btn btn-success btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="row" class="id-tabla">002</td>
+                                                    <td>Marianella, Casanello</td>
+                                                    <td>Chelo</td>
+                                                    <td><span class="btn btn-danger btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="row" class="id-tabla">003</td>
+                                                    <td>Agustin, Iriarte</td>
+                                                    <td>Violín</td>
+                                                    <td><span class="btn btn-pink btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /Tabla alumnos -->
+                                </div>
+                                <!-- /Col 12-->
+                            </div>
+                        </section>
+                        <!-- /Seccion: Ver alumnos -->
+
+                        <!-- Seccion: Ver alumnos -->
+                        <section class="subItem">
+                            <!-- /Row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h3>Filtros</h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="browser-default custom-select">
+                                        <option selected>Tipo de instrumento</option>
+                                        <option value="Lunes">Cuerda</option>
+                                        <option value="Martes">Percusión</option>
+                                        <option value="Miércoles">Viento</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="browser-default custom-select">
+                                        <option selected>Intrumento</option>
+                                        <option value="Lunes">Viola</option>
+                                        <option value="Martes">Chelo</option>
+                                        <option value="Miércoles">Violín</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <!-- Listado de alumnos -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Tabla alumnos -->
+                                    <div class="table-responsive">
+                                        <h3>Instrumentos</h3>
+                                        <table class="table table-striped" id="tablaInstrumentos">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Instrumento</th>
+                                                    <th scope="col">Nivel</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="id-tabla">001</th>
+                                                    <td>Damian, Díaz</td>
+                                                    <td>Piano</td>
+                                                    <td><span class="btn btn-success btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="row" class="id-tabla">002</td>
+                                                    <td>Marianella, Casanello</td>
+                                                    <td>Chelo</td>
+                                                    <td><span class="btn btn-danger btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="row" class="id-tabla">003</td>
+                                                    <td>Agustin, Iriarte</td>
+                                                    <td>Violín</td>
+                                                    <td><span class="btn btn-pink btn-sm py-2 px-4 m-0 cursor-d"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /Tabla alumnos -->
+                                </div>
+                                <!-- /Col 12-->
+                            </div>
+                        </section>
+                        <!-- /Seccion: Ver alumnos -->
+
+                        <!-- Secciones que rotan -->
+                        <section class="subItem">
+
+                        </section>
+                        <!-- /Secciones que rotan -->
+                        <!-- Secciones que rotan -->
+                        <section class="subItem">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 mt-4">
+                                            <h4 onclick="showAddNote();">Añadir nueva nota</h4>
+                                        </div>
+                                        <div class="col-md-10 my-2" id="add-note">
+                                            <div class="card">
+                                                <form method="!#">
+                                                    <div class="card-header">
+                                                        Nueva nota
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Título</label>
+                                                            <input type="text" class="form-control rounded-0" id="exampleFormControlTextarea1" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Texto</label>
+                                                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="8" required></textarea>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-note-detail btn-rounded text-white">Añadir nota</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-primary" role="alert">
+                                                <p>Nota 1</p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <input disabled type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card no-shadow my-2 p-2">
+                                                            brbrbrbrbr
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="alert alert-warning" role="alert">
+                                                <p>Nota 2</p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <input disabled type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card no-shadow my-2 p-2">
+                                                            brbrbrbrbr
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="alert alert-danger" role="alert">
+                                                <p>Nota 3</p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <input disabled type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card no-shadow my-2 p-2">
+                                                            brbrbrbrbr
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+                        <!-- /Secciones que rotan -->
+                    </div>
+                        <!--/col-span-10-->
+                    </div>
+                </div>
+        </main>
+        <!-- /Main -->
+    {% endblock %}

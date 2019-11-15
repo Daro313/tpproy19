@@ -5,6 +5,7 @@ tags
 tags/
 env/
 *tags*
+<<<<<<< HEAD
 =======
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -116,3 +117,9 @@ db/db.sqlite
 >>>>>>> 831437d6fefb89a9f5398d9dcc29c46e56fbcf6a
 
 flask_session
+=======
+*.pyc
+env2/
+runserver.sh
+runshell.sh
+>>>>>>> 40a1d61e1d7aab4c5221c6621bb28d0f884d943c

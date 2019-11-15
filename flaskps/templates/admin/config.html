@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <form class="form-group" method="POST" action="{{ url_for('admin.configuration') }}">
+
+    <label for="paginator"> Numero de paginas </label>
+    <input class="form-control" type="text" value="{{configuration.offset_paginator}}" name="offset">
+
+    <label for="active"> Activo </label>
+    
+    <select class="" name="active">
+      <option value="{{configuration.active}}" selected>{{configuration.active}}</option>
+      <option value="True">Activos</option>
+      <option value="False">Inactivos</option>
+    </select>
+    <input class="btn btn-success" type="submit" value="Guardar">
+  </form>
+  <button role="link" onclick="window.location='/dashboard'" class="btn btn-light" name="button">Volver</button>
+  <button role="link" onclick="window.location='/'" class="btn btn-light" name="button">ir al home</button>
+</div>
+{% endblock %}
