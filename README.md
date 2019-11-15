@@ -1,3 +1,4 @@
+
 # Remember that a model is a representation of a database table in code.
 
 # crear base de datos
@@ -7,6 +8,46 @@ create user 'admin'@'localhost' identified by 'admin';
 create database grupo8;
 grant all privileges on grupo8 .* to 'admin'@'localhost';
 ```
+
+### crear tablas con sqlalchemy
+```console
+sh runshell.sh
+>>> from flaskps import db
+>>> db.create_all()
+```
+
+### output de ejemplo Model User y Rol 
+> 2019-11-14 22:00:37,395 INFO sqlalchemy.engine.base.Engine COMMIT
+> 2019-11-14 22:00:37,398 INFO sqlalchemy.engine.base.Engine
+> CREATE TABLE users (
+> 	created_at DATE,
+> 	updated_at DATE,
+> 	id INTEGER NOT NULL AUTO_INCREMENT,
+> 	is_admin BOOL,
+> 	username VARCHAR(60) NOT NULL,
+> 	email VARCHAR(60) NOT NULL,
+> 	name VARCHAR(60),
+> 	surname VARCHAR(60),
+> 	active BOOL,
+> 	password_hash VARCHAR(128),
+> 	PRIMARY KEY (id),
+> 	CHECK (is_admin IN (0, 1)),
+> 	UNIQUE (username),
+> 	UNIQUE (email),
+> 	CHECK (active IN (0, 1))
+> )
+> 
+> 
+> 2019-11-14 22:00:37,398 INFO sqlalchemy.engine.base.Engine {}
+> 2019-11-14 22:00:37,432 INFO sqlalchemy.engine.base.Engine COMMIT
+> 2019-11-14 22:00:37,433 INFO sqlalchemy.engine.base.Engine
+> CREATE TABLE rol (
+> 	id INTEGER NOT NULL AUTO_INCREMENT,
+> 	name VARCHAR(60) NOT NULL,
+> 	PRIMARY KEY (id),
+> 	UNIQUE (name)
+> )
+
 
 
 ### crear migraciones
@@ -67,14 +108,22 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
     └── run.py
 
 
-# relaciones
-https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html
-ejemplo de modelo a sql
-CREATE TABLE invoices (
-   id INTEGER NOT NULL,
-   custid INTEGER,
-   invno INTEGER,
-   amount INTEGER,
-   PRIMARY KEY (id),
-   FOREIGN KEY(custid) REFERENCES customers (id)
+### instanciar base de datos y crear ADMIN inicial
+```console
+from flaskps import db
+db.create_all()
+from flaskps.users.models import User
+# crea usuario
+user = User(
+    username='superadmin',
+    email='admin@admin.com',
 )
+user.password = 'admin'
+
+# lo guarda en la db
+db.session.add(user)
+db.session.commit()
+
+
+User.query.all() # te trae todos los usuarios
+```
