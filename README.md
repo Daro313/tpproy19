@@ -109,7 +109,12 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
 
 
 ### instanciar base de datos y crear ADMIN inicial
+
+* entrar a la consola de flask
+
 ```console
+sh runshell.sh
+
 from flaskps import db
 db.create_all()
 from flaskps.users.models import User
