@@ -11,7 +11,7 @@ def update_user_template():
     pass
 
 @users.route('/user/create_form')
-# @login_required descomentar despues de crear el primer usuario
+@login_required
 def user_create_form():
     """
     Muestra el template de creacion de usuario
@@ -20,6 +20,7 @@ def user_create_form():
 
 
 @users.route('/user/create', methods=['POST'])
+@login_required
 def create():
     """
     Si los datos son validos crea un nuevo usuario
