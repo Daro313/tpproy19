@@ -2,7 +2,7 @@ from flask_login import UserMixin
 from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
-  
+
 from flaskps import db, login_manager
 from flaskps.utils.models import TimeStampedModel
 
@@ -19,7 +19,7 @@ class User(db.Model, TimeStampedModel, UserMixin):
     name = db.Column(db.String(60))
     surname = db.Column(db.String(60))
 
-    active = db.Column(db.Boolean, default=True) 
+    active = db.Column(db.Boolean, default=True)
     password_hash = db.Column(db.String(128))
 
     def __repr__(self):
@@ -42,6 +42,12 @@ class User(db.Model, TimeStampedModel, UserMixin):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+
+## Set up user_loader
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
     # TODO: descomentar y agregar funcionalidad despues de crear migracion
@@ -78,19 +84,11 @@ class Rol(db.Model):
 #
 #
 #
+
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
-
-
-
-
-
-
-
 
 
 # test many to many user role

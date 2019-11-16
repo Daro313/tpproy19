@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}creacion de usuario{% endblock %}
+{% block content %}
+
+
+<div id="form-create-user" class="container">
+  <div class="row">
+    <div class="col-md">
+      <h3> Creacion de usuarios </h3>
+      <div class="form-group" name="create_user_form">
+        <label for="email"> Email </label>
+        <input id="email" class="form-control" type="text" v-model="email" required>
+
+        <label for="name"> Nombre </label>
+        <input id="name" class="form-control" type="text" v-model="name" required>
+
+        <label for="surname"> Apellido </label>
+        <input id="surname" class="form-control" type="text" v-model="surname" required>
+
+        <label for="username"> Nombre de usuario </label>
+        <input id="username" class="form-control" type="text" v-model="username" required>
+
+        <label for="password"> Contraseña </label>
+        <input id="password" class="form-control" type="text" v-model="password" required>
+
+        <label for="role"> Rol </label>
+        <select class="custom-select custom-select-sm" name="role" v-model="role" required>
+          <option name="" value="" selected>NINGUNO</option>
+          <option name="" value="admin">ADMIN</option>
+          <option name="" value="profesor">PROFESOR</option>
+          <option name="" value="preceptor">PRECEPTOR</option>
+        </select>
+        <!-- TODO: eliminar si no se necesitan agregar nuevos roles
+        <select name="role"  v-model="role">
+          <option v-for="role in roles" v-bind:value="role.id">
+            [[ role.name ]]
+          </option>
+        </select>
+        -->
+        <button class="btn btn-success" id="crear-usuario" @click="submit()">Agregar usuario</button>
+        <button role="link" onclick="window.location='/user/list'" class="btn btn-light" name="button">Volver</button>
+        <div v-if="success_create_msg">
+          [[ success_create_msg ]]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><Paste>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+var app = new Vue({
+  el: '#form-create-user',
+	delimiters: ['[[', ']]'],
+  data: {
+    name: '',
+    surname: '',
+    username: '',
+    password: '',
+    email: '',
+    role: '',
+    success_create_msg: false,
+  },
+  methods: {
+    submit: function () {
+      this.success_create_msg = false;
+      axios
+        .post('/user/create', {
+          name: this.name,
+          surname: this.surname,
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          rol: this.role,
+        })
+        .then((response) => {
+          this.success_create_msg = response.headers.msg;
+        })
+        .catch((response) => {
+          alert("no se pudo creare el usuario");
+        });
+    },
+  }
+})
+</script>
+{% endblock %}
