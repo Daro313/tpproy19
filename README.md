@@ -108,16 +108,19 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
     └── run.py
 
 
-### instanciar base de datos y crear ADMIN inicial
+### instanciar base de datos y crear Objetos inicial para el correcto funcionamiento
+
 
 * entrar a la consola de flask
 
 ```console
 sh runshell.sh
 
-from flaskps import db
 db.create_all()
-from flaskps.users.models import User
+
+from flaskps import db
+from flaskps.users.models import User, Rol
+from flaskps.configurations.models import Configurations
 # crea usuario
 user = User(
     username='superadmin',
@@ -127,8 +130,21 @@ user.password = 'admin'
 
 # lo guarda en la db
 db.session.add(user)
+
+conf = Configurations(
+  description='escuela orquesta beriso',
+  title='escuela orquesta',
+  email='escuela@orquesta.mail.com'
+)
+db.session.add(conf)
+
+docente = Rol(name='docente')
+administrador = Rol(name='administrador')
+preceptor = Rol(name='preceptor')
+
+db.session.add(docente)
+db.session.add(administrador)
+db.session.add(preceptor)
+
 db.session.commit()
-
-
-User.query.all() # te trae todos los usuarios
 ```
