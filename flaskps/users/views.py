@@ -19,7 +19,6 @@ def create():
     """
     Si los datos son validos crea un nuevo usuario
     """
-    import ipdb;ipdb.set_trace()
     form = CreateFormUser(request.form)
 
     if request.method == 'POST' and form.validate():
@@ -42,8 +41,8 @@ def create():
             db.session.commit()
         except:
             db.session.rollback()
-            return render_template('users/create_user.html'), 403
-        return render_template('users/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
+            return render_template('users/create_user.html', msg= 'No se pudo crear el usuario'), 403
+        return render_template('users/create_user.html', msg='Usuario {} creado con exito'.format(name)), 201
     return render_template('users/create_user.html')
 
 
@@ -59,8 +58,8 @@ def update(user_id):
     active = request.form.get("active")
     rol = request.form.get("rol")
 
-    user.first_name = name
-    user.last_name = surname
+    user.name = name
+    user.surname = surname
     if active is None:
         user.active = False
     else:

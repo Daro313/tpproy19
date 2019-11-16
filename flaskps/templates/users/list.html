@@ -30,9 +30,9 @@
           <tr class="table-danger">
         {% endif %}
         <td>
-          <a href="{{ url_for('users.detail', username=user.username) }}">{{ user.first_name }}</a>
+          <a href="{{ url_for('users.detail', username=user.username) }}">{{ user.name }}</a>
         </td>
-        <td>{{ user.last_name }}</td>
+        <td>{{ user.surname }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.username}}</td>
         <td>{{ user.rol }}</td>

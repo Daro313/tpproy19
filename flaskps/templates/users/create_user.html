@@ -6,6 +6,9 @@
 
 {% block content %}
 <h4 class="center">Usuario Nuevo</h4>
+{% if msg %}
+  {{ msg }}
+{% endif %}
 <div class="divider black"></div>
 <div class="container">
   <div class="row">
@@ -45,7 +48,7 @@
           </select>
         </div>
       </div>
-      <input class="btn waves-effect waves-light right" type="submit">Guardar</button>
+      <input class="btn waves-effect waves-light right" type="submit" value="Guardar">
     </form>
   </div>
 </div>

@@ -35,8 +35,8 @@
     </div></li>
     <li>
       <div class="collapsible-header white-text"><i class="material-icons white-text">people</i>Usuarios</div>
-      <div class="collapsible-body grey"><a href="users_new.html" class="waves-effect white-text btn-flat"><i class="material-icons white-text">add</i>Nuevo</a></div>
-      <div class="collapsible-body grey"><a href="users_list.html" class="waves-effect white-text btn-flat"><i class="material-icons white-text">list</i>Ver todos</a></div>
+      <div class="collapsible-body grey"><a href="{{ url_for('users.create') }}" class="waves-effect white-text btn-flat"><i class="material-icons white-text">add</i>Nuevo</a></div>
+      <div class="collapsible-body grey"><a href="{{ url_for('users.list') }}" class="waves-effect white-text btn-flat"><i class="material-icons white-text">list</i>Ver todos</a></div>
     </li>
     <li>
       <div class="collapsible-header white-text"><i class="material-icons white-text">face</i>Estudiantes</div>
