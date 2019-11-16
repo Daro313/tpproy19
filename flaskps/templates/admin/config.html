@@ -2,21 +2,31 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-  <form class="form-group" method="POST" action="{{ url_for('admin.configuration') }}">
+  <form class="form-group" method="POST" action="{{ url_for('configurations.configuration') }}">
 
     <label for="paginator"> Numero de paginas </label>
     <input class="form-control" type="text" value="{{configuration.offset_paginator}}" name="offset">
+    <label for="description"> Descripcion </label>
+    <input class="form-control" type="text" value="{{configuration.description}}" name="description">
+    <label for="title"> Titulo </label>
+    <input class="form-control" type="text" value="{{configuration.title}}" name="title">
+    <label for="email"> eMail: </label>
+    <input class="form-control" type="email" value="{{configuration.email}}" name="email">
 
-    <label for="active"> Activo </label>
-    
-    <select class="" name="active">
-      <option value="{{configuration.active}}" selected>{{configuration.active}}</option>
-      <option value="True">Activos</option>
-      <option value="False">Inactivos</option>
-    </select>
+
+    {% if configuration.active %}
+    <label>
+        <input type="checkbox" value="{{configuration.active}}" name="active" checked />
+        <span>Sitio activo </span>
+      </label>
+      {% else %}
+      <label>
+          <input type="checkbox" value="{{configuration.active}}" name="active" checked />
+          <span>Sitio activo </span>
+        </label>
+        {% endif %}
+        <br><br>
     <input class="btn btn-success" type="submit" value="Guardar">
   </form>
-  <button role="link" onclick="window.location='/dashboard'" class="btn btn-light" name="button">Volver</button>
-  <button role="link" onclick="window.location='/'" class="btn btn-light" name="button">ir al home</button>
 </div>
 {% endblock %}
