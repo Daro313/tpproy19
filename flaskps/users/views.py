@@ -8,10 +8,6 @@ from flaskps.users.forms import CreateFormUser
 
 from . import users
 
-def update_user_template():
-    pass
-
-
 
 @users.route('/user/create', methods=['GET', 'POST'])
 @login_required
@@ -19,7 +15,6 @@ def create():
     """
     Si los datos son validos crea un nuevo usuario
     """
-    import ipdb;ipdb.set_trace()
     form = CreateFormUser(request.form)
 
     if request.method == 'POST' and form.validate():
@@ -49,6 +44,7 @@ def create():
 
 
 @users.route('/user/update/<user_id>', methods=['POST'])
+@login_required
 def update(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
     # TODO: crear form para validad
@@ -75,6 +71,7 @@ def update(user_id):
 
 
 @users.route('/user/list', methods=['GET', 'POST'])
+@login_required
 def list():
     users = User.query.filter_by()
     if request.method == 'POST':
@@ -95,22 +92,25 @@ def list():
 
 
 @users.route('/user/detail/<username>')
+@login_required
 def detail(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('users/detail.html', user=user)
 
 
 @users.route('/user/delete/<user_id>', methods=['POST'])
+@login_required
 def delete(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
     db.session.delete(user)
     db.session.commit()
-    return redirect('/user/list')
+    return redirect('/user/list') 
 
-
+@login_required
 def activate_user():
     pass
 
 
+@login_required
 def deactivate_user():
     pass
