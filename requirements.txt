@@ -7,3 +7,4 @@ Flask-Migrate==2.5.2
 ipdb==0.12.2
 Flask-Perm==0.2.8
 PyMySQL==0.9.3
+Flask-WTF==0.14.2

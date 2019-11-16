@@ -2,6 +2,7 @@ from flask import render_template, redirect, request
 from flask_login import login_required, login_manager, login_user
 
 from flaskps.users.models import User
+from flaskps.auth.forms import LogInForm
 
 from . import auth
 
@@ -11,17 +12,18 @@ def login():
     """
     Muestra el template de login
     """
+    import ipdb;ipdb.set_trace()
+    form = LogInForm(request.form)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
 
         email = request.form.get("email")
         password = request.form.get("password")
 
-        if email:
-            user = User.query.filter_by(email=email).first()
-            if user.verify_password(password):
-                login_user(user)
-                return redirect('/dashboard')
+        user = User.query.filter_by(email=email).first()
+        if user.verify_password(password):
+            login_user(user)
+            return redirect('/dashboard')
     return render_template('auth/login.html', title="login")
 
 
