@@ -11,3 +11,4 @@ class CreateFormUser(Form):
     first_name =StringField('nombre', [validators.DataRequired()])
     last_name = StringField('apellido', [validators.DataRequired()])
     password = StringField('password', [validators.DataRequired()])
+    roles = StringField('rol', [validators.DataRequired()])

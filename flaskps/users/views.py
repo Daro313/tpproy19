@@ -11,24 +11,18 @@ from . import users
 def update_user_template():
     pass
 
-@users.route('/user/create_form')
-@login_required
-def user_create_form():
-    """
-    Muestra el template de creacion de usuario
-    """
-    return render_template('users/create_user.html')
 
 
-@users.route('/user/create', methods=['POST'])
+@users.route('/user/create', methods=['GET', 'POST'])
 @login_required
 def create():
     """
     Si los datos son validos crea un nuevo usuario
     """
+    import ipdb;ipdb.set_trace()
     form = CreateFormUser(request.form)
 
-    if form.validate():
+    if request.method == 'POST' and form.validate():
         name = request.form.get('first_name')
         surname = request.form.get('last_name')
         email = request.form.get('email')
@@ -36,22 +30,22 @@ def create():
         username = request.form.get('user_name')
         rol = request.form.get('roles')
 
-    user = User(
-        first_name=name,
-        last_name=surname,
-        email=email,
-        username=username,
-        rol=rol
-    )
-    user.password = password
-    db.session.add(user)
-    try:
-        db.session.commit()
-    except:
-        db.session.rollback()
-        return render_template('users/create_user.html'), 403
+        user = User(
+            name=name,
+            surname=surname,
+            email=email,
+            username=username,
+        )
+        user.password = password
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            return render_template('users/create_user.html'), 403
+        return render_template('users/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
+    return render_template('users/create_user.html')
 
-    return render_template('users/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
 
 
 @users.route('/user/update/<user_id>', methods=['POST'])
