@@ -4,6 +4,7 @@ from flask_login import login_required
 from flaskps import db
 from flaskps.users.models import User
 from flaskps.configurations.models import Configurations
+from flaskps.users.forms import CreateFormUser
 
 from . import users
 
@@ -11,7 +12,7 @@ def update_user_template():
     pass
 
 @users.route('/user/create_form')
-# @login_required descomentar despues de crear el primer usuario
+@login_required
 def user_create_form():
     """
     Muestra el template de creacion de usuario
@@ -20,25 +21,20 @@ def user_create_form():
 
 
 @users.route('/user/create', methods=['POST'])
+@login_required
 def create():
     """
     Si los datos son validos crea un nuevo usuario
     """
-    data_dict = {}
-    data = request.data.decode()
-    data = data.replace("{", "").replace("}", "").replace('\"', "")
-    data = data.split(',')
+    form = CreateFormUser(request.form)
 
-    for d in data:
-        d = d.split(':')
-        data_dict.update({d[0]: d[1]})
-
-    name = data_dict.get('name')
-    surname = data_dict.get('surname')
-    email = data_dict.get('email')
-    password = data_dict.get('password')
-    username = data_dict.get('username')
-    rol = data_dict.get('rol')
+    if form.validate():
+        name = request.form.get('first_name')
+        surname = request.form.get('last_name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        username = request.form.get('user_name')
+        rol = request.form.get('roles')
 
     user = User(
         first_name=name,

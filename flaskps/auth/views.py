@@ -12,7 +12,6 @@ def login():
     """
     Muestra el template de login
     """
-    import ipdb;ipdb.set_trace()
     form = LogInForm(request.form)
 
     if request.method == 'POST' and form.validate():
