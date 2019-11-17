@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container" id="user_list">
+  <button role="link" onclick="window.location='/user/create_form'" class="btn btn-info" name="button">Nuevo Usuario</button>
   <form class="" action="/user/list" method="POST">
     <input type="text" name="username" value="" placeholder="Nombre de usuario">
     <select class="" name="active">
@@ -13,6 +14,7 @@
   <table class="table table-hover">
     <thead class="thead-dark">
     <tr>
+      <th>#</th>
       <th>Nombre</th>
       <th>Apellido</th>
       <th>Email</th>
@@ -23,12 +25,13 @@
     </tr>
     </thead>
     <tbody>
-      {% for user in user_list %}
+      {% for user in user_list.items %}
         {% if user.active %}
           <tr>
         {% else %}
           <tr class="table-danger">
         {% endif %}
+        <td>{{ loop.index }}</td>
         <td>
           <a href="{{ url_for('users.detail', username=user.username) }}">{{ user.name }}</a>
         </td>
@@ -45,7 +48,14 @@
       {% endfor %}
     </tbody>
   </table>
-  <button role="link" onclick="window.location='/user/create_form'" class="btn btn-info" name="button">Nuevo Usuario</button>
-  <button role="link" onclick="window.location='/dashboard'" class="btn btn-light" name="button">Volver</button>
+  <br>
+  Ir a pagina:<br>
+  {% if user_list.has_prev %}
+    <a href="{{ url_for('users.list',page=user_list.prev_num) }}">Anterior</a>
+  {% endif %} |
+  {% if user_list.has_next %}
+    <a href="{{ url_for('users.list',page=user_list.next_num) }}">Siguiente</a>
+  {% endif %}
 </div>
+<br><br>
 {% endblock %}

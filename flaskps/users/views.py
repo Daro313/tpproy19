@@ -69,10 +69,12 @@ def update(user_id):
 
     return redirect('/user/list')
 
+@users.route('/user/list/', methods=['GET', 'POST'], defaults={'page':1})
 
-@users.route('/user/list', methods=['GET', 'POST'])
+@users.route('/user/list/<int:page>', methods=['GET', 'POST'])
 @login_required
-def list():
+def list(page):
+    page=page
     users = User.query.filter_by()
     if request.method == 'POST':
         form = request.form
@@ -86,7 +88,7 @@ def list():
 
     conf = Configurations.query.first()
 
-    users = users.paginate(1, conf.offset_paginator, False).items
+    users = users.paginate(page, conf.offset_paginator, False)
 
     return render_template('users/list.html', user_list=users)
 
@@ -104,7 +106,7 @@ def delete(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
     db.session.delete(user)
     db.session.commit()
-    return redirect('/user/list') 
+    return redirect('/user/list')
 
 @login_required
 def activate_user():
