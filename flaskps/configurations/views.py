@@ -5,10 +5,10 @@ from flask_login import login_required
 from flaskps import db
 from flaskps.configurations.models import Configurations
 
-from . import configuration
+from . import configurations
 
 
-@admin.route('/admin/configuration', methods=['GET', 'POST'])
+@configurations.route('/admin/configuration', methods=['GET', 'POST'])
 @login_required
 def configuration():
     conf = Configurations.query.first()
@@ -27,7 +27,7 @@ def configuration():
     return render_template('admin/config.html', configuration=conf)
 
 
-@admin.route('/out_of_services')
+@configurations.route('/out_of_services')
 def page_not_found():
     # note that we set the 404 status explicitly
     return render_template('admin/fuera_de_servicio.html'), 500
