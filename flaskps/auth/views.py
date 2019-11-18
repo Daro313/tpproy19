@@ -1,5 +1,5 @@
-from flask import render_template, redirect, request
-from flask_login import login_required, login_manager, login_user
+from flask import render_template, redirect, request, flash
+from flask_login import login_required, login_manager, login_user, logout_user
 
 from flaskps.users.models import User
 from flaskps.auth.forms import LogInForm
@@ -22,15 +22,16 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user.verify_password(password):
             login_user(user)
+            flash('Ingreso exitoso!')
             return redirect('/dashboard')
     return render_template('auth/login.html', title="login")
 
-
+@auth.route('/auth/logout')
+@login_required
 def logout():
-    """
-    Deslogea usuario de la session
-    """
-    pass
+    logout_user()
+    return render_template('auth/login.html')
+
 
 
 #@perm.current_user_loader

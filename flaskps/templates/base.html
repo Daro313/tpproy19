@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   {% endblock %}
 </head>
-<body class="teal darken-1">
+<body class="teal darken-1" onload="showToast()">
   <header>
     <img class="responsive-img" src="/static/img/OEB_logo.png" alt="Logo Orquesta Escuela">
   </header>
@@ -30,8 +30,8 @@
         <img class="responsive-img" src="/static/img/violin.jpg">
       </div>
       <a href="#"><img class="circle responsive-img" src="/static/img/profile.png"></a>
-      <a href="#"><span class="teal-text name" >Administrador</span></a>
-      <a href="login.html"><span class="red-text">Salir</span></a>
+      <a href="#"><span class="teal-text name" >{{ current_user.username }}</span></a>
+      <a href="{{ url_for('auth.logout') }}"><span class="red-text">Salir</span></a>
     </div></li>
     <li>
       <div class="collapsible-header white-text"><i class="material-icons white-text">people</i>Usuarios</div>
@@ -56,6 +56,19 @@
     </li>
   </ul>
   <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          {% block javascript %}
+          <script>
+          function showToast("{{ message }}", 3000) {
+                  Materialize.toast(message, duration);
+               }
+          </script>
+          {% endblock %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
   </main>
 
@@ -69,6 +82,7 @@
     var instances = M.Collapsible.init(elems,);
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems,);
+
   });
   </script>
 </body>
