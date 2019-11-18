@@ -48,7 +48,7 @@
       <div class="divider black"></div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="birth_city" type="text" class="validate" value="{% if student.borned %}{{ student.borned }} {% endif %}">
+          <input id="birth_city" name="borned" type="text" class="validate" value="{% if student.borned %}{{ student.borned }} {% endif %}">
           <label for="birth_city">Lugar de nacimiento</label>
         </div>
         <div class="input-field col s6">
@@ -88,7 +88,7 @@
           <label for="tutor">Responsable a cargo:</label>
         </div>
         <div class="input-field col s6">
-          <input id="phone" type="tel" class="validate" value="{% if student.phone %}{{ student.phone }}{% endif %}">
+          <input id="phone" name="phone" type="tel" class="validate" value="{% if student.phone %}{{ student.phone }}{% endif %}">
           <label for="phone">Telefono:</label>
         </div>
       </div>

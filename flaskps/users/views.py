@@ -47,6 +47,7 @@ def create():
 @login_required
 def update(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
+
     # TODO: crear form para validad
     name = request.form.get("first_name")
     surname = request.form.get("last_name")
@@ -104,7 +105,7 @@ def delete(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
     db.session.delete(user)
     db.session.commit()
-    return redirect('/user/list') 
+    return redirect('/user/list')
 
 @login_required
 def activate_user():
