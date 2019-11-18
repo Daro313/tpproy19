@@ -39,7 +39,7 @@ def create():
             db.session.rollback()
             return render_template('users/create_user.html'), 403
         return render_template('users/create_user.html'), 201, {'msg': 'el usuario se creo con exito'}
-    return render_template('users/create_user.html')
+    return render_template('users/create_user.html', form=form)
 
 
 
