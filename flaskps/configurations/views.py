@@ -8,7 +8,7 @@ from flaskps.configurations.models import Configurations
 from . import configurations
 
 
-@configurations.route('/configurations', methods=['GET', 'POST'])
+@configurations.route('/admin/configuration', methods=['GET', 'POST'])
 @login_required
 def configuration():
     conf = Configurations.query.first()

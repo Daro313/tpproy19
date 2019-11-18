@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" id="user_list">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Barrio</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for student in students.items %}
+      <tr>
+        <td>
+          <a href="{{ url_for('students.detail', student_id=student.id) }}">{{ student.name }}</a>
+        </td>
+        <td>{{ student.surname }}</td>
+        <td>{{ student.neighborhood }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('students.delete', student_id=student.id) }}"><input type="submit" value="Eliminar"></form>
+          <button type="button" onclick="window.location.href='{{ url_for('students.update', student_id=student.id) }}';" class="btn btn-info" >Editar</button>
+
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  Ir a pagina:<br>
+  {% if students.has_prev %}
+    <a href="{{ url_for('students.list',page=students.prev_num) }}">Anterior</a>
+  {% endif %} |
+  {% if students.has_next %}
+    <a href="{{ url_for('students.list',page=students.next_num) }}">Siguiente</a>
+  {% endif %}
+  <br><br>
+  <button role="link" onclick="window.location.href='{{ url_for( 'students.create' ) }}';" class="btn btn-info" name="button">Nuevo estudiante</button>
+</div>
+{% endblock %}

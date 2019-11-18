@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request, url_for
 from flask_login import login_required
 
 from flaskps import db
@@ -39,7 +39,7 @@ def create():
             db.session.rollback()
             return render_template('users/create_user.html', msg= 'No se pudo crear el usuario'), 403
         return render_template('users/create_user.html', msg='Usuario {} creado con exito'.format(name)), 201
-    return render_template('users/create_user.html')
+    return render_template('users/create_user.html', form=form)
 
 
 
@@ -47,6 +47,7 @@ def create():
 @login_required
 def update(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
+
     # TODO: crear form para validad
     name = request.form.get("first_name")
     surname = request.form.get("last_name")
@@ -67,10 +68,10 @@ def update(user_id):
 
     db.session.commit()
 
-    return redirect('/user/list')
+    return redirect(url_for('users.list'))
+
 
 @users.route('/user/list/', methods=['GET', 'POST'], defaults={'page':1})
-
 @users.route('/user/list/<int:page>', methods=['GET', 'POST'])
 @login_required
 def list(page):
@@ -106,7 +107,7 @@ def delete(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
     db.session.delete(user)
     db.session.commit()
-    return redirect('/user/list')
+    return redirect(url_for('users.list'))
 
 @login_required
 def activate_user():
