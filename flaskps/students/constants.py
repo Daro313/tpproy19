@@ -5,7 +5,7 @@ GENDER_CHOICES = [
 ]
 
 LEVEL_CHOICES = [
-    (1, u'I'),
+    ('1', u'I'),
     (2, u'II'),
     (3, u'III'),
     (4, u'IV'),
@@ -20,7 +20,7 @@ LEVEL_CHOICES = [
 ]
 
 NEIGHBORHOOD_CHOICES = [
-    (1, 'Barrio Náutico'),
+    ('1', 'Barrio Náutico'),
     (2, 'Barrio Obrero'),
     (3, 'Berisso'),
     (4, 'Barrio Solidaridad'),

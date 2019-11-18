@@ -5,11 +5,27 @@
 
 {% block content %}
   <div class="container">
-    {% for field in form %}
-        <tr>
-            <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
-            <td>{{ field }}</td>
-        </tr>
-    {% endfor %}
+    {% if msg %}
+      {{ msg }}
+    {% endif %}
+    {% if form.errors %}
+      {% for field in form.errors %}
+          <tr>
+              <th>{{ field.label }}</th>
+              <td>{{ field }}</td>
+          </tr>
+      {% endfor %}
+    {% endif %}
+    <form action="{{ url_for( 'students.create' ) }}" method="POST">
+      {% for field in form %}
+          <tr>
+              <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+              <td>{{ field }}</td>
+          </tr>
+      {% endfor %}
+      <br><br>
+      <input type="submit" name="Guardar" value="Guardar">
+      </form>
+      <br><br>
   <div>
 {% endblock %}
