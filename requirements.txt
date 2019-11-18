@@ -8,3 +8,5 @@ ipdb==0.12.2
 Flask-Perm==0.2.8
 PyMySQL==0.9.3
 Flask-WTF==0.14.2
+SQLAlchemy-Utils==0.35.0
+flask-shell-ipython==0.4.1
