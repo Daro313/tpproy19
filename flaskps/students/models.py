@@ -22,6 +22,25 @@ class Students(db.Model):
     phone = db.Column(db.String(60))
     school = db.Column(db.String(60))
     level = db.Column(ChoiceType(LEVEL_CHOICES))
-    
+
     def __repr__(self):
         return '<Estudiante: %r>' % self.name
+
+    def update(self, form):
+
+        self.name = form.name.data
+        self.surname = form.surname.data
+        self.birth_date = form.birth_date.data
+        self.borned = form.borned.data
+        self.locality = form.locality.data
+        self.address = form.address.data
+        self.neighborhood = form.neighborhood.data
+        self.gender = form.gender.data
+        self.document_type = form.document_type.data
+        self.document_number = form.document_number.data
+        self.tutor = form.tutor.data
+        self.phone = form.phone.data
+        self.school = form.school.data
+        self.level = form.level.data
+
+        db.session.commit()

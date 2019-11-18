@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h4>Detalles {{ student.name }}</h4>
+  <ul>
+    <li><p>Nombre: {{ student.name }}</p></li>
+    <li><p>Apellido: {{ student.surname }}</p></li>
+    <li><p>Fecha de nacimiento: {{ student.birth_date }}</p></li>
+    <li><p>Lugar de nacimiento:{% if student.borned %} {{ student.borned }} {% endif %}</p></li>
+    <li><p>Localidad: {{ student.locality }}</p></li>
+    <li><p> Direccion: {{ student.address }}</p></li>
+    <li><p>Barrio:{{  student.neighborhood }}</p></li>
+    <li><p>Genero: {{ student.gender }}</p></li>
+    <li><p>Tipo de documento: {{ student.document_type }}</p></li>
+    <li><p>Nro de documento: {{ student.document_number }}</p></li>
+    <li><p>Tutor: {{ student.tutor }}</p></li>
+    <li><p>Telefono: {% if student.phone %} {{ student.phone }} {% endif %}</p></li>
+    <li><p>Colegio: {{ student.school }}</p></li>
+    <li><p>Nivel:{{ student.level }}</p></li>
+  </ul>
+</div>
+{% endblock %}
