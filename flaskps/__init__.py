@@ -21,11 +21,12 @@ def create_app(config_name):
     my_loader = jinja2.ChoiceLoader([
             app.jinja_loader,
             jinja2.FileSystemLoader([
-                '%s/flaskps/auth/templates/' % BASE_DIR, 
-                '%s/flaskps/configurations/templates/' % BASE_DIR, 
-                '%s/flaskps/students/templates/' % BASE_DIR, 
-                '%s/flaskps/home/templates/' % BASE_DIR, 
-                '%s/flaskps/users/templates/' % BASE_DIR, 
+                '%s/flaskps/auth/templates/' % BASE_DIR,
+                '%s/flaskps/configurations/templates/' % BASE_DIR,
+                '%s/flaskps/students/templates/' % BASE_DIR,
+                '%s/flaskps/home/templates/' % BASE_DIR,
+                '%s/flaskps/users/templates/' % BASE_DIR,
+                '%s/flaskps/teachers/templates/' % BASE_DIR,
             ]),
         ])
 
@@ -54,5 +55,8 @@ def create_app(config_name):
 
     from .students import students as students_blueprint
     app.register_blueprint(students_blueprint)
+
+    from .teachers import teachers as teachers_blueprint
+    app.register_blueprint(teachers_blueprint)
 
     return app

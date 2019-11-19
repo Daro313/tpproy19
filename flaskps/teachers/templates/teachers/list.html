@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Docentes{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Docentes</h4>
+    <div class="divider black"></div>
+    <div class="container">
+
+      <div class="row">
+        <table class="responsive-table centered highlight">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Documento</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for teacher in teachers.items %}
+            <tr>
+              <td>{{ teacher.name }}</td>
+              <td>{{ teacher.surname }}</td>
+              <td>{{ teacher.document_number }}</td>
+              <td><a href="{{ url_for('teachers.detail', teacher_id=teacher.id) }}"><i class="small material-icons green-text text-darken-4">visibility</i></a></td>
+              <td><a href="{{ url_for('teachers.update', teacher_id=teacher.id) }}"><i class="small material-icons blue-text text-darken-4">edit</i></a></td>
+              <td><a href="{{ url_for('teachers.delete', teacher_id=teacher.id) }}"><i class="small material-icons red-text text-darken-4">delete_forever</i></a></td>
+            </tr>
+            <tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <br>
+        Ir a pagina:<br>
+        {% if teachers.has_prev %}
+          <a href="{{ url_for('teachers.list',page=teachers.prev_num) }}">Anterior</a>
+        {% endif %} |
+        {% if teachers.has_next %}
+          <a href="{{ url_for('teachers.list',page=teachers.next_num) }}">Siguiente</a>
+        {% endif %}
+        <br><br>
+        <a href="{{ url_for('teachers.create') }}" class="btn-floating btn-medium waves-effect waves-light teal right"><i class="material-icons">add</i></a>
+        </div>
+      </div>
+{% endblock %}

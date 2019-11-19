@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Nuevo docente{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Nuevo Docente</h4>
+<div class="divider black"></div>
+<div class="container">
+  <div class="row">
+    <form class="col s12" action="{{ url_for( 'teachers.create' ) }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <!-- <input id="first_name" type="text" class="validate" name="name">
+          <label for="first_name">Nombre:</label> -->
+          {{ form.name }}
+          {{ form.name.label }}
+        </div>
+        <div class="input-field col s6">
+          <!-- <input id="last_name" type="text" class="validate" name="surname">
+          <label for="last_name">Apellido:</label> -->
+          {{ form.surname }}
+          {{ form.surname.label }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <!-- <select name="document_type">
+            <option value="" selected>Documento tipo:</option>
+            <option value="dni">DNI</option>
+            <option value="cedula">Cedula</option>
+            <option value="pasaporte">Pasaporte</option>
+          </select> -->
+          {{ form.document_type }}
+          {{ form.document_type.label }}
+        </div>
+        <div class="input-field col s6">
+          <!-- <input id="document_number" type="number" class="validate" name="document_number">
+          <label for="document_number">Nro de documento:</label> -->
+          {{ form.document_number }}
+          {{ form.document_number.label }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <!-- <label for="birth_date">Fecha de nacimiento:</label>
+          <input id="birth_date" type="text" class="datepicker" name="birth_date"> -->
+          {{ form.birth_date }}
+          {{ form.birth_date.label }}
+        </div>
+      </div>
+      <div class="divider black"></div>
+      <div class="row">
+        <div class="input-field col s6">
+          <!-- <select name="locality">
+            <option value="" selected>Localidad:</option>
+            <option value="1">La Plata</option>
+            <option value="2">Berisso</option>
+            <option value="3">Avellaneda</option>
+          </select> -->
+          {{ form.locality }}
+          {{ form.locality.label }}
+        </div>
+        <div class="input-field col s6">
+          <!-- <input id="address" type="text" class="validate" name="address">
+          <label for="address">Domicilio:</label> -->
+          {{ form.address }}
+          {{ form.address.label }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <!-- <input id="phone" type="tel" class="validate" name="phone">
+          <label for="phone">Telefono:</label> -->
+          {{ form.phone }}
+          {{ form.phone.label }}
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
