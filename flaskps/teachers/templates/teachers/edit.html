@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Editar docente{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Docente: {{ teacher.name }}</h4>
+<div class="divider black"></div>
+<div class="container">
+  <div class="row">
+    <form class="col s12" action="{{ url_for('teachers.update', teacher_id=teacher.id) }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" name="name" value="{{ teacher.name }}">
+          <label for="first_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate" name="surname" value="{{ teacher.surname }}">
+          <label for="last_name">Apellido</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="document_type">
+            <option value="{{ teacher.document_type }}" selected>{{ teacher.document_type }}</option>
+            <option value="DNI">DNI</option>
+            <option value="LC">LC</option>
+            <option value="LE">LE</option>
+            <option value="CI">CI</option>
+            <option value="Pasaporte">Pasaporte</option>
+          </select>
+        </div>
+        <div class="input-field col s6">
+          <input id="document_number" type="number" class="validate" name="document_number" value="{{ teacher.document_number }}">
+          <label for="document_number">Nro de documento</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <label for="birth_date">Fecha de nacimiento:</label>
+          <input id="birth_date" type="text" class="datepicker" name="birth_date" value="{{ teacher.birth_date }}">
+        </div>
+      </div>
+      <div class="divider black"></div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="locality">
+            <option value="{{ teacher.locality }}" selected>{{ teacher.locality }}</option>
+            <option value="1">La Plata</option>
+            <option value="2">Berisso</option>
+            <option value="3">Avellaneda</option>
+          </select>
+        </div>
+        <label for="locality">Localidad:</label>
+        <div class="input-field col s6">
+          <input id="address" type="text" class="validate" name="address" value="{{ teacher.address }}">
+          <label for="address">Domicilio:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="phone" type="tel" class="validate" name="phone" value="{{ teacher.phone }}">
+          <label for="phone">Telefono:</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

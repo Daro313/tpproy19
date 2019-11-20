@@ -1,31 +1,128 @@
 {% extends 'base.html' %}
+{% block title %}Nuevo Estudiante{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    {% if msg %}
-      {{ msg }}
-    {% endif %}
-    {% if form.errors %}
-      {% for field in form.errors %}
-          <tr>
-              <th>{{ field.label }}</th>
-              <td>{{ field }}</td>
-          </tr>
-      {% endfor %}
-    {% endif %}
-    <form action="{{ url_for( 'students.create' ) }}" method="POST">
-      {% for field in form %}
-          <tr>
-              <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
-              <td>{{ field }}</td>
-          </tr>
-      {% endfor %}
-      <br><br>
-      <input type="submit" name="Guardar" value="Guardar">
-      </form>
-      <br><br>
-  <div>
+<h4 class="center">Nuevo Estudiante</h4>
+<div class="divider black"></div>
+<div class="container">
+  <div class="row">
+    <form class="col s12" action="{{ url_for('students.create') }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate"  name="name">
+          <label for="first_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate"  name="surname">
+          <label for="last_name">Apellido</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <label for="birth_date">Fecha de nacimiento:</label>
+          <input id="birth_date" type="text" class="datepicker"  name="birth_date">
+        </div>
+        <div class="input-field col s6">
+          <select name="gender">
+            <option value="" selected> </option>
+            <option value="female">Femenino</option>
+            <option value="male">Masculino</option>
+            <option value="others">Otro</option>
+          </select>
+          <label for="gender">Genero:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="document_type">
+            <option value="" selected></option>
+            <option value="DNI">DNI</option>
+            <option value="LC">LC</option>
+            <option value="LE">LE</option>
+            <option value="CI">CI</option>
+            <option value="Pasaporte">Pasaporte</option>
+          </select>
+          <label for="document_type">Tipo de documento:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="birth_city" type="number" class="validate" name="document_number">
+          <label for="birth_city">Nro de documento</label>
+        </div>
+      </div>
+      <div class="divider black"></div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="birth_city" name="borned" type="text" class="validate">
+          <label for="birth_city">Lugar de nacimiento</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="locality">
+            <option value="" selected></option>
+            <option value="1">La Plata</option>
+            <option value="2">Berisso</option>
+            <option value="3">Avellaneda</option>
+          </select>
+          <label for="locality">Localidad</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="address" type="text" class="validate" name="address">
+          <label for="address">Domicilio</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="neighborhood">
+            <option value="" selected></option>
+            <option value="1">Los Hornos</option>
+            <option value="2">San Carlos</option>
+            <option value="3">Villa Elvira</option>
+          </select>
+          <label for="neighborhood">Barrio:</label>
+        </div>
+      </div>
+      <div class="divider black"></div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="tutor">
+            <option value="" selected></option>
+            <option value="1">Madre</option>
+            <option value="2">Padre</option>
+            <option value="3">Tutor</option>
+          </select>
+          <label for="tutor">Responsable a cargo:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="phone" name="phone" type="tel" class="validate">
+          <label for="phone">Telefono:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select name="school">
+            <option value="" selected></option>
+            <option value="1">Nacional</option>
+            <option value="2">Normal</option>
+            <option value="3">Albert Thomas</option>
+          </select>
+          <label for="school">Escuela</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select name="level">
+            <option value="" selected></option>
+            <option value="1">I</option>
+            <option value="2">II</option>
+            <option value="3">III</option>
+          </select>
+          <label for="level">Nivel</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
