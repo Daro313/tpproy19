@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Ciclo lectivo{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Nuevo Ciclo lectivo</h4>
+<div class="divider black"></div>
+<div class="container">
+  <div class="row">
+    <form class="col s12" action="{{ url_for( 'teachers.create' ) }}" method="POST">
+      <div class="row">
+        <div class="col s6">
+          <label for="birth_date">Fecha de incio:</label>
+          <input id="birth_date" type="text" class="datepicker" name="start_date">
+        </div>
+        <div class="col s6">
+          <label for="birth_date">Fecha de finalizacion:</label>
+          <input id="birth_date" type="text" class="datepicker" name="end_date">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select name="semester">
+            <option value="" selected></option>
+            <option value="1">Semestre I</option>
+            <option value="2">Semestre II</option>
+          </select>
+          <label for="semester">Semestre:</label>
+            <button class="btn waves-effect waves-light right" type="submit">Guardar</button>
+          </form>
+        </div>
+      </div>
+      {% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Taller{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Nuevo Taller</h4>
+<div class="divider black"></div>
+<div class="container">
+  <div class="row">
+    <form class="col s12" action="{{ url_for( 'teachers.create' ) }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="name" type="text" class="validate" name="name">
+          <label for="name">Nombre:</label>
+        <div class="input-field col s6">
+          <input id="short_name" type="text" class="validate" name="short_name">
+          <label for="short_name">Nombre corto:</label>
+      </div>
+    <button class="btn waves-effect waves-light right" type="submit">Guardar</button>
+    </form>
+  </div>
+{% endblock %}
