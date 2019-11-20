@@ -1,10 +1,15 @@
 {% extends "base.html" %}
+{% block title %}Editar estudiante{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
 {% block content %}
 <h4 class="center">Editar Estudiante</h4>
-<div class="divider black"></div>
+<div class="divider black"></div><br>
 <div class="container">
   <div class="row" id='edit-student'>
-    <form class="col s12" action="{{ url_for('students.update', student_id=student.id) }}" method="POST">
+    <form class="col s12 teal lighten-4" action="{{ url_for('students.update', student_id=student.id) }}" method="POST">
       <div class="row">
         <div class="input-field col s6">
           <input id="first_name" type="text" class="validate" value="{{ student.name }}" name="name">
@@ -93,7 +98,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
           <select name="school">
             <option value="{{ student.school }}" selected>Escuela: {{ student.school }}</option>
             <option value="1">Nacional</option>
@@ -102,9 +107,7 @@
           </select>
           <label for="school"></label>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
           <select name="level">
             <option value="{{ student.level.code }}" selected>Nivel: {{ student.level }}</option>
             <option value="1">I</option>
@@ -114,47 +117,9 @@
           <label for="level"></label>
         </div>
       </div>
-      <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button>
+      <button class="btn waves-effect waves-light left red darken-2">Cancelar</button>
+      <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button><br><br>
     </form>
-    [[ dniTypes ]] 
-    <br></br>
-    [[ localities ]]
   </div>
 </div>
 {% endblock %}
-{% block javascript %}
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-<script type="text/javascript">
-var app = new Vue({
-	el: '#edit-student',
-	delimiters: ['[[', ']]'],
-	data: {
-    dniTypes: [],
-    localities: [],
-    locality: '',
-    type: '',
-	},
-	mounted () {
-    this.getDniTypes('https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento');
-    this.getLocalities('https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad');
-	},
-	methods: {
-		getDniTypes: function (url) {
-			axios
-				.get(url).then((response) => {
-          this.dniTypes = response.data;
-				})
-		},
-    getLocalities: function (url) {
-      axios
-        .get(url).then((response) => {
-          this.localities = response.data;
-        })
-    }
-	},
-});
-</script>
-{% endblock %}
-

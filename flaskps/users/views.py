@@ -16,20 +16,12 @@ def create():
     Si los datos son validos crea un nuevo usuario
     """
     form = CreateFormUser(request.form)
-
     if request.method == 'POST' and form.validate():
-        name = request.form.get('first_name')
-        surname = request.form.get('last_name')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        username = request.form.get('user_name')
-        rol = request.form.get('roles')
-
         user = User(
-            name=name,
-            surname=surname,
-            email=email,
-            username=username,
+            name=request.form.get('name'),
+            surname=request.form.get('surname'),
+            email=request.form.get('email'),
+            username=request.form.get('username'),
         )
         user.password = password
         db.session.add(user)
@@ -38,37 +30,23 @@ def create():
         except:
             db.session.rollback()
             return render_template('users/create_user.html', msg= 'No se pudo crear el usuario'), 403
-        return render_template('users/create_user.html', msg='Usuario {} creado con exito'.format(name)), 201
+        return rendirect('users.detail', user_id=user.id, msg='Usuario {} creado con exito'.format(name)), 201
     return render_template('users/create_user.html', form=form)
 
 
 
-@users.route('/user/update/<user_id>', methods=['POST'])
+@users.route('/user/update/int:<user_id>', methods=['GET','POST'])
 @login_required
 def update(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
 
-    # TODO: crear form para validad
-    name = request.form.get("first_name")
-    surname = request.form.get("last_name")
-    email = request.form.get("email")
-    username = request.form.get("username")
-    active = request.form.get("active")
-    rol = request.form.get("rol")
+    if request.method == "POST":
+        form = CreateFormUser(request.form)
+        if form.validate():
+            user.update(form)
+            return redirect(url_for('users.detail', user_id=user.id))
 
-    user.name = name
-    user.surname = surname
-    if active is None:
-        user.active = False
-    else:
-        user.active = True
-    user.username = username
-    user.rol = rol
-    user.email = email
-
-    db.session.commit()
-
-    return redirect(url_for('users.list'))
+    return render_template('users/edit.html', user=user), 200
 
 
 @users.route('/user/list/', methods=['GET', 'POST'], defaults={'page':1})

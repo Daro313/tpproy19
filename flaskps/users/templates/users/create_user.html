@@ -9,23 +9,23 @@
 {% if msg %}
   {{ msg }}
 {% endif %}
-<div class="divider black"></div>
+<div class="divider black"></div><br>
 <div class="container">
   <div class="row">
-    <form class="col s12" action="{{ url_for('users.create') }}" method="POST" >
+    <form class="col s12 teal lighten-4" action="{{ url_for('users.create') }}" method="POST" >
       <div class="row">
         <div class="input-field col s6">
-          <input id="first_name" type="text" class="validate" name="first_name">
+          <input id="first_name" type="text" class="validate" name="name">
           <label for="first_name">Nombre</label>
         </div>
         <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate" name="last_name">
+          <input id="last_name" type="text" class="validate" name="surname">
           <label for="last_name">Apellido</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="user_name" type="text" class="validate" name="user_name">
+          <input id="user_name" type="text" class="validate" name="username">
           <label for="user_name">Nombre de usuario</label>
         </div>
         <div class="input-field col s6">
@@ -41,14 +41,15 @@
         </div>
         <div class="input-field col s6">
           <select multiple name="roles">
-            <option value="none">Roles:</option>
             <option value="Administrador">Administrador</option>
             <option value="Docente">Docente</option>
             <option value="Preceptor">Preceptor</option>
           </select>
+          <label for="roles">Rol:</label>
         </div>
       </div>
-      <input class="btn waves-effect waves-light right" type="submit" value="Guardar">
+      <button class="btn waves-effect waves-light red darken-3 left">Cancelar</button>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
     </form>
   </div>
 </div>

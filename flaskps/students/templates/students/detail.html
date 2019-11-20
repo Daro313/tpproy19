@@ -1,22 +1,33 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block title %}Detalles estudiante{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
 {% block content %}
-<div class="container">
-  <h4>Detalles {{ student.name }}</h4>
-  <ul>
-    <li><p>Nombre: {{ student.name }}</p></li>
-    <li><p>Apellido: {{ student.surname }}</p></li>
-    <li><p>Fecha de nacimiento: {{ student.birth_date }}</p></li>
-    <li><p>Lugar de nacimiento:{% if student.borned %} {{ student.borned }} {% endif %}</p></li>
-    <li><p>Localidad: {{ student.locality }}</p></li>
-    <li><p> Direccion: {{ student.address }}</p></li>
-    <li><p>Barrio:{{  student.neighborhood }}</p></li>
-    <li><p>Genero: {{ student.gender }}</p></li>
-    <li><p>Tipo de documento: {{ student.document_type }}</p></li>
-    <li><p>Nro de documento: {{ student.document_number }}</p></li>
-    <li><p>Tutor: {{ student.tutor }}</p></li>
-    <li><p>Telefono: {% if student.phone %} {{ student.phone }} {% endif %}</p></li>
-    <li><p>Colegio: {{ student.school }}</p></li>
-    <li><p>Nivel:{{ student.level }}</p></li>
-  </ul>
+  <h4 class="center">Detalles estudiante:</h4>
+  <div class="divider black"></div><br>
+  <div class="container">
+  <ul class="collection">
+  <li class="collection-item avatar">
+        <i class="material-icons circle green">account_circle</i>
+        <span class="title"><h5>{{ student.name }} {{ student.surname }}</h5></span>
+        <p>Fecha de nacimiento: {{ student.birth_date }}<br>
+           Lugar de nacimiento:{% if student.borned %} {{ student.borned }} {% endif %}<br>
+           Localidad: {{ student.locality }}<br>
+           Direccion: {{ student.address }}<br>
+           Barrio:{{  student.neighborhood }}<br>
+           Genero: {{ student.gender }}<br>
+           Tipo de documento: {{ student.document_type }}<br>
+           Nro de documento: {{ student.document_number }}<br>
+           Tutor: {{ student.tutor }}<br>
+           Telefono: {% if student.phone %} {{ student.phone }} {% endif %}<br>
+           Colegio: {{ student.school }}<br>
+           Nivel:{{ student.level }}
+        </p>
+        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+      </li>
+      </ul>
 </div>
+
 {% endblock %}

@@ -5,17 +5,22 @@
 {% endblock %}
 
 {% block content %}
+<h4 class="center">Detalles docente:</h4>
+<div class="divider black"></div><br>
 <div class="container">
-  <h4>Detalles: {{ teacher.name }}</h4>
-  <ul>
-    <li><p>Nombre: {{ teacher.name }}</p></li>
-    <li><p>Apellido: {{ teacher.surname }}</p></li>
-    <li><p>Fecha de nacimiento: {{ teacher.birth_date }}</p></li>
-    <li><p>Localidad: {{ teacher.locality }}</p></li>
-    <li><p>Direccion: {{ teacher.address }}</p></li>
-    <li><p>Tipo de documento: {{ teacher.document_type }}</p></li>
-    <li><p>Nro de documento: {{ teacher.document_number }}</p></li>
-    <li><p>Telefono: {% if teacher.phone %} {{ teacher.phone }} {% endif %}</p></li>
-  </ul>
+<ul class="collection">
+<li class="collection-item avatar">
+      <i class="material-icons circle green">account_circle</i>
+      <span class="title"><h5>{{ teacher.name }} {{ teacher.surname }}</h5></span>
+      <p>Fecha de nacimiento: {{ teacher.birth_date }}<br>
+         Localidad: {{ teacher.locality }}<br>
+         Direccion: {{ teacher.address }}<br>
+         Tipo de documento: {{ teacher.document_type }}<br>
+         Nro de documento: {{ teacher.document_number }}<br>
+         Telefono: {% if teacher.phone %} {{ teacher.phone }} {% endif %}
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    </ul>
 </div>
 {% endblock %}

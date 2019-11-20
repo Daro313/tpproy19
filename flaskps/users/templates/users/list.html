@@ -11,24 +11,25 @@
 
   <div class="row">
     <form class="col s12" action="{{ url_for('users.list') }}" method="POST">
-      <div class="input-field col s6">
+      <div class="row">
+        <div class="input-field col s6">
           <input type="text" name="username" id="user_name">
           <label for="user_name">Nombre de usuario:</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="active">
+            <option value="" selected>Todos</option>
+            <option value="True">Activos</option>
+            <option value="False">Inactivos</option>
+          </select>
+        </div>
       </div>
-      <div class="input-field col s6">
-        <select name="active">
-          <option value="" selected>Todos</option>
-          <option value="True">Activos</option>
-          <option value="False">Inactivos</option>
-        </select>
-      </div>
-      <input type="submit" value="Buscar" class="btn btn-info right">
+        <button class="btn waves-effect waves-light right" type="submit">Buscar</button><br><br>
     </form>
   </div>
-  <div class="divider black"></div>
-  <br>
+  <div class="divider black"></div><br>
 
-  <table class="responsive-table centered highlight">
+  <table class="responsive-table centered highlight teal lighten-4">
     <thead>
     <tr>
       <th>Nombre de usuario</th>
@@ -53,8 +54,8 @@
       </tr>
     {% endfor %}
     </tbody>
-  </table>
-  <br>
+  </table><br>
+  <a href="{{ url_for('users.create') }}" class="btn-floating btn-medium waves-effect waves-light teal right tooltipped" data-tooltip="Agregar usuario"><i class="material-icons">add</i></a>
   <ul class="pagination center">
     {% if user_list.has_prev %}
       <li class="waves-effect"><a href="{{ url_for('users.list',page=user_list.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>

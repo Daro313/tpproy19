@@ -1,4 +1,11 @@
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import (
+    Form,
+    BooleanField,
+    StringField,
+    PasswordField,
+    validators,
+    SelectField
+)
 
 
 class CreateFormUser(Form):
@@ -7,11 +14,12 @@ class CreateFormUser(Form):
                 validators.DataRequired()
             ])
 
-    user_name = StringField('nombre de usuario', [validators.DataRequired()])
-    first_name =StringField('nombre', [validators.DataRequired()])
-    last_name = StringField('apellido', [validators.DataRequired()])
-    password = StringField('password', [validators.DataRequired()])
-    roles = StringField('rol', [validators.DataRequired()])
+    username = StringField('Nombre de usuario', [validators.DataRequired()])
+    name =StringField('Nombre', [validators.DataRequired()])
+    surname = StringField('Apellido', [validators.DataRequired()])
+    password = StringField('Password', [validators.DataRequired()])
+    active = BooleanField('Activo')
+    roles = StringField('Rol', [validators.DataRequired()])
 
 # class UpdateFormUser(Form):
 #     email = StringField('Email', [

@@ -6,10 +6,10 @@
 
 {% block content %}
 <h4 class="center">Docente: {{ teacher.name }}</h4>
-<div class="divider black"></div>
+<div class="divider black"></div><br>
 <div class="container">
   <div class="row">
-    <form class="col s12" action="{{ url_for('teachers.update', teacher_id=teacher.id) }}" method="POST">
+    <form class="col s12 teal lighten-4" action="{{ url_for('teachers.update', teacher_id=teacher.id) }}" method="POST">
       <div class="row">
         <div class="input-field col s6">
           <input id="first_name" type="text" class="validate" name="name" value="{{ teacher.name }}">
@@ -62,7 +62,8 @@
           <label for="phone">Telefono:</label>
         </div>
       </div>
-      <button class="btn waves-effect waves-light right" type="submit">Guardar</button>
+      <button class="btn waves-effect waves-light red darken-2 left">Cancelar</button>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
     </form>
   </div>
 </div>
