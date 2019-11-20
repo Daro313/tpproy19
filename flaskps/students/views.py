@@ -10,7 +10,7 @@ from flaskps.configurations.models import Configurations
 
 
 @students.route('/students/create', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def create():
     """
     metodo GET: renderiza form de reacion
@@ -51,7 +51,7 @@ def create():
 
 @students.route('/students/list/', methods=['GET'], defaults={'page':1})
 @students.route('/students/list/<int:page>', methods=['GET'])
-@login_required
+# @login_required
 def list(page):
     page = page
     conf = Configurations.query.first()
@@ -62,7 +62,7 @@ def list(page):
 
 
 @students.route('/students/detail/<int:student_id>', methods=['GET','POST'])
-@login_required
+# @login_required
 def detail(student_id):
     student = Students.query.filter_by(id=student_id).first_or_404()
     return render_template('students/detail.html', student=student)
@@ -78,7 +78,7 @@ def delete(student_id):
 
 
 @students.route('/students/update/<int:student_id>', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def update(student_id):
     student = Students.query.filter_by(id=student_id).first_or_404()
 

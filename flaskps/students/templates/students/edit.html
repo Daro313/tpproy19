@@ -3,7 +3,7 @@
 <h4 class="center">Editar Estudiante</h4>
 <div class="divider black"></div>
 <div class="container">
-  <div class="row">
+  <div class="row" id='edit-student'>
     <form class="col s12" action="{{ url_for('students.update', student_id=student.id) }}" method="POST">
       <div class="row">
         <div class="input-field col s6">
@@ -34,9 +34,9 @@
         <div class="input-field col s6">
           <select name="document_type">
             <option value="{{ student.document_type }}" selected>Documento tipo: {{ student.document_type }}</option>
-            <option value="dni">DNI</option>
-            <option value="cedula">Cedula</option>
-            <option value="pasaporte">Pasaporte</option>
+            <option v-for='type in dniTypes' value="locality.nombre">
+              [[ type.nombre ]]
+            </option>
           </select>
           <label for="document_type">Tipo de documento:</label>
         </div>
@@ -52,11 +52,11 @@
           <label for="birth_city">Lugar de nacimiento</label>
         </div>
         <div class="input-field col s6">
-          <select name="locality">
+          <select name="locality" v-model="locality">
             <option value="{{ student.locality }}" selected>Localidad: {{ student.locality }}</option>
-            <option value="1">La Plata</option>
-            <option value="2">Berisso</option>
-            <option value="3">Avellaneda</option>
+            <option v-for="locality in localities" value="locality.nombre">
+              [[ locality.nombre ]]
+            </option>
           </select>
           <label for="locality">Localidad</label>
         </div>
@@ -116,6 +116,45 @@
       </div>
       <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button>
     </form>
+    [[ dniTypes ]] 
+    <br></br>
+    [[ localities ]]
   </div>
 </div>
 {% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="text/javascript">
+var app = new Vue({
+	el: '#edit-student',
+	delimiters: ['[[', ']]'],
+	data: {
+    dniTypes: [],
+    localities: [],
+    locality: '',
+    type: '',
+	},
+	mounted () {
+    this.getDniTypes('https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento');
+    this.getLocalities('https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad');
+	},
+	methods: {
+		getDniTypes: function (url) {
+			axios
+				.get(url).then((response) => {
+          this.dniTypes = response.data;
+				})
+		},
+    getLocalities: function (url) {
+      axios
+        .get(url).then((response) => {
+          this.localities = response.data;
+        })
+    }
+	},
+});
+</script>
+{% endblock %}
+
