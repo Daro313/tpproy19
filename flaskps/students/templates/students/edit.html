@@ -1,10 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Editar estudiante{% endblock %}
-{% block head %}
-  {{ super() }}
-{% endblock %}
 {% block content %}
-<h4 class="center">Editar {{ student.name }}</h4>
+<h4 class="center">Editar Estudiante</h4>
 <div class="divider black"></div>
 <div class="container">
   <div class="row" id='edit-student'>
@@ -35,12 +31,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s6">
+        <div class="browser-default col s6">
           <select name="document_type">
-            <option value="{{ student.document_type }}" selected>Documento tipo: {{ student.document_type }}</option>
-            <option v-for='type in dniTypes' value="locality.nombre">
-              [[ type.nombre ]]
-            </option>
+            <option value="{{ student.document_type }}" selected> <i>{{ student.document_type }} </i></option>
+            {% for dni in dniTypes %}
+              <option value="{{ dni.nombre }}">{{ dni.nombre }}</option>
+            {% endfor %}
           </select>
           <label for="document_type">Tipo de documento:</label>
         </div>
@@ -56,11 +52,11 @@
           <label for="birth_city">Lugar de nacimiento</label>
         </div>
         <div class="input-field col s6">
-          <select name="locality" v-model="locality">
+          <select name="locality">
             <option value="{{ student.locality }}" selected>Localidad: {{ student.locality }}</option>
-            <option v-for="locality in localities" value="locality.nombre">
-              [[ locality.nombre ]]
-            </option>
+            {% for locality in localities %}
+              <option value="{{ locality.nombre }}">{{ locality.nombre }}</option>
+            {% endfor %}
           </select>
           <label for="locality">Localidad</label>
         </div>

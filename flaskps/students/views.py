@@ -1,3 +1,5 @@
+import requests
+
 from flask_login import login_required
 
 from flask import render_template, redirect, request, url_for
@@ -9,6 +11,7 @@ from .forms import CreateStudentsForm
 from flaskps.configurations.models import Configurations
 
 
+
 @students.route('/students/create', methods=['GET', 'POST'])
 # @login_required
 def create():
@@ -17,6 +20,9 @@ def create():
     metodo POST: verifica los datos y crea usuaraio
     """
     form = CreateStudentsForm(request.form)
+
+    dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
+    localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
 
     if request.method == 'POST' and form.validate():
         student = Students(
@@ -39,14 +45,13 @@ def create():
         db.session.add(student)
         try:
             db.session.commit()
-            msg = "El Estudiante %s se creo con exito" % student.name
         except:
             db.session.rollback()
 
-            return render_template('students/create.html', form=form), 403
+            return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities), 403
         return redirect(url_for('students.detail', student_id=student.id))
 
-    return render_template('students/create.html', form=form)
+    return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities)
 
 
 @students.route('/students/list/', methods=['GET'], defaults={'page':1})
@@ -82,6 +87,9 @@ def delete(student_id):
 def update(student_id):
     student = Students.query.filter_by(id=student_id).first_or_404()
 
+    dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
+    localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
+
     if request.method == "POST":
         form = CreateStudentsForm(request.form)
         if form.validate():
@@ -89,4 +97,4 @@ def update(student_id):
             student.update(form)
             return redirect(url_for('students.detail', student_id=student.id))
 
-    return render_template('students/edit.html', student=student), 200
+    return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes), 200
