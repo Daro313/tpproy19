@@ -78,7 +78,6 @@ def update(teacher_id):
     if request.method == "POST":
         form = CreateTeachersForm(request.form)
         if form.validate():
-
             teacher.update(form)
             return redirect(url_for('teachers.detail', teacher_id=teacher.id))
 
