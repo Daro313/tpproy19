@@ -18,6 +18,9 @@ def create():
     """
     form = CreateTeachersForm(request.form)
 
+    dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
+    localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
+
     if request.method == 'POST' and form.validate():
         teacher = Teachers(
             name=request.form.get('name'),
@@ -37,10 +40,10 @@ def create():
         except:
             db.session.rollback()
 
-            return render_template('teachers/create.html', form=form), 403
+            return render_template('teachers/create.html', form=form, dniTypes=dniTypes, localities=localities), 403
         return redirect(url_for('teachers.detail', teacher_id=teacher.id))
 
-    return render_template('teachers/create.html', form=form)
+    return render_template('teachers/create.html', form=form, dniTypes=dniTypes, localities=localities)
 
 @teachers.route('/teachers/list/', methods=['GET'], defaults={'page':1})
 @teachers.route('/teachers/list/<int:page>', methods=['GET'])
@@ -75,10 +78,13 @@ def delete(teacher_id):
 def update(teacher_id):
     teacher = Teachers.query.filter_by(id=teacher_id).first_or_404()
 
+    dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
+    localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
+
     if request.method == "POST":
         form = CreateTeachersForm(request.form)
         if form.validate():
             teacher.update(form)
             return redirect(url_for('teachers.detail', teacher_id=teacher.id))
 
-    return render_template('teachers/edit.html', teacher=teacher), 200
+    return render_template('teachers/edit.html', teacher=teacher, dniTypes=dniTypes, localities=localities), 200
