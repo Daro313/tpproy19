@@ -38,12 +38,9 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="document_type">
-            <option value="" selected></option>
-            <option value="DNI">DNI</option>
-            <option value="LC">LC</option>
-            <option value="LE">LE</option>
-            <option value="CI">CI</option>
-            <option value="Pasaporte">Pasaporte</option>
+            {% for dni in dniTypes %}
+              <option value="{{ dni.nombre }}">{{ dni.nombre }}</option>
+            {% endfor %}
           </select>
           <label for="document_type">Tipo de documento:</label>
         </div>
@@ -60,10 +57,9 @@
         </div>
         <div class="input-field col s6">
           <select name="locality">
-            <option value="" selected></option>
-            <option value="1">La Plata</option>
-            <option value="2">Berisso</option>
-            <option value="3">Avellaneda</option>
+            {% for locality in localities %}
+              <option value="{{ locality.nombre }}">{{ locality.nombre }}</option>
+            {% endfor %}
           </select>
           <label for="locality">Localidad</label>
         </div>
@@ -117,6 +113,15 @@
             <option value="1">I</option>
             <option value="2">II</option>
             <option value="3">III</option>
+            <option value="4">IV</option>
+            <option value="5">V</option>
+            <option value="6">VI</option>
+            <option value="7">VII</option>
+            <option value="8">VIII</option>
+            <option value="9">IX</option>
+            <option value="10">X</option>
+            <option value="11">XI</option>
+            <option value="12">XII</option>
           </select>
           <label for="level">Nivel</label>
         </div>
@@ -126,3 +131,39 @@
   </div>
 </div>
 {% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="text/javascript">
+var app = new Vue({
+	el: '#create-student',
+	delimiters: ['[[', ']]'],
+	data: {
+    dniTypes: [],
+    localities: [],
+    locality: '',
+    type: '',
+	},
+	mounted () {
+    this.getDniTypes('https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento');
+    this.getLocalities('https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad');
+	},
+	methods: {
+		getDniTypes: function (url) {
+			axios
+				.get(url).then((response) => {
+          this.dniTypes = response.data;
+				})
+		},
+    getLocalities: function (url) {
+      axios
+        .get(url).then((response) => {
+          this.localities = response.data;
+        })
+    }
+	},
+});
+</script>
+{% endblock %}
+

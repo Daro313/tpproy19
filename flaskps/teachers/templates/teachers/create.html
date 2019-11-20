@@ -27,10 +27,9 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="document_type">
-            <option value="" selected>Documento tipo:</option>
-            <option value="dni">DNI</option>
-            <option value="cedula">Cedula</option>
-            <option value="pasaporte">Pasaporte</option>
+            {% for dni in dniTypes %}
+              <option value="{{ dni.nombre }}">{{ dni.nombre }}</option>
+            {% endfor %}
           </select>
           <!-- {{ form.document_type }}
           {{ form.document_type.label }} -->
@@ -54,10 +53,9 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="locality">
-            <option value="" selected>Localidad:</option>
-            <option value="1">La Plata</option>
-            <option value="2">Berisso</option>
-            <option value="3">Avellaneda</option>
+            {% for locality in localities %}
+              <option value="{{ locality.nombre }}">{{ locality.nombre }}</option>
+            {% endfor %}
           </select>
           <!-- {{ form.locality }}
           {{ form.locality.label }} -->

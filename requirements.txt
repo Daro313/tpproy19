@@ -10,3 +10,4 @@ PyMySQL==0.9.3
 Flask-WTF==0.14.2
 SQLAlchemy-Utils==0.35.0
 flask-shell-ipython==0.4.1
+requests==2.22.0
