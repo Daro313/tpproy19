@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <form class="form-group" method="POST" action="{{ url_for('users.update', user_id=user.id) }}">
+
+    <label for="first_name"> Nombre </label>
+    <input class="form-control" type="text" value="{{user.name}}" name="first_name">
+
+    <label for="last_name"> Apellido </label>
+    <input class="form-control" type="text" value="{{user.surname}}" name="last_name">
+
+    <label for="email"> Email </label>
+    <input class="form-control" type="email" value="{{user.email}}" name="email">
+
+    <label for="username"> Nombre de usuario </label>
+    <input class="form-control" type="text" value="{{user.username}}" name="username">
+
+
+    {% if user.active %}
+    <label>
+        <input type="checkbox" value="{{user.active}}" name="active" checked />
+        <span>Activo </span>
+      </label>
+      {% else %}
+      <label>
+          <input type="checkbox" value="{{user.active}}" name="active" checked />
+          <span>Activo </span>
+        </label>
+        {% endif %}
+
+      <br>
+
+
+      <div class="input-field col s6">
+        <select multiple name="roles">
+          <option value="none" selected>Roles:</option>
+          <option value="Administrador">Administrador</option>
+          <option value="Docente">Docente</option>
+          <option value="Preceptor">Preceptor</option>
+        </select>
+
+    <input class="btn btn-success" type="submit" value="Editar">
+  </form>
+</div>
+{% endblock %}

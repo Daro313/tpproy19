@@ -1,0 +1,62 @@
+import jinja2
+import os
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_migrate import Migrate
+
+from config import app_config
+
+login_manager = LoginManager()
+db = SQLAlchemy()
+
+BASE_DIR = os.getcwd()
+
+def create_app(config_name):
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object(app_config[config_name])
+    app.config.from_pyfile('config.py')
+    # setup templates config
+    my_loader = jinja2.ChoiceLoader([
+            app.jinja_loader,
+            jinja2.FileSystemLoader([
+                '%s/flaskps/auth/templates/' % BASE_DIR,
+                '%s/flaskps/configurations/templates/' % BASE_DIR,
+                '%s/flaskps/students/templates/' % BASE_DIR,
+                '%s/flaskps/home/templates/' % BASE_DIR,
+                '%s/flaskps/users/templates/' % BASE_DIR,
+                '%s/flaskps/teachers/templates/' % BASE_DIR,
+            ]),
+        ])
+
+    app.jinja_loader = my_loader
+    db.init_app(app)
+
+    login_manager.init_app(app)
+    login_manager.login_message = "Logeo necesario."
+    login_manager.login_view = "auth.login"
+
+    migrate = Migrate(app, db)
+
+    from flaskps import models
+
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
+
+    from .users import users as users_blueprint
+    app.register_blueprint(users_blueprint)
+
+    from .configurations import configurations as configurations_blueprint
+    app.register_blueprint(configurations_blueprint)
+
+    from .students import students as students_blueprint
+    app.register_blueprint(students_blueprint)
+
+    from .teachers import teachers as teachers_blueprint
+    app.register_blueprint(teachers_blueprint)
+
+    return app

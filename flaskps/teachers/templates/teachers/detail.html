@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Detalle docente{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h4>Detalles: {{ teacher.name }}</h4>
+  <ul>
+    <li><p>Nombre: {{ teacher.name }}</p></li>
+    <li><p>Apellido: {{ teacher.surname }}</p></li>
+    <li><p>Fecha de nacimiento: {{ teacher.birth_date }}</p></li>
+    <li><p>Localidad: {{ teacher.locality }}</p></li>
+    <li><p>Direccion: {{ teacher.address }}</p></li>
+    <li><p>Tipo de documento: {{ teacher.document_type }}</p></li>
+    <li><p>Nro de documento: {{ teacher.document_number }}</p></li>
+    <li><p>Telefono: {% if teacher.phone %} {{ teacher.phone }} {% endif %}</p></li>
+  </ul>
+</div>
+{% endblock %}
