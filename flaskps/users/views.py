@@ -94,10 +94,10 @@ def list(page):
     return render_template('users/list.html', user_list=users)
 
 
-@users.route('/user/detail/<username>')
+@users.route('/user/detail/<int:user_id>')
 @login_required
-def detail(username):
-    user = User.query.filter_by(username=username).first_or_404()
+def detail(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
     return render_template('users/detail.html', user=user)
 
 
