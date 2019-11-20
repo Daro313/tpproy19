@@ -23,14 +23,14 @@ def create():
             email=request.form.get('email'),
             username=request.form.get('username'),
         )
-        user.password = password
+        user.password = request.form.get('password')
         db.session.add(user)
         try:
             db.session.commit()
         except:
             db.session.rollback()
             return render_template('users/create_user.html', msg= 'No se pudo crear el usuario'), 403
-        return rendirect('users.detail', user_id=user.id, msg='Usuario {} creado con exito'.format(name)), 201
+        return redirect(url_for('users.detail', user_id=user.id))
     return render_template('users/create_user.html', form=form)
 
 
