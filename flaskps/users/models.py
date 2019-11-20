@@ -25,6 +25,17 @@ class User(db.Model, TimeStampedModel, UserMixin):
     def __repr__(self):
         return '<Usuario: %r>' % self.username
 
+    def update(self, form):
+        self.name = form.name.data
+        self.surname = form.name.data
+        self.username = form.username.data
+        self.email = form.email.data
+        self.active = form.active.data
+        self.roles = form.roles.data
+
+        db.session.commit()
+
+
     @property
     def is_active(self):
         return self.active
