@@ -1,8 +1,8 @@
 from flask import render_template, redirect, request, flash
 from flask_login import login_required, login_manager, login_user, logout_user
 
-from flaskps.users.models import User
-from flaskps.auth.forms import LogInForm
+from flaskps.app.users.models import User
+from flaskps.app.auth.forms import LogInForm
 
 from . import auth
 

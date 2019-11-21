@@ -8,7 +8,7 @@ from flaskps import db
 from . import students
 from .models import Students
 from .forms import CreateStudentsForm
-from flaskps.configurations.models import Configurations
+from flaskps.app.configurations.models import Configurations
 
 
 

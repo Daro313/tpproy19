@@ -2,9 +2,9 @@ from flask import render_template, redirect, request, url_for
 from flask_login import login_required
 
 from flaskps import db
-from flaskps.users.models import User
-from flaskps.configurations.models import Configurations
-from flaskps.users.forms import CreateFormUser
+from flaskps.app.users.models import User
+from flaskps.app.configurations.models import Configurations
+from flaskps.app.users.forms import CreateFormUser
 
 from . import users
 

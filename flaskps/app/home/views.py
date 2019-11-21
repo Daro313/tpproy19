@@ -1,6 +1,6 @@
 from flask import render_template
 from flask_login import login_required
-from flaskps.configurations.models import Configurations
+from flaskps.app.configurations.models import Configurations
 
 from . import home
 
