@@ -27,7 +27,7 @@
         </div>
         <div class="input-field col s6">
           <select name="gender">
-            <option value="{{ student.gender.code }}" selected> Actual: <i>{{ student.gender }} </i></option>
+            <option value="{{ student.gender.code }}" selected>{{ student.gender }}</option>
             <option value="female">Femenino</option>
             <option value="male">Masculino</option>
             <option value="others">Otro</option>
@@ -101,11 +101,11 @@
         <div class="input-field col s6">
           <select name="school">
             <option value="{{ student.school }}" selected>{{ student.school }}</option>
-            <option value="1">Nacional</option>
-            <option value="2">Normal</option>
-            <option value="3">Albert Thomas</option>
+            <option value="nacional">Nacional</option>
+            <option value="normal">Normal</option>
+            <option value="albert thomas">Albert Thomas</option>
           </select>
-          <label for="school"></label>
+          <label for="school">Escuela:</label>
         </div>
         <div class="input-field col s6">
           <select name="level">
@@ -123,7 +123,7 @@
             <option value="11">XI</option>
             <option value="12">XII</option>
           </select>
-          <label for="level"></label>
+          <label for="level">Nivel:</label>
         </div>
       </div>
       <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button><br><br>

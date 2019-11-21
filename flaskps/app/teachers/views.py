@@ -7,7 +7,7 @@ from flaskps import db
 from . import teachers
 from .models import Teachers
 from .forms import CreateTeachersForm
-from flaskp.apps.configurations.models import Configurations
+from flaskps.app.configurations.models import Configurations
 
 
 @teachers.route('/teachers/create', methods=['GET', 'POST'])

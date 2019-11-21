@@ -30,18 +30,3 @@ class CreateStudentsForm(Form):
     phone = StringField('teleforno')
     school = StringField('escuela', [validators.DataRequired()])
     level = SelectField('nivel', [validators.DataRequired()], choices=LEVEL_CHOICES)
-
-surname = 'otero'
-name = 'mariano'
-birth_date = '7/5/1988'
-borned = 'bahia blanca'
-locality = 'La plata'
-address = '41 1492'
-neighborhood = 1
-gender = 'male'
-document_type = 'DNI'
-document_number = '33870338'
-tutor = 'Juan Topo'
-phone = '2216166842'
-school = 'UNLP'
-level = 1

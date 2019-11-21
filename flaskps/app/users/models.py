@@ -27,7 +27,7 @@ class User(db.Model, TimeStampedModel, UserMixin):
 
     def update(self, form):
         self.name = form.name.data
-        self.surname = form.name.data
+        self.surname = form.surname.data
         self.username = form.username.data
         self.email = form.email.data
         self.active = form.active.data
