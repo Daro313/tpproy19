@@ -89,7 +89,6 @@ def update(student_id):
 
     dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
     localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
-
     if request.method == "POST":
         form = CreateStudentsForm(request.form)
         if form.validate():

@@ -58,7 +58,7 @@
         </div>
         <div class="input-field col s6">
           <select name="locality">
-            <option value="{{ student.locality }}" selected>Localidad: {{ student.locality }}</option>
+            <option value="{{ student.locality }}" selected>{{ student.locality }}</option>
             {% for locality in localities %}
               <option value="{{ locality.nombre }}">{{ locality.nombre }}</option>
             {% endfor %}
@@ -68,15 +68,15 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="address" type="text" class="validate" value="{{ student.adress }}" name="address">
+          <input id="address" type="text" class="validate" value="{{ student.address }}" name="address">
           <label for="address">Domicilio</label>
         </div>
         <div class="input-field col s6">
           <select name="neighborhood">
-            <option value="{{ student.neighborhood.code }}" selected>Barrio: {{ student.neighborhood }}</option>
-            <option value="1">Los Hornos</option>
-            <option value="2">San Carlos</option>
-            <option value="3">Villa Elvira</option>
+            <option value="{{ student.neighborhood.code }}" selected> {{ student.neighborhood }}</option>
+            <option value="1">Barrio Náutico</option>
+            <option value="2">Barrior Obrero</option>
+            <option value="3">Berisso</option>
           </select>
           <label for="neighborhood">Barrio:</label>
         </div>
@@ -85,10 +85,10 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="tutor">
-            <option value="{{ student.tutor}}" selected>Responsable a cargo: {{ student.tutor }}</option>
-            <option value="1">Madre</option>
-            <option value="2">Padre</option>
-            <option value="3">Tutor</option>
+            <option value="{{ student.tutor }}" selected> {{ student.tutor }}</option>
+            <option value="madre">Madre</option>
+            <option value="padre">Padre</option>
+            <option value="tutor">Tutor</option>
           </select>
           <label for="tutor">Responsable a cargo:</label>
         </div>
@@ -100,7 +100,7 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="school">
-            <option value="{{ student.school }}" selected>Escuela: {{ student.school }}</option>
+            <option value="{{ student.school }}" selected>{{ student.school }}</option>
             <option value="1">Nacional</option>
             <option value="2">Normal</option>
             <option value="3">Albert Thomas</option>
@@ -109,10 +109,19 @@
         </div>
         <div class="input-field col s6">
           <select name="level">
-            <option value="{{ student.level.code }}" selected>Nivel: {{ student.level }}</option>
+            <option value="{{ student.level.code }}" selected>{{ student.level }}</option>
             <option value="1">I</option>
             <option value="2">II</option>
             <option value="3">III</option>
+            <option value="4">IV</option>
+            <option value="5">V</option>
+            <option value="6">VI</option>
+            <option value="7">VII</option>
+            <option value="8">VIII</option>
+            <option value="9">IX</option>
+            <option value="10">X</option>
+            <option value="11">XI</option>
+            <option value="12">XII</option>
           </select>
           <label for="level"></label>
         </div>

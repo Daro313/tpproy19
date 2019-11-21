@@ -26,7 +26,7 @@
               <td>{{ teacher.document_number }}</td>
               <td>
                 <a href="{{ url_for('teachers.detail', teacher_id=teacher.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a>
-                <form method="POST" action="{{ url_for('teachers.update', teacher_id=teacher.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
+                <form method="GET" action="{{ url_for('teachers.update', teacher_id=teacher.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
                 <form method="POST" action="{{ url_for('teachers.delete', teacher_id=teacher.id) }}"><button class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
               </td>
             </tr>
