@@ -25,3 +25,15 @@ Agregar api
 * crear template (permiete agregar varios estudiantes y docentes)
 
 
+
+
+### MEJORA
+
+USER verificar is__active:
+
+ALTA STUdiante
+  * agregar campo: nombre en tutor
+
+
+CONFIG 
+  * que se reflejen los cambios de los 
