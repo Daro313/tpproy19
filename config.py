@@ -13,6 +13,8 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     SQLALCHEMY_ECHO = True
+    SECRET_KEY = 'p9Bv<3Eid9%$i01'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:admin@localhost/grupo8'
 
 
 class ProductionConfig(Config):
