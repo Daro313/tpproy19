@@ -1,4 +1,3 @@
-
 # Remember that a model is a representation of a database table in code.
 
 # crear base de datos
