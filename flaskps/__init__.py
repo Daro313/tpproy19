@@ -16,7 +16,7 @@ BASE_DIR = os.getcwd()
 def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
-    app.config.from_pyfile('config.py')
+    app.config.from_pyfile('../config.py')
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_message = "Logeo necesario."
@@ -35,17 +35,27 @@ def create_app(config_name):
         ])
     app.jinja_loader = my_loader
     migrate = Migrate(app, db)
+
     from flaskps import models
+
+    from .app.administration import administration as administration_blueprint
+    app.register_blueprint(administration_blueprint)
+
     from .app.students import students as students_blueprint
     app.register_blueprint(students_blueprint)
+
     from .app.configurations import configurations as configurations_blueprint
     app.register_blueprint(configurations_blueprint)
+
     from .app.teachers import teachers as teachers_blueprint
     app.register_blueprint(teachers_blueprint)
+
     from .app.home import home as home_blueprint
     app.register_blueprint(home_blueprint)
+
     from .app.users import users as users_blueprint
     app.register_blueprint(users_blueprint)
+
     from .app.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
     return app
