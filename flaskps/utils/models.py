@@ -1,11 +1,7 @@
 from flaskps import db
-import datetime
 
-def _get_date():
-    return datetime.datetime.now()
+from flaskps.utils.functions import get_today
 
 class TimeStampedModel():
-    created_at = db.Column(db.Date, default=_get_date)
-    updated_at = db.Column(db.Date, onupdate=_get_date)
-
-
+    created_at = db.Column(db.Date, default=get_today())
+    updated_at = db.Column(db.Date, onupdate=get_today())
