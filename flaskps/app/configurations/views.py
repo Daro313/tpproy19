@@ -1,5 +1,4 @@
-from flask import render_template, redirect
-from flask import request
+from flask import render_template, redirect, request, flash
 from flask_login import login_required
 from flask_user import current_user
 
@@ -20,4 +19,5 @@ def configuration(permiso='configuration_show'):
             return render_template('/home/dashboard.html')
         return render_template('admin/config.html', configuration=conf)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

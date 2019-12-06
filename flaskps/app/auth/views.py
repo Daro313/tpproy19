@@ -19,9 +19,8 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user.verify_password(password):
             login_user(user)
-            flash('Ingreso exitoso!')
             return redirect('/dashboard')
-    flash('Verificar usuario o contrasenia')
+        flash('Verificar usuario o contrasenia')
     return render_template('auth/login.html', title="login")
 
 @auth.route('/auth/logout')

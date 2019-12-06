@@ -2,7 +2,7 @@ import requests
 from flask_login import login_required
 from flask_user import current_user
 
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, flash
 
 from flaskps import db
 from . import teachers
@@ -44,6 +44,7 @@ def create(permiso='teachers_new'):
             return redirect(url_for('teachers.detail', teacher_id=teacher.id))
         return render_template('teachers/create.html', form=form, dniTypes=dniTypes, localities=localities)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -58,6 +59,7 @@ def list(page,permiso='teachers_index'):
         teachers = teachers.paginate(page, conf.offset_paginator, False)
         return render_template('teachers/list.html', teachers=teachers)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -68,6 +70,7 @@ def detail(teacher_id,permiso='teachers_show'):
         teacher = Teachers.query.filter_by(id=teacher_id).first_or_404()
         return render_template('teachers/detail.html', teacher=teacher)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -80,6 +83,7 @@ def delete(teacher_id,permiso='teachers_destroy'):
         db.session.commit()
         return redirect(url_for('teachers.list'))
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -98,4 +102,5 @@ def update(teacher_id,permiso='teachers_update'):
                 return redirect(url_for('teachers.detail', teacher_id=teacher.id))
         return render_template('teachers/edit.html', teacher=teacher, dniTypes=dniTypes, localities=localities), 200
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

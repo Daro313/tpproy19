@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required
 from flask_user import current_user, roles_required, UserManager
 
@@ -40,6 +40,7 @@ def create(permiso='user_new'):
             return redirect(url_for('users.detail', user_id=user.id))
         return render_template('users/create_user.html', form=form)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -63,6 +64,7 @@ def list(page,permiso='user_index'):
         users = users.paginate(page, conf.offset_paginator, False)
         return render_template('users/list.html', user_list=users)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -79,6 +81,7 @@ def update(user_id,permiso='user_update'):
                 return redirect(url_for('users.detail', user_id=user.id))
         return render_template('users/edit.html', user=user, roles=roles), 200
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -89,6 +92,7 @@ def detail(user_id,permiso='user_show'):
         user = User.query.filter_by(id=user_id).first_or_404()
         return render_template('users/detail.html', user=user)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -101,4 +105,5 @@ def delete(user_id,permiso='user_destroy'):
         db.session.commit()
         return redirect(url_for('users.list'))
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

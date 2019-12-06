@@ -1,6 +1,6 @@
 import requests
 from flask_login import login_required
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, flash
 from flask_user import current_user
 
 from flaskps import db
@@ -47,6 +47,7 @@ def create(permiso='students_new'):
             return redirect(url_for('students.detail', student_id=student.id))
         return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 @students.route('/students/list/', methods=['GET'], defaults={'page':1})
@@ -60,6 +61,7 @@ def list(page,permiso='students_index'):
         students = students.paginate(page, conf.offset_paginator, False)
         return render_template('students/list.html', students=students)
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -81,6 +83,7 @@ def delete(student_id,permiso='students_destroy'):
         db.session.commit()
         return redirect('/students/list')
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
@@ -98,4 +101,5 @@ def update(student_id,permiso='students_update'):
                 return redirect(url_for('students.detail', student_id=student.id))
         return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes), 200
     else:
+        flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
