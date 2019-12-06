@@ -1,5 +1,9 @@
-
 {% extends "base.html" %}
+{% block title %}Configuraciones del sitio{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
 {% block content %}
 <div class="container">
   <form class="form-group" method="POST" action="{{ url_for('configurations.configuration') }}">
@@ -21,12 +25,12 @@
       </label>
       {% else %}
       <label>
-          <input type="checkbox" value="{{configuration.active}}" name="active" checked />
+          <input type="checkbox" value="{{configuration.active}}" name="active" />
           <span>Sitio activo </span>
         </label>
         {% endif %}
         <br><br>
-    <input class="btn btn-success" type="submit" value="Guardar">
+    <input class="btn btn-success right" type="submit" value="Guardar">
   </form>
 </div>
 {% endblock %}

@@ -13,17 +13,15 @@ def login():
     Muestra el template de login
     """
     form = LogInForm(request.form)
-
     if request.method == 'POST' and form.validate():
-
         email = request.form.get("email")
         password = request.form.get("password")
-
         user = User.query.filter_by(email=email).first()
         if user.verify_password(password):
             login_user(user)
             flash('Ingreso exitoso!')
             return redirect('/dashboard')
+    flash('Verificar usuario o contrasenia')
     return render_template('auth/login.html', title="login")
 
 @auth.route('/auth/logout')
@@ -31,10 +29,3 @@ def login():
 def logout():
     logout_user()
     return render_template('auth/login.html')
-
-
-
-#@perm.current_user_loader
-#def load_current_user():
-#    if 'user_id' in session:
-#        return User.query.get(session['user_id'])

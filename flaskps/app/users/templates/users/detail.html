@@ -16,7 +16,7 @@
            Apellido: {{ user.surname }}<br>
            Email: {{ user.email }}<br>
            Estado: {% if user.active %} Activo {% else %} Inactivo {% endif %}<br>
-           Roles:{{  user.role }}
+           Roles: |{%  for r in user.roles %} {{ r.name }} | {% endfor %}
         </p>
         <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
       </li>
