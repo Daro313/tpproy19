@@ -1,0 +1,29 @@
+from flask_login import login_required
+from flask import render_template, redirect, request, url_for
+
+from . import administration
+from .models import SchoolYear
+from .forms import CreateSchoolYearForm
+
+
+@administration.route('/school-year/create', methods=['GET', 'POST'])
+# @login_required
+def school_year_create():
+    """
+    metodo GET: renderiza form de creacion
+    metodo POST: verifica los datos y crea usuaraio
+    """
+    form = CreateSchoolYearForm
+
+    if request.method == 'POST' and form.validate():
+        school_year = SchoolYear.create(form)
+        return redirect(url_for('administration.detail', school_year=school_year.id))
+    return render_template('administration/create.html')
+
+
+@administration.route('/school-year/detail/<int:school_year_id>', methods=['GET'])
+# @login_required
+def school_year_detail(school_year_id):
+    school_year = SchoolYear.query.filter_by(id=school_year_id).first()
+    return render_template('administration/detail.html', shool_year=school_year)
+

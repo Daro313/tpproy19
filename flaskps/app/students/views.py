@@ -11,7 +11,6 @@ from .forms import CreateStudentsForm
 from flaskps.app.configurations.models import Configurations
 
 
-
 @students.route('/students/create', methods=['GET', 'POST'])
 # @login_required
 def create():
@@ -48,10 +47,10 @@ def create():
         except:
             db.session.rollback()
 
-            return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities), 403
+            return render_template('students/create.html', form=form, dnitypes=dnitypes, localities=localities), 403
         return redirect(url_for('students.detail', student_id=student.id))
 
-    return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities)
+    return render_template('students/create.html', form=form, dnitypes=dnitypes, localities=localities)
 
 
 @students.route('/students/list/', methods=['GET'], defaults={'page':1})

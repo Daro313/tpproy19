@@ -18,6 +18,25 @@ class SchoolYear(db.Model):
     semesters = db.relationship(
         'Semester', backref='school_year', lazy=True)
 
+    @classmethod
+    def create(cls, *args, **kwargs):
+        import ipdb; ipdb.set_trace()
+        instance = cls()
+        instance.start_date = kwargs.get('start_date')
+        instance.end_date = kwargs.get('end_date')
+
+
+        semesters = kwargs.get('semester')
+        for semester in semesters:
+            instance.semesters.append(semester)
+
+        db.session.add(instance)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+
+
 
 
 class Semester(db.Model):
