@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Nuevo Instrumento{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Nuevo Instrumento</h4><br>
+<div class="divider black"></div><br>
+<div class="container">
+  <div class="row">
+    <form class="col s12 teal lighten-4" action="{{ url_for( 'instruments.create' ) }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="name" type="text" class="validate" name="name">
+          <label for="name">Nombre:</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="type">
+              <option value="cuerda">Cuerda</option>
+              <option value="percusion">Percusión</option>
+              <option value="viento">Viento</option>
+          </select>
+          <label for="type">Tipo de instrumento:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input disabled id="inventory_number" type="text" class="validate" name="inventory_number" value="CUE012">
+          <label for="inventory_number">Numero de inventario:</label>
+        </div>
+          <div class="file-field input-field col s6">
+            <div class="btn">
+              <span>Imagen</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Cargar imagen">
+            </div>
+          </div>
+        </div>
+      <button class="btn waves-effect waves-light right" type="submit">Guardar</button><br><br>
+    </form>
+  </div>
+</div>
+{% endblock %}
