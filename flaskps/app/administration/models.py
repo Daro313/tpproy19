@@ -7,7 +7,7 @@ from flaskps.utils.functions import get_today
 
 __all__ = [
    'SchoolYear',
-   'Semester',
+   'Workshop',
 ]
 
 
@@ -15,20 +15,16 @@ class SchoolYear(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.Date, default=get_today())
     end_date = db.Column(db.Date, default=get_today())
-    semesters = db.relationship(
-        'Semester', backref='school_year', lazy=True)
+    semesters = db.Column(ChoiceType(SCHOOL_YEAR_CHOICES))
+    workshops = db.relationship(
+            'Workshop', backref='semester', lazy=True)
 
     @classmethod
-    def create(cls, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
+    def create(cls, form):
         instance = cls()
-        instance.start_date = kwargs.get('start_date')
-        instance.end_date = kwargs.get('end_date')
-
-
-        semesters = kwargs.get('semester')
-        for semester in semesters:
-            instance.semesters.append(semester)
+        instance.start_date = form.start_date
+        instance.end_date = form.end_date
+        instance.semesters = form.semester
 
         db.session.add(instance)
         try:
@@ -36,13 +32,16 @@ class SchoolYear(db.Model):
         except:
             db.session.rollback()
 
+        return instance
+
+    def add_workshop(self, workshops):
+        for workshop in workshops:
+            self.workshops.append(workshops)
 
 
-
-class Semester(db.Model):
+class Workshop(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    start_date = db.Column(db.Date, default=get_today())
-    end_date = db.Column(db.Date, default=get_today())
-    year_semester = db.Column(ChoiceType(SCHOOL_YEAR_CHOICES))
-    school_year_id = db.Column(
+    name = db.Column(db.String(120))
+    short_name = db.Column(db.String(60))
+    semester_id = db.Column(
         db.Integer, db.ForeignKey('school_year.id'), nullable=False)

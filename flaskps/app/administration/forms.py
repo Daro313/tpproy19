@@ -6,13 +6,11 @@ from wtforms import (
     SelectField,
 )
 
+from .contants import SCHOOL_YEAR_CHOICES
+
 
 class CreateSchoolYearForm(Form):
-    start_date = DateField('Fecha de inicio', [
-                validators.Length(min=6, max=35),
-                validators.DataRequired()
-            ])
-
+    start_date = DateField('Fecha de inicio', [ validators.DataRequired() ])
     end_date = DateField('Fecha de fin', [validators.DataRequired()])
-    semester = StringField('Semestre', [validators.DataRequired()])
+    semester = SelectField('Semestre', [validators.DataRequired()], choices=SCHOOL_YEAR_CHOICES)
 

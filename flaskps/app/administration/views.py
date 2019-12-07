@@ -13,11 +13,15 @@ def school_year_create():
     metodo GET: renderiza form de creacion
     metodo POST: verifica los datos y crea usuaraio
     """
-    form = CreateSchoolYearForm
-
+    form = CreateSchoolYearForm(request.form)
     if request.method == 'POST' and form.validate():
+        print(form.validate())
+        print(form.start_date)
+        print(form.end_date)
+        print(form.semester)
         school_year = SchoolYear.create(form)
-        return redirect(url_for('administration.detail', school_year=school_year.id))
+        return render_template('administration/create.html')
+        # return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
     return render_template('administration/create.html')
 
 
