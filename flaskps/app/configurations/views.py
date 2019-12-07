@@ -10,7 +10,7 @@ from . import configurations
 
 @configurations.route('/admin/configuration', methods=['GET', 'POST'])
 @login_required
-def configuration(permiso='configuration_show'):
+def configuration(permiso='configurations_show'):
     if current_user.have_permissions(permiso):
         conf = Configurations.query.first()
         if request.method == 'POST':
