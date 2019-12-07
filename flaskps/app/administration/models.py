@@ -21,10 +21,11 @@ class SchoolYear(db.Model):
 
     @classmethod
     def create(cls, form):
-        instance = cls()
-        instance.start_date = form.start_date
-        instance.end_date = form.end_date
-        instance.semesters = form.semester
+        import ipdb; ipdb.set_trace()
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+        semesters = form.semester.data
+        instance = cls(start_date=start_date,end_date=end_date,semesters=semesters)
 
         db.session.add(instance)
         try:

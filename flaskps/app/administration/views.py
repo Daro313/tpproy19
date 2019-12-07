@@ -15,19 +15,13 @@ def school_year_create():
     """
     form = CreateSchoolYearForm(request.form)
     if request.method == 'POST' and form.validate():
-        print(form.validate())
-        print(form.start_date)
-        print(form.end_date)
-        print(form.semester)
         school_year = SchoolYear.create(form)
-        return render_template('administration/create.html')
-        # return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
+        return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
     return render_template('administration/create.html')
 
 
 @administration.route('/school-year/detail/<int:school_year_id>', methods=['GET'])
 # @login_required
 def school_year_detail(school_year_id):
-    school_year = SchoolYear.query.filter_by(id=school_year_id).first()
+    school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
     return render_template('administration/detail.html', shool_year=school_year)
-
