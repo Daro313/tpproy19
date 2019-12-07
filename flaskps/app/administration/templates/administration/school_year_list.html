@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Detalles estudiante{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <table class="responsive-table centered highlight teal lighten-4">
+    <thead>
+      <tr>
+        <th>Anio</th>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
+        <th>Semestre</th>
+        <th>Detalle</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sy in school_years.items %}
+        <tr>
+          <td>{{ sy.start_date.year }}</td>
+          <td>{{ sy.start_date }}</td>
+          <td>{{ sy.end_date }}</td>
+          <td>{{ sy.semesters }}</td>
+          <td> <a href="{{ url_for('administration.school_year_detail', school_year_id=sy.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <ul class="pagination center">
+    {% if school_years.has_prev %}
+      <li class="waves-effect"><a href="{{ url_for('administration.school_year_list', page=school_years.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    {% endif %}
+    {% for page in school_years.iter_pages() %}
+      {% if page %}
+        {% if page != school_years.page %}
+          <li class=""><a href="{{ url_for('administration.school_year_list', page=page) }}">{{ page }}</a></li>
+        {% else %}
+          <li class="active teal darken-3"><a href="#!">{{ page }}</a></li>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    {% if school_years.has_next %}
+      <li class="waves-effect"><a href="{{ url_for('administration.school_year_list', page=school_years.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
+    {% else %}
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    {% endif %}
+  </ul>
+</div>
+
+{% endblock %}

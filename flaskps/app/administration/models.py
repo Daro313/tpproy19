@@ -21,7 +21,6 @@ class SchoolYear(db.Model):
 
     @classmethod
     def create(cls, form):
-        import ipdb; ipdb.set_trace()
         start_date = form.start_date.data
         end_date = form.end_date.data
         semesters = form.semester.data

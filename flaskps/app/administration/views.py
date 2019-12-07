@@ -4,6 +4,7 @@ from flask import render_template, redirect, request, url_for
 from . import administration
 from .models import SchoolYear
 from .forms import CreateSchoolYearForm
+from flaskps.app.configurations.models import Configurations
 
 
 @administration.route('/school-year/create', methods=['GET', 'POST'])
@@ -24,4 +25,20 @@ def school_year_create():
 # @login_required
 def school_year_detail(school_year_id):
     school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
-    return render_template('administration/detail.html', shool_year=school_year)
+    return render_template('administration/detail.html', school_year=school_year)
+
+@administration.route('/school-year/list', methods=['GET'], defaults={'page':1})
+@administration.route('/school-year/list/<int:page>', methods=['GET'])
+def school_year_list(page):
+    conf = Configurations.query.first()
+    school_years = SchoolYear.query.filter_by().paginate(
+                        page,
+                        conf.offset_paginator,
+                        False
+                    )
+
+    return render_template(
+            'administration/school_year_list.html', school_years=school_years)
+
+    
+    
