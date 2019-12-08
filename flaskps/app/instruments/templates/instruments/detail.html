@@ -5,5 +5,25 @@
 {% endblock %}
 
 {% block content %}
-
+<h4 class="center">Detalle</h4>
+  <div class="container">
+      <div class="row">
+        <div class="col s12 m7">
+          <div class="card">
+            <div class="card-image">
+              <img class="responsive-img" src="/home/daro/dev/proy19/escuela_orquesta/grupo8/flaskps/static/img/instruments/oboe.jpg">
+              <span class="card-title">Card Title</span>
+            </div>
+            <div class="card-content">
+              <p>Nombre: {{ instrument.name }}<br>
+                Tipo: {{ instrument.type }}<br>
+                Numero de inventario: {{ instrument.inventory_number }}</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Volver</a>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
 {% endblock %}

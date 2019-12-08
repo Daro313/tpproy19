@@ -5,15 +5,13 @@ from wtforms import (
     PasswordField,
     validators,
     DateField,
-    SelectField
+    SelectField,
+    FileField,
 )
 
+from .constants import INSTRUMENT_TYPES
 
-image        = FileField(u'Image File', [validators.regexp(u'^[^/\\]\.jpg$')])
-
-
-class CreateTeachersForm(Form):
+class CreateInstrumentsForm(Form):
     name = StringField('Nombre', [validators.DataRequired()])
-    type = SelectField('Tipo', [validators.DataRequired()])
-    inventory_number = StringField('Numero de documento', [validators.DataRequired()])
-    image = FileField(u'Imagen', [validators.regexp(u'^[^/\\]\.jpg$')])
+    type = SelectField('Tipo', [validators.DataRequired()], choices=INSTRUMENT_TYPES)
+    inventory_number = StringField('Numero de inventario', [validators.DataRequired()])

@@ -1,34 +1,35 @@
 from flaskps import db
-from sqlalchemy_utils import ChoiceType
-from sqlalchemy_imageattach.entity import Image, image_attachment
 
 class Instrument(db.Model):
     __tablename__ = 'instruments'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     type = db.Column(db.String(60))
-    inventory_number = db.Column(db.Integer)
-    picture = image_attachment('InstrumentPicture')
+    inventory_number = db.Column(db.String(60))
+    img_path = db.Column(db.String(120))
 
     def __repr__(self):
         return '<Instrumento: %r>' % self.name
+
+    @classmethod
+    def create(cls, form, path):
+        name = form.name.data
+        type = form.type.data
+        inventory_number = form.inventory_number.data
+        img_path = path
+        instance = cls(name=name,type=type,inventory_number=inventory_number,img_path=img_path)
+
+
+        db.session.add(instance)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        return instance
 
     def update(self, form):
         self.name = form.name.data
         self.type = form.type.data
         self.inventory_number = form.inventory_number.data
-
+        self.img_path = form.img_path.data
         db.session.commit()
-
-    def have_permissions(self, permission):
-        perm = []
-        for rol in self.roles:
-            perm += rol.permisos.split(',')
-        if permission in perm:
-            return True
-        return False
-
-class InstrumentPicture(db.Model, ):
-    __tablename__ = 'instrument_pictures'
-    id = db.Column(db.Integer, ForeingKey('instrument.id'), primary_key=True)
-    instrument = relationship('Instrument')

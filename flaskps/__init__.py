@@ -31,6 +31,7 @@ def create_app(config_name):
                 '%s/flaskps/app/home/templates/' % BASE_DIR,
                 '%s/flaskps/app/users/templates/' % BASE_DIR,
                 '%s/flaskps/app/teachers/templates/' % BASE_DIR,
+                '%s/flaskps/app/instruments/templates/' % BASE_DIR,
             ]),
         ])
     app.jinja_loader = my_loader
@@ -48,4 +49,6 @@ def create_app(config_name):
     app.register_blueprint(users_blueprint)
     from .app.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
+    from .app.instruments import instruments as instruments_blueprint
+    app.register_blueprint(instruments_blueprint)
     return app

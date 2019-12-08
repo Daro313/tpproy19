@@ -55,6 +55,8 @@
       <div class="collapsible-body grey"><a href="#!" class="waves-effect white-text btn-flat"><i class="material-icons white-text">add</i>Nuevo ciclo lectivo</a></div>
       <div class="collapsible-body grey"><a href="#!" class="waves-effect white-text btn-flat"><i class="material-icons white-text">add</i>Nuevo taller</a></div>
       <div class="collapsible-body grey"><a href="#!" class="waves-effect white-text btn-flat"><i class="material-icons white-text">list</i>Ver talleres</a></div>
+      <div class="collapsible-body grey"><a href="{{ url_for('instruments.create') }}" class="waves-effect white-text btn-flat"><i class="material-icons white-text">add</i>Nuevo instrumento</a></div>
+      <div class="collapsible-body grey"><a href="{{ url_for('instruments.list') }}" class="waves-effect white-text btn-flat"><i class="material-icons white-text">list</i>Inventario instrumentos</a></div>
     </li>
     <li>
       <a href="{{ url_for('configurations.configuration') }}" class="waves-effect white-text btn-flat"><i class="material-icons white-text">settings</i>Configuraciones del sitio</a>

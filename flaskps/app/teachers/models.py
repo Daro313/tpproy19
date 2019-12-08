@@ -28,11 +28,3 @@ class Teachers(db.Model):
 
 
         db.session.commit()
-
-    def have_permissions(self, permission):
-        perm = []
-        for rol in self.roles:
-            perm += rol.permisos.split(',')
-        if permission in perm:
-            return True
-        return False
