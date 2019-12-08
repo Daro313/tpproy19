@@ -86,12 +86,3 @@ def delete(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('users.list'))
-
-@login_required
-def activate_user():
-    pass
-
-
-@login_required
-def deactivate_user():
-    pass

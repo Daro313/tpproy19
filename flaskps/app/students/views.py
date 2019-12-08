@@ -1,5 +1,4 @@
 import requests
-school_years
 from flask_login import login_required
 
 from flask import render_template, redirect, request, url_for
@@ -12,7 +11,7 @@ from flaskps.app.configurations.models import Configurations
 
 
 @students.route('/students/create', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def create():
     """
     metodo GET: renderiza form de reacion
@@ -66,7 +65,7 @@ def list(page):
 
 
 @students.route('/students/detail/<int:student_id>', methods=['GET','POST'])
-# @login_required
+@login_required
 def detail(student_id):
     student = Students.query.filter_by(id=student_id).first_or_404()
     return render_template('students/detail.html', student=student)
@@ -82,7 +81,7 @@ def delete(student_id):
 
 
 @students.route('/students/update/<int:student_id>', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def update(student_id):
     student = Students.query.filter_by(id=student_id).first_or_404()
 
