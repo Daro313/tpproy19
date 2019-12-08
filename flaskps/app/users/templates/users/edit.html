@@ -33,7 +33,7 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input class="active" type="password" value="{{user.password}}" name="password">
+          <input class="validate" type="password" value="" name="password">
           <label for="password"> Password </label>
         </div>
         <div class="input-field col s6">
@@ -53,9 +53,13 @@
       <div class="row">
         <div class="input-field col s12">
           <select multiple name="roles">
-            <option value="Administrador">Administrador</option>
-            <option value="Docente">Docente</option>
-            <option value="Preceptor">Preceptor</option>
+            {% for k,v in roles.items() %}
+              {% if v %}
+                <option value="{{ k }}" selected>{{ k }}</option>
+              {% else %}
+                <option value="{{ k }}">{{ k }}</option>
+              {% endif %}
+            {% endfor %}
           </select>
           <label for="roles">Rol:</label>
         </div>

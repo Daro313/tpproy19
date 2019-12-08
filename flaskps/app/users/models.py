@@ -8,19 +8,17 @@ from flaskps.utils.models import TimeStampedModel
 
 
 class User(db.Model, TimeStampedModel, UserMixin):
-
     __tablename__ = 'users'
-
     id = db.Column(db.Integer, primary_key=True)
     is_admin = db.Column(db.Boolean, default=False)
-
     username = db.Column(db.String(60), unique=True, nullable=False)
     email = db.Column(db.String(60), unique=True, nullable=False)
     name = db.Column(db.String(60))
     surname = db.Column(db.String(60))
-
     active = db.Column(db.Boolean, default=True)
     password_hash = db.Column(db.String(128))
+    # Define the relationship to Role via UserRoles
+    roles = db.relationship('Rol', secondary='user_roles')
 
     def __repr__(self):
         return '<Usuario: %r>' % self.username
@@ -31,10 +29,23 @@ class User(db.Model, TimeStampedModel, UserMixin):
         self.username = form.username.data
         self.email = form.email.data
         self.active = form.active.data
-        self.roles = form.roles.data
+
+        roles = form.roles.raw_data
+        roles = Rol.query.filter(Rol.name.in_(roles)).all()
+        self.roles = roles
+
+        if not self.verify_password(form.password.data):
+            self.password = form.password.data
 
         db.session.commit()
 
+    def have_permissions(self, permission):
+        perm = []
+        for rol in self.roles:
+            perm += rol.permisos.split(',')
+        if permission in perm:
+            return True
+        return False
 
     @property
     def is_active(self):
@@ -61,63 +72,26 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-    # TODO: descomentar y agregar funcionalidad despues de crear migracion
-    # many-to-many
-    # @property
-    # def display_rol(self):
-    #     return ' | '.join(str(self.rol))
-
-
-
 class Rol(db.Model):
     """
     Create a Role table
     """
-
-    __tablename__ = 'rol'
-
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    permisos = db.Column(db.String(60000), nullable=False)
+
+    def __init__(self, name, permisos):
+        super().__init__
+        self.name = name
+        self.permisos = permisos
 
     def __repr__(self):
         return '<Rol: {}>'.format(self.name)
 
 
-#class Permission(db.Model):
-#
-#    __tablename__ = 'permissions'
-#
-#    id = db.Column(db.Integer, primary_key=True)
-#    name = db.Column(db.String(60), unique=True)
-#
-#    def __repr__(self):
-#        return '<Permiso: {}>'.format(self.name)
-#
-#
-#
-
-# Set up user_loader
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-
-# test many to many user role
-tags = db.Table('tags',
-        db.Column(
-            'tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
-        db.Column(
-            'page_id', db.Integer, db.ForeignKey('page.id'), primary_key=True)
-    )
-
-class Page(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    tags = db.relationship(
-                'Tag',
-                secondary=tags,
-                lazy='subquery',
-                backref=db.backref('pages', lazy=True),
-            )
-
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+class UserRoles(db.Model):
+        __tablename__ = 'user_roles'
+        id = db.Column(db.Integer(), primary_key=True)
+        user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+        role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))

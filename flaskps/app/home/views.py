@@ -12,8 +12,9 @@ def homepage():
     check if home is available
     """
     conf = Configurations.query.first()
-    return render_template('home/index.html', conf=conf)
-
+    if conf.active:
+        return render_template('home/index.html', conf=conf)
+    return render_template('home/fuera_de_servicio.html', conf=conf)
 
 @home.route('/dashboard')
 @login_required
