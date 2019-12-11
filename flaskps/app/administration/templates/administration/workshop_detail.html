@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Detalle taller{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <h4 class="center">Detalles Taller:</h4>
+  <div class="divider black"></div><br>
+  <div class="container">
+  <ul class="collection">
+    <li class="collection-item avatar">
+      <p>nombre: {{ workshop.name }}</p>
+      <p>nombre corto: {{ workshop.short_name }}</p>
+      <p>Semestre: {{ workshop.semester.semesters}}</p>
+      <p>Profesor a cargo: {{ workshop.teacher_id }}</p>
+      <p>dias: {{ workshop.days }}</p>
+      <p>nucleo: {{ workshop.nucleo }}</p>
+      <p>direccion: {{ workshop.address }}</p>
+      <p>horaio: {{ workshop.horario }}</p>
+      <p>cantidad de clases: {{ workshop.cant_lessons }}</p>
+    </li>
+  </ul>
+{% endblock %}

@@ -52,7 +52,6 @@ class Workshop(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
     short_name = db.Column(db.String(60))
-    cant_lessons = db.Column(db.Integer, default=0)
     semester_id = db.Column(
         db.Integer, db.ForeignKey('school_year.id'), nullable=False)
     teacher_id = db.Column(
@@ -64,9 +63,57 @@ class Workshop(db.Model):
                     backref=db.backref('workshops', lazy=True)
                 )
 
-class AttendWorkshop(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    workshop_id = db.Column(db.Integer, db.ForeignKey('workshop.id'))
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    cant_lessons = db.Column(db.Integer, default=0)
+    lessons = db.relationship('Lesson', backref='workshop', lazy=True)
+    nucleo = db.Column(db.String(120))
+    address = db.Column(db.String(214))
+    days = db.Column(db.String(520))
+    horario = db.Column(db.String(20))
 
+    @classmethod
+    def create(cls, form, sy):
+        name = form.name.data
+        short_name = form.short_name.data
+        teacher_id = form.teacher.data
+        nucleo = form.nucleo.data
+        address = form.address.data
+        days = form.address.data
+        horario = form.horario.data
+        cant = form.clases.data
+
+        instance = cls(
+            name=name,
+            short_name=short_name,
+            teacher_id=teacher_id,
+            semester_id=sy.id,
+            cant_lessons=cant,
+            nucleo=nucleo,
+            address=address,
+            days=days,
+            horario=horario,
+        )
+
+        n = 0
+        for lesson in range(cant):
+            l = Lesson(number=n, workshop_id=instance.id)
+            n += 1
+            instance.lessons.append(l)
+
+        db.session.add(instance)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        return instance
+
+    def update(self, form):
+        pass
+
+
+class Lesson(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=True)
+    number = db.Column(db.Integer)
+    attend = db.Column(db.Boolean, default=False)
+    workshop_id = db.Column(db.Integer, db.ForeignKey('workshop.id'), nullable=False)
 
