@@ -28,6 +28,8 @@
         <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
       </li>
       </ul>
+      <form class="right" method="POST" action="{{ url_for('students.delete', student_id=student.id) }}"><a href="{{ url_for( 'students.list' ) }}" class="btn waves-effect waves-light">Volver</a><button class="btn waves-effect waves-light red darken-2" type="submit">Borrar</button></form>
+      <br><br>
 </div>
 
 {% endblock %}

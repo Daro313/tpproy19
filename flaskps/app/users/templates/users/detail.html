@@ -21,5 +21,7 @@
         <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
       </li>
       </ul>
+      <form class="right" method="POST" action="{{ url_for('users.delete', user_id=user.id) }}"><a href="{{ url_for( 'users.list' ) }}" class="btn waves-effect waves-light">Volver</a><button class="btn waves-effect waves-light red darken-2" type="submit">Borrar</button></form>
+      <br><br>
 </div>
 {% endblock %}

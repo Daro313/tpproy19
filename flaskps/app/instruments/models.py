@@ -1,4 +1,5 @@
 from flaskps import db
+import datetime
 
 class Instrument(db.Model):
     __tablename__ = 'instruments'
@@ -7,15 +8,24 @@ class Instrument(db.Model):
     type = db.Column(db.String(60))
     inventory_number = db.Column(db.String(60))
     img_path = db.Column(db.String(120))
+    cant = 0
 
     def __repr__(self):
         return '<Instrumento: %r>' % self.name
 
     @classmethod
+    def set_inventory_number(cls,type):
+        year = datetime.datetime.now().year
+        month = datetime.datetime.now().month
+        cls.cant+=1
+        c = cls.cant
+        return type+str(year)+str(month)+str(c)
+
+    @classmethod
     def create(cls, form, path):
         name = form.name.data
         type = form.type.data
-        inventory_number = form.inventory_number.data
+        inventory_number = cls.set_inventory_number(type)
         img_path = path
         instance = cls(name=name,type=type,inventory_number=inventory_number,img_path=img_path)
 

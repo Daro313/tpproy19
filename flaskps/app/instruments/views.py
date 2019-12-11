@@ -82,18 +82,23 @@ def update(instrument_id,permiso='administration_update'):
     if current_user.have_permissions(permiso):
         instrument = Instrument.query.filter_by(id=instrument_id).first_or_404()
         if request.method == "POST":
-            if request.files:
+            if request.files["image"].filename:
                 image = request.files["image"]
                 if image.filename == '':
                     return redirect(request.url)
                 if not allowed_file(image.filename):
                     return redirect(request.url)
                 else:
-                    os.remove('%s/flaskps' % BASE_DIR+instrument.img_path)
                     image_name = secure_filename(image.filename)
                     image.save(os.path.join(UPLOAD_IMAGES_FOLDER[0], image_name))
-                img_path= IMG_PATH+image_name
-            form = CreateInstrumentsForm(request.form,)
+                    try:
+                        os.remove('%s/flaskps' % BASE_DIR+instrument.img_path)
+                    except Exception as e:
+                        pass
+                img_path = IMG_PATH+image_name
+            else:
+                img_path = instrument.img_path
+            form = CreateInstrumentsForm(request.form,img_path)
             if form.validate():
                 instrument.update(form,img_path)
                 return redirect(url_for('instruments.detail', instrument_id=instrument.id))
