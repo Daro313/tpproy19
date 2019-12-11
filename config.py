@@ -3,9 +3,6 @@ class Config(object):
     Common configurations
     """
 
-    # Put any configurations here that are common across all environments
-
-
 class DevelopmentConfig(Config):
     """
     Development configurations
@@ -15,6 +12,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_ECHO = True
     SECRET_KEY = 'p9Bv<3Eid9%$i01'
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:admin@localhost/grupo8'
+    EXPLAIN_TEMPLATE_LOADING = True
 
 class ProductionConfig(Config):
     """

@@ -1,3 +1,5 @@
+from flaskps import db
+
 # Ejemplo one-to-many
 class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
