@@ -27,7 +27,7 @@
               <td>
                 <a href="{{ url_for('instruments.detail', instrument_id=instrument.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a>
                 <form method="GET" action="{{ url_for('instruments.update', instrument_id=instrument.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
-                <form method="POST" action="{{ url_for('instruments.delete', instrument_id=instrument.id) }}"><button class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
+                <form method="POST" action="{{ url_for('instruments.delete', instrument_id=instrument.id) }}"><button data-toggle="modal" class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
               </td>
             </tr>
             <tr>

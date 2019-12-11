@@ -15,11 +15,11 @@ from werkzeug.utils import secure_filename
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
 MAX_IMAGE_SIZE = 0.5 * 1024 * 1024
 UPLOAD_IMAGES_FOLDER = '%s/flaskps/static/img/instruments/' % BASE_DIR,
-
+IMG_PATH = '/static/img/instruments/'
 
 @instruments.route('/instruments/create', methods=['GET', 'POST'])
 @login_required
-def create(permiso='teachers_new'):
+def create(permiso='administration_new'):
     """
     metodo GET: renderiza form de reacion
     metodo POST: verifica los datos y crea usuaraio
@@ -36,7 +36,7 @@ def create(permiso='teachers_new'):
                 else:
                     image_name = secure_filename(image.filename)
                     image.save(os.path.join(UPLOAD_IMAGES_FOLDER[0], image_name))
-                img_path= UPLOAD_IMAGES_FOLDER[0]+image_name
+                img_path= IMG_PATH+image_name
 
             instrument = Instrument.create(form,img_path)
             return redirect(url_for('instruments.detail',instrument_id=instrument.id))
@@ -52,7 +52,7 @@ def allowed_file(filename):
 
 @instruments.route('/instruments/detail/<int:instrument_id>', methods=['GET','POST'])
 @login_required
-def detail(instrument_id,permiso='teachers_show'):
+def detail(instrument_id,permiso='administration_show'):
     if current_user.have_permissions(permiso):
         instrument = Instrument.query.filter_by(id=instrument_id).first_or_404()
         return render_template('instruments/detail.html', instrument=instrument)
@@ -64,7 +64,7 @@ def detail(instrument_id,permiso='teachers_show'):
 @instruments.route('/instruments/list/', methods=['GET'], defaults={'page':1})
 @instruments.route('/instruments/list/<int:page>', methods=['GET'])
 @login_required
-def list(page,permiso='teachers_index'):
+def list(page,permiso='administration_index'):
     if current_user.have_permissions(permiso):
         page = page
         conf = Configurations.query.first()
@@ -78,13 +78,24 @@ def list(page,permiso='teachers_index'):
 
 @instruments.route('/instruments/update/<int:instrument_id>', methods=['GET', 'POST'])
 @login_required
-def update(instrument_id,permiso='teachers_update'):
+def update(instrument_id,permiso='administration_update'):
     if current_user.have_permissions(permiso):
         instrument = Instrument.query.filter_by(id=instrument_id).first_or_404()
         if request.method == "POST":
-            form = CreateTeachersForm(request.form)
+            if request.files:
+                image = request.files["image"]
+                if image.filename == '':
+                    return redirect(request.url)
+                if not allowed_file(image.filename):
+                    return redirect(request.url)
+                else:
+                    os.remove('%s/flaskps' % BASE_DIR+instrument.img_path)
+                    image_name = secure_filename(image.filename)
+                    image.save(os.path.join(UPLOAD_IMAGES_FOLDER[0], image_name))
+                img_path= IMG_PATH+image_name
+            form = CreateInstrumentsForm(request.form,)
             if form.validate():
-                instrument.update(form)
+                instrument.update(form,img_path)
                 return redirect(url_for('instruments.detail', instrument_id=instrument.id))
         return render_template('instruments/edit.html', instrument=instrument), 200
     else:
@@ -94,9 +105,10 @@ def update(instrument_id,permiso='teachers_update'):
 
 @instruments.route('/instruments/delete/<int:instrument_id>', methods=['POST'])
 @login_required
-def delete(instrument_id,permiso='teachers_destroy'):
+def delete(instrument_id,permiso='administration_destroy'):
     if current_user.have_permissions(permiso):
         instrument = Instrument.query.filter_by(id=instrument_id).first_or_404()
+        os.remove('%s/flaskps' % BASE_DIR+instrument.img_path)
         db.session.delete(instrument)
         db.session.commit()
         return redirect(url_for('instruments.list'))
