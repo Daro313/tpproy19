@@ -84,7 +84,7 @@ class Rol(db.Model):
     def __init__(self, name, permisos):
         super().__init__
         self.name = name
-        self.permisos = permisos
+        self.permisos = ','.join(permisos)
 
     def __repr__(self):
         return '<Rol: {}>'.format(self.name)

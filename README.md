@@ -118,8 +118,9 @@ sh runshell.sh
 db.create_all()
 
 from flaskps import db
-from flaskps.users.models import User, Rol
-from flaskps.configurations.models import Configurations
+from flaskps.app.users.models import User, Rol
+from flaskps.app.users.constants import * 
+from flaskps.app.configurations.models import Configurations
 # crea usuario
 user = User(
     username='superadmin',
@@ -137,9 +138,9 @@ conf = Configurations(
 )
 db.session.add(conf)
 
-docente = Rol(name='docente')
-administrador = Rol(name='administrador')
-preceptor = Rol(name='preceptor')
+docente = Rol(name='docente', permisos=DOCENTE_PERMISOS)
+administrador = Rol(name='administrador', permisos=ADMIN_PERMISOS)
+preceptor = Rol(name='preceptor', permisos=PRECEPTOR_PERMISOS)
 
 db.session.add(docente)
 db.session.add(administrador)
