@@ -129,7 +129,6 @@ user = User(
 user.password = 'admin'
 
 # lo guarda en la db
-db.session.add(user)
 
 conf = Configurations(
   description='escuela orquesta beriso',
@@ -145,6 +144,9 @@ preceptor = Rol(name='preceptor', permisos=PRECEPTOR_PERMISOS)
 db.session.add(docente)
 db.session.add(administrador)
 db.session.add(preceptor)
+
+user.roles.append(administrador)
+db.session.add(user)
 
 db.session.commit()
 ```
