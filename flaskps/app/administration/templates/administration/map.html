@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Ciclo lectivo{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Ubicacion de los nucleos</h4>
+<div class="divider black"></div><br><br>
+<div id="map" style="height: 400px;" class="center"></div><br><br>
+
+<script type="text/javascript">
+  // The first parameter are the coordinates of the center of the map
+  // The second parameter is the zoom level
+  var map = L.map('map').setView([-34.9313798, -57.9786087], 12);
+
+  // {s}, {z}, {x} and {y} are placeholders for map tiles
+  // {x} and {y} are the x/y of where you are on the map
+  // {z} is the zoom level
+  // {s} is the subdomain of cartodb
+    var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  });
+
+  // Now add the layer onto the map
+  map.addLayer(layer);
+
+  L.marker([-34.922763,-57.9860357]).addTo(map)
+  .bindPopup("<strong>Nucleo 1</strong>");
+
+  L.marker([-34.897606,-57.9653306]).addTo(map)
+  .bindPopup("<strong>Nucleo 2</strong>");
+
+  L.marker([-34.911029,-57.9547927]).addTo(map)
+  .bindPopup("<strong>Nucleo 3</strong>");
+
+  L.marker([-34.931573,-57.9341207]).addTo(map)
+  .bindPopup("<strong>Nucleo 4</strong>");
+
+</script>
+{% endblock %}

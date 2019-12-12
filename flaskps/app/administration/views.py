@@ -93,3 +93,8 @@ def workshop_list():
 @login_required
 def show_workshop_students(workshop_id):
     pass
+
+@administration.route('/administration/map', methods=['GET'])
+@login_required
+def show_map():
+    return render_template('administration/map.html')
