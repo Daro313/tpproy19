@@ -7,6 +7,7 @@ from .forms import CreateSchoolYearForm, WorkshopCreateForm
 from flaskps.app.configurations.models import Configurations
 from flaskps.app.teachers.models import Teachers
 from flaskps.app.students.constants import NEIGHBORHOOD_CHOICES
+from flaskps.app.students.models import Students
 
 
 @administration.route('/school-year/create', methods=['GET', 'POST'])
@@ -93,3 +94,13 @@ def workshop_list():
 @login_required
 def show_workshop_students(workshop_id):
     pass
+
+
+@administration.route('/workshop/add_student/<int:workshop_id>', methods=['GET', 'POST'])
+@login_required
+def add_student(workshop_id):
+    workshop = Workshop.query.filter_by(id=workshop_id).first_or_404
+    students = Students.query.filter_by()
+    if request.method == "POST":
+        Workshop.add_student(student.id)
+    return render_template('administration/workshop_add_student.html', workshop=workshop, students=students)

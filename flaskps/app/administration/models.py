@@ -109,6 +109,10 @@ class Workshop(db.Model):
     def update(self, form):
         pass
 
+    def add_student(self, students):
+        for student in students:
+            self.students.appened(student)
+
 
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
