@@ -6,6 +6,9 @@
 
 {% block content %}
 <div id="add_student" class="container">
+  {% if msg %}
+    <span>{{ msg }}</span>
+  {% endif %}
   <table class="responsive-table centered highlight">
     <thead>
       <tr>
@@ -24,27 +27,39 @@
           <td>{{ student.name }}</td>
           <td>{{ student.surname }}</td>
           <td>
+            <!--
             <label>
-              <input type="checkbox" value="{{student.id}}" name="active"/>
+              <input type="checkbox" value="{{student.id}}" name="active" v-model="studentsIds">
               <span>Activo</span>
             </label>
-            <form>
-            </form>
+            -->
+            <a href="{{ url_for('administration.workshop_add_student',  workshop_id=workshop.id, student_id=student.id) }}">AGREGAR</a>
+            {% if student in workshop.students %}
+              <span> | YA ESTA AGREGADO</span>
+            {% endif %}
+
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+  <input type="hidden" value="{{workshop.id}}" v-model="workshop">
+  {% if msg %}
+    <span>{{ msg }}</span>
+  {% endif %}
 </div>
 {% endblock %}
 
 {% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
   var app = new Vue({
     el: '#add_student',
     delimiters: ['[[', ']]'],
     data: {
-      studentsId: [],
+      studentsIds: [],
+      workshop: null,
     },
     methods: {},
   })

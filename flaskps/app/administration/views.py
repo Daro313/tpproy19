@@ -21,7 +21,7 @@ def school_year_create():
     if request.method == 'POST' and form.validate():
         school_year = SchoolYear.create(form)
         return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
-    return render_template('administration/school_year_create.html')
+    return render_template('administration/school_year_create.html', form=form)
 
 
 @administration.route('/school-year/detail/<int:school_year_id>', methods=['GET'])
@@ -53,20 +53,16 @@ def workshop_create(school_year_id):
     teachers = Teachers.query.all()
     form = WorkshopCreateForm(request.form)
     if request.method == "POST" and form.validate():
-        import ipdb;ipdb.set_trace()
         workshop = Workshop.create(form, sy)
         return redirect(
                 url_for('administration.workshop_detail', workshop_id=workshop.id))
     return render_template(
                 'administration/workshop_create.html',
-                school_year_id=sy.id,
+                school_year=sy,
                 nucleos=NEIGHBORHOOD_CHOICES,
                 teachers=teachers,
-            )
-
-
-@administration.route('/workshop/detail/<int:workshop_id>', methods=['GET'])
-@login_required
+                form=form,
+            ) @administration.route('/workshop/detail/<int:workshop_id>', methods=['GET']) @login_required
 def workshop_detail(workshop_id):
     workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
     return render_template('administration/workshop_detail.html', workshop=workshop)
@@ -93,14 +89,42 @@ def workshop_list():
 @administration.route('/workshop/students-list/<int:workshop_id>', methods=['GET'])
 @login_required
 def show_workshop_students(workshop_id):
-    pass
-
+    workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
+    students = Students.query.all()
+    return render_template(
+            'administration/workshop_show_students.html',
+            workshop=workshop,
+            students=students,
+        )
 
 @administration.route('/workshop/add_student/<int:workshop_id>', methods=['GET', 'POST'])
 @login_required
 def add_student(workshop_id):
-    workshop = Workshop.query.filter_by(id=workshop_id).first_or_404
-    students = Students.query.filter_by()
-    if request.method == "POST":
-        Workshop.add_student(student.id)
-    return render_template('administration/workshop_add_student.html', workshop=workshop, students=students)
+    workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
+    students = Students.query.all()
+    return render_template(
+            'administration/workshop_add_student.html',
+            workshop=workshop,
+            students=students,
+        )
+
+
+@administration.route('/workshop/workshop_add_student/<int:workshop_id>/<int:student_id>', methods=['GET'])
+@login_required
+def workshop_add_student(workshop_id, student_id):
+    workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
+    student = Students.query.filter_by(id=student_id).first_or_404()
+    if can_add_student(student, workshop):
+        workshop.add_student(student)
+        msg = "el alumno {} se agrego al taller".format(student.name)
+    else:
+        msg = "el alumno {} no se agrego al taller".format(student.name)
+    return redirect(
+                url_for('administration.add_student', workshop_id=workshop.id, msg=msg))
+
+
+def can_add_student(student, workshop):
+    if student in workshop.students:
+        return False
+    else:
+        return True

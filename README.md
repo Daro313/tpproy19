@@ -49,17 +49,7 @@ sh runshell.sh
 
 
 
-### crear migraciones
-```console
-flask db migrate
-```
 
-### aplicar migracion
-antes de aplicar las migraciones, asegurese de tener seteado la aplicacion. Para saber en que proyecto se aplican las migraciones
-```console
-export FLASK_APP=run.py
-flask db upgrade
-```
 
 
 ## Correr servidor local localhost:5000

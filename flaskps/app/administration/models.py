@@ -24,7 +24,11 @@ class SchoolYear(db.Model):
         start_date = form.start_date.data
         end_date = form.end_date.data
         semesters = form.semester.data
-        instance = cls(start_date=start_date,end_date=end_date,semesters=semesters)
+        instance = cls(
+                        start_date=start_date,
+                        end_date=end_date,
+                        semesters=semesters
+                    )
 
         db.session.add(instance)
         try:
@@ -93,8 +97,8 @@ class Workshop(db.Model):
             horario=horario,
         )
 
-        n = 0
-        for lesson in range(cant):
+        n = 1
+        for lesson in range(cant+1):
             l = Lesson(number=n, workshop_id=instance.id)
             n += 1
             instance.lessons.append(l)
@@ -109,9 +113,13 @@ class Workshop(db.Model):
     def update(self, form):
         pass
 
-    def add_student(self, students):
-        for student in students:
-            self.students.appened(student)
+    def add_student(self, student):
+        self.students.append(student)
+        db.session.add(self)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
 
 class Lesson(db.Model):
