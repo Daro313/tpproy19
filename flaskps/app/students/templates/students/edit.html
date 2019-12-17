@@ -9,7 +9,7 @@
 <div class="divider black"></div><br>
 <div class="container">
   <div class="row" id='edit-student'>
-    <form class="col s12 teal lighten-4" action="{{ url_for('students.update', student_id=student.id) }}" method="POST">
+    <form class="col s12" action="{{ url_for('students.update', student_id=student.id) }}" method="POST">
       <div class="row">
         <div class="input-field col s6">
           <input id="first_name" type="text" class="validate" value="{{ student.name }}" name="name">
@@ -126,6 +126,7 @@
           <label for="level">Nivel:</label>
         </div>
       </div>
+      <a href="{{ url_for( 'students.list' ) }}" class="btn waves-effect waves-light red darken-2 left">Cancelar</a>
       <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar</button><br><br>
     </form>
   </div>

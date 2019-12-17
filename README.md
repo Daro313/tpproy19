@@ -1,4 +1,15 @@
+### CREDENCIALES ACCESO
+administrador
+usuario admin@admin.com
+pass admin
 
+docente
+usuario: usudocente@mail.com
+pass: 123456
+
+preceptor
+usuario: usupreceptor@mail.com
+pass:123456
 # Remember that a model is a representation of a database table in code.
 
 # crear base de datos
@@ -16,7 +27,7 @@ sh runshell.sh
 >>> db.create_all()
 ```
 
-### output de ejemplo Model User y Rol 
+### output de ejemplo Model User y Rol
 > 2019-11-14 22:00:37,395 INFO sqlalchemy.engine.base.Engine COMMIT
 > 2019-11-14 22:00:37,398 INFO sqlalchemy.engine.base.Engine
 > CREATE TABLE users (
@@ -36,8 +47,8 @@ sh runshell.sh
 > 	UNIQUE (email),
 > 	CHECK (active IN (0, 1))
 > )
-> 
-> 
+>
+>
 > 2019-11-14 22:00:37,398 INFO sqlalchemy.engine.base.Engine {}
 > 2019-11-14 22:00:37,432 INFO sqlalchemy.engine.base.Engine COMMIT
 > 2019-11-14 22:00:37,433 INFO sqlalchemy.engine.base.Engine
@@ -119,8 +130,9 @@ sh runshell.sh
 db.create_all()
 
 from flaskps import db
-from flaskps.users.models import User, Rol
-from flaskps.configurations.models import Configurations
+from flaskps.app.users.models import User, Rol
+from flaskps.app.users.constants import *
+from flaskps.app.configurations.models import Configurations
 # crea usuario
 user = User(
     username='superadmin',
@@ -129,7 +141,6 @@ user = User(
 user.password = 'admin'
 
 # lo guarda en la db
-db.session.add(user)
 
 conf = Configurations(
   description='escuela orquesta beriso',
@@ -138,13 +149,16 @@ conf = Configurations(
 )
 db.session.add(conf)
 
-docente = Rol(name='docente')
-administrador = Rol(name='administrador')
-preceptor = Rol(name='preceptor')
+docente = Rol(name='docente', permisos=DOCENTE_PERMISOS)
+administrador = Rol(name='administrador', permisos=ADMIN_PERMISOS)
+preceptor = Rol(name='preceptor', permisos=PRECEPTOR_PERMISOS)
 
 db.session.add(docente)
 db.session.add(administrador)
 db.session.add(preceptor)
+
+user.roles.append(administrador)
+db.session.add(user)
 
 db.session.commit()
 ```

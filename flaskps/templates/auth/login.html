@@ -16,6 +16,15 @@
     <div class="container">
       <div class="">
         <br><br><br><br>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
       </div>
       <form class="" action="{{ url_for('auth.login') }}" method="POST">
         <div class="col s12 m6">
@@ -42,7 +51,7 @@
             </div>
             <div class="card-action">
               <a href="/">Volver</a>
-              <input type="submit" value="Ingresar" class="right">
+              <input type="submit" value="Ingresar" class="btn-flat  right amber-text text-lighten-1">
 
             </div>
           </div>

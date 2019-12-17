@@ -4,31 +4,15 @@ from wtforms import (
     StringField,
     PasswordField,
     validators,
-    SelectField
+    SelectField,
 )
 
 
 class CreateFormUser(Form):
-    email = StringField('Email', [
-                validators.Length(min=6, max=35),
-                validators.DataRequired()
-            ])
-
-    username = StringField('Nombre de usuario', [validators.DataRequired()])
-    name =StringField('Nombre', [validators.DataRequired()])
-    surname = StringField('Apellido', [validators.DataRequired()])
-    password = StringField('Password', [validators.DataRequired()])
+    email = StringField('Email', [validators.Email(), validators.InputRequired()])
+    username = StringField('Nombre de usuario', [validators.InputRequired()])
+    name =StringField('Nombre', [validators.InputRequired()])
+    surname = StringField('Apellido', [validators.InputRequired()])
+    password = StringField('Password', [validators.InputRequired()])
     active = BooleanField('Activo')
-    roles = StringField('Rol', [validators.DataRequired()])
-
-# class UpdateFormUser(Form):
-#     email = StringField('Email', [
-#                 validators.Length(min=6, max=35),
-#                 validators.DataRequired()
-#             ])
-#
-#     user_name = StringField('nombre de usuario', [validators.DataRequired()])
-#     first_name =StringField('nombre', [validators.DataRequired()])
-#     last_name = StringField('apellido', [validators.DataRequired()])
-#     password = StringField('password', [validators.DataRequired()])
-#     roles = StringField('rol', [validators.DataRequired()])
+    roles = StringField('Roles',[validators.InputRequired()])

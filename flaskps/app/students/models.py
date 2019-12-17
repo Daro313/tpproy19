@@ -27,7 +27,6 @@ class Students(db.Model):
         return '<Estudiante: %r>' % self.name
 
     def update(self, form):
-
         self.name = form.name.data
         self.surname = form.surname.data
         self.birth_date = form.birth_date.data
