@@ -14,8 +14,8 @@ from werkzeug.utils import secure_filename
 
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
 MAX_IMAGE_SIZE = 0.5 * 1024 * 1024
-UPLOAD_IMAGES_FOLDER = '%s/flaskps/static/img/instruments/' % BASE_DIR,
-IMG_PATH = '/static/img/instruments/'
+UPLOAD_IMAGES_FOLDER = '%s/flaskps/static/uploads/' % BASE_DIR,
+IMG_PATH = '/static/uploads/'
 
 @instruments.route('/instruments/create', methods=['GET', 'POST'])
 @login_required

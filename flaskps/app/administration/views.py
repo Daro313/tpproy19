@@ -122,6 +122,13 @@ def workshop_detail(workshop_id, permiso='administration_show'):
         return render_template('home/dashboard.html')
 
 
+@administration.route('/administration/map', methods=['GET'])
+@login_required
+def show_map():
+    return render_template('administration/map.html')
+
+
+
 @administration.route('/workshop/list', methods=['GET'])
 @login_required
 def workshop_list():
