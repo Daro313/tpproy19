@@ -9,6 +9,9 @@
 <div class="divider black"></div><br>
 <div class="container">
   <div class="row">
+    {% if form.errors %}
+      {{form.errors}}
+    {% endif %}
     <form class="col s12" method="POST" action="{{ url_for('users.update', user_id=user.id) }}">
       <div class="row">
         <div class="input-field col s6">

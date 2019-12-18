@@ -54,10 +54,6 @@ administrador = Rol('administrador', ADMIN_PERMISOS)
 docente = Rol('docente', DOCENTE_PERMISOS)
 preceptor = Rol('preceptor', PRECEPTOR_PERMISOS)
 
-administrador.permisos = ','.join(map(str, ADMIN_PERMISOS)
-docente.permisos = ','.join(map(str, DOCENTE_PERMISOS)
-preceptor.permisos = ','.join(map(str, PRECEPTOR_PERMISOS)
-
 db.session.add(administrador)
 db.session.add(docente)
 db.session.add(preceptor)

@@ -22,7 +22,14 @@
       {% for student in workshop.students %}
         <tr>
           <td> {{ student.name, student.surname}} </td>
-          <td>{{ student.workshops.lessons}}</td>
+          {% for lesson in workshop.lessons %}
+          <td>
+            <label>
+              <input type="checkbox" value="{{lesson.id}}" name="active" checked />
+              <span></span>
+            </label>
+          </td>
+          {% endfor %}
         </tr>
       {% endfor %}
     </tbody>
