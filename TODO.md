@@ -27,6 +27,18 @@ Agregar api
 
 
 
+<<<<<<< HEAD
+### MEJORA
+
+USER verificar is__active:
+
+ALTA STUdiante
+  * agregar campo: nombre en tutor
+
+
+CONFIG 
+  * que se reflejen los cambios de los 
+=======
 
 # creacion de roles con sus permisos
 
@@ -62,3 +74,4 @@ user.roles.append(administrador)
 
 db.session.commit()
 ```
+>>>>>>> 42609108a9e38cbb309480b4a106c1564d4e1467
