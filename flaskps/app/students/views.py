@@ -99,7 +99,7 @@ def update(student_id,permiso='students_update'):
             if form.validate():
                 student.update(form)
                 return redirect(url_for('students.detail', student_id=student.id))
-        return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes), 200
+        return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes, form=form), 200
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

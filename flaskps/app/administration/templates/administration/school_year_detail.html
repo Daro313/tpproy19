@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <h4 class="center">Detalles Ciclo Lectivo:</h4>
-  <div class="divider black"></div><br>
-  <div class="container">
+<h4 class="center">Detalles Ciclo Lectivo:</h4>
+<div class="divider black"></div><br>
+<div class="container">
   <ul class="collection">
     <li class="collection-item avatar">
       <p> Fecha de inicio : {{ school_year.start_date }} </p>
@@ -18,13 +18,15 @@
   </ul>
   <table class="responsive-table centered highlight teal lighten-4">
     <thead>
-      <tr>Nucleo</tr>
-      <tr>Direccion</tr>
-      <tr>Horario</tr>
-      <tr>Dias</tr>
-      <tr>Docente</tr>
-      <tr>Taller</tr>
-      <tr>Ver Alumnos</tr>
+      <tr>
+        <th>Nucleo</th>
+        <th>Direccion</th>
+        <th>Horario</th>
+        <th>Dias</th>
+        <th>Docente</th>
+        <th>Taller</th>
+        <th>Acciones</th>
+      </tr>
     </thead>
     <tbody>
       {% for workshop in school_year.workshops %}
@@ -36,7 +38,8 @@
           <td>{{ workshop.teacher_id }}</td>
           <td>{{ workshop.name }}</td>
           <td>
-            <a href="{{ url_for('administration.show_workshop_students',  workshop_id=workshop.id) }}" class="">ver alumnos</a>
+            <a href="{{ url_for('administration.show_workshop_students',  workshop_id=workshop.id) }}" class="">asistencia</a> |
+            <a href="{{ url_for('administration.add_student',  workshop_id=workshop.id) }}" class="">agregar</a>
           </td>
         </tr>
       {% endfor %}

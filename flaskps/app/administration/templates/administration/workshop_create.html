@@ -8,11 +8,20 @@
 <h4 class="center">Nuevo Taller</h4>
 <div class="divider black"></div>
 <div class="container">
-  <form class="col s12" action="{{ url_for('administration.workshop_create', school_year_id=school_year_id) }}" method="POST">
+  <h4> Ciclo lectivo {{school_year.start_date}}, {{school_year.semesters}} </h4>
+  {% if form.errors %}
+    {{ form.errors }}
+  {% endif %}
+  <form class="col s12" action="{{ url_for('administration.workshop_create', school_year_id=school_year.id) }}" method="POST">
     <div class="row">
       <div class="col s6">
         <label for="name">Nombre del taller</label>
-        <input id="name" type="text" name="name">
+          <select name="name">
+            {% for taller in talleres %}
+              <option value="{{ taller[0] }}"> {{ taller[1] }} </option>
+            {% endfor %}
+          </select>
+          <label for="nucleo">Nucleo</label>
 
         <label for="short_name">Nombre corto</label>
         <input id="short_name" type="text" name="short_name">
@@ -36,7 +45,7 @@
         <input id="address" type="text" name="address">
 
         <div class="input-field col s6">
-          <select multiple name="days">
+          <select name="days">
             <option value="lunes">Lunes</option>
             <option value="martes">Martes</option>
             <option value="miercoles">Miercoles</option>

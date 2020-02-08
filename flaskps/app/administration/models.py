@@ -13,18 +13,23 @@ __all__ = [
 
 class SchoolYear(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    start_date = db.Column(db.Date, default=get_today())
+    start_date = db.Column(db.Date, default=get_today(), unique=True)
     end_date = db.Column(db.Date, default=get_today())
     semesters = db.Column(ChoiceType(SCHOOL_YEAR_CHOICES))
     workshops = db.relationship(
             'Workshop', backref='semester', lazy=True)
+    active = db.Column(db.Boolean, default=True)
 
     @classmethod
     def create(cls, form):
         start_date = form.start_date.data
         end_date = form.end_date.data
         semesters = form.semester.data
-        instance = cls(start_date=start_date,end_date=end_date,semesters=semesters)
+        instance = cls(
+                        start_date=start_date,
+                        end_date=end_date,
+                        semesters=semesters
+                    )
 
         db.session.add(instance)
         try:
@@ -38,13 +43,26 @@ class SchoolYear(db.Model):
         for workshop in workshops:
             self.workshops.append(workshops)
 
+    def delete(self):
+        self.active = False
+        db.session.commit()
+
+    def update(self, form):
+        self.start_date = form.get('start_date')
+        self.end_date = form.get('end_date')
+        self.semesters = form.get('semester')
+        db.session.commit()
+
+
 
 workshop_students = db.Table('workshop_students',
     db.Column(
         'workshop_id', db.Integer, db.ForeignKey('workshop.id'), primary_key=True),
     db.Column(
         'student_id', db.Integer, db.ForeignKey('students.id'), primary_key=True),
-    db.Column('attent_date', db.Date)
+    db.Column('attent_date', db.Date),
+    db.Column(
+        'lesson_id', db.Integer, db.ForeignKey('lesson.id'), primary_key=True),
 )
 
 
@@ -93,8 +111,8 @@ class Workshop(db.Model):
             horario=horario,
         )
 
-        n = 0
-        for lesson in range(cant):
+        n = 1
+        for lesson in range(cant+1):
             l = Lesson(number=n, workshop_id=instance.id)
             n += 1
             instance.lessons.append(l)
@@ -108,6 +126,14 @@ class Workshop(db.Model):
 
     def update(self, form):
         pass
+
+    def add_student(self, student):
+        self.students.append(student)
+        db.session.add(self)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
 
 class Lesson(db.Model):
