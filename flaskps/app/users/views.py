@@ -79,7 +79,7 @@ def update(user_id,permiso='user_update'):
             if form.validate():
                 user.update(form)
                 return redirect(url_for('users.detail', user_id=user.id))
-        return render_template('users/edit.html', user=user, roles=roles), 200
+        return render_template('users/edit.html', user=user, roles=roles, form=form), 200
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

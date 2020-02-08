@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Detalle Ciclo lectivo{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h4 class="center">Detalles Ciclo Lectivo:</h4>
+<div class="divider black"></div><br>
+<div class="container">
+  <h3>{{workshop.name}}</h3>
+  <table class="responsive-table centered highlight teal lighten-4">
+    <thead>
+      <tr>
+        <th>alumno</th>
+        {% for lesson in workshop.lessons %}
+          <th>{{ lesson.number }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in workshop.students %}
+        <tr>
+          <td> {{ student.name, student.surname}} </td>
+          {% for lesson in workshop.lessons %}
+          <td>
+            <label>
+              <input type="checkbox" value="{{lesson.id}}" name="active" checked />
+              <span></span>
+            </label>
+          </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

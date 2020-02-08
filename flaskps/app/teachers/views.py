@@ -100,7 +100,7 @@ def update(teacher_id,permiso='teachers_update'):
             if form.validate():
                 teacher.update(form)
                 return redirect(url_for('teachers.detail', teacher_id=teacher.id))
-        return render_template('teachers/edit.html', teacher=teacher, dniTypes=dniTypes, localities=localities), 200
+        return render_template('teachers/edit.html', teacher=teacher, dniTypes=dniTypes, localities=localities, form=form), 200
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
