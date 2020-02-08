@@ -19,7 +19,9 @@ class ProductionConfig(Config):
     Production configurations
     """
 
-    DEBUG = False
+    DEBUG = True
+    EXPLAIN_TEMPLATE_LOADING = True
+    SQLALCHEMY_ECHO = True
     SECRET_KEY = 'p9Bv<3Eid9%$i01'
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://grupo8:MTFhMWVmMDkxYmE2@127.0.0.1/grupo8'
 
