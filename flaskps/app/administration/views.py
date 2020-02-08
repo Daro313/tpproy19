@@ -57,11 +57,6 @@ def school_year_edit(school_year_id, permiso='administration_new'):
         return render_template('home/dashboard.html')
 
 
-@administration.route('/school-year/delete/<int:school_year_id>', methods=['POST'])
-@login_required
-def school_year_delete():
-    pass
-
 @administration.route('/school-year/detail/<int:school_year_id>', methods=['GET'])
 @login_required
 def school_year_detail(school_year_id, permiso='administration_show'):
