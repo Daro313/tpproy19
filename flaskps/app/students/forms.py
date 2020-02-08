@@ -16,7 +16,7 @@ from .constants import (
 )
 
 class CreateStudentsForm(Form):
-    surname = StringField('apellido', [validators.DataRequired()])
+    surname = StringField('apellido', [validators.DataRequired()], _name="apellido")
     name = StringField('nombre', [validators.DataRequired()])
     birth_date = DateField('fecha de nacimiento', [validators.DataRequired()],format='%Y-%m-%d')
     borned = StringField('lugar de nacimiento')
