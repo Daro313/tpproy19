@@ -22,9 +22,18 @@ def school_year_create(permiso='administration_new'):
     """
     if current_user.have_permissions(permiso):
         form = CreateSchoolYearForm(request.form)
-        if request.method == 'POST' and form.validate():
-            school_year = SchoolYear.create(form)
-            return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
+        if request.method == 'POST':
+            if form.validate():
+                school_year = SchoolYear.query.filter_by(start_date=form.start_date.data).all()
+                if school_year:
+                    msg = "Error al crear el ciclo lectivo ya existe uno creado con la misma fecha de inicio"
+                    return render_template(
+                        'administration/school_year_create.html',
+                        form=form,
+                        msg=msg
+                    )
+                school_year = SchoolYear.create(form)
+                return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
         return render_template('administration/school_year_create.html', form=form)
     else:
         flash('No tiene los permisos para acceder :(')
@@ -49,7 +58,6 @@ def school_year_edit(school_year_id, permiso='administration_new'):
         school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
         if request.method == "POST":
             school_year.update(request.form)
-            print('---------------------------------------------')
             return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
         return render_template('administration/school_year_edit.html', school_year=school_year)
     else:
@@ -116,7 +124,12 @@ def workshop_create(school_year_id, permiso='administration_new'):
 def workshop_detail(workshop_id, permiso='administration_show'):
     if current_user.have_permissions(permiso):
         workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
-        return render_template('administration/workshop_detail.html', workshop=workshop)
+        teacher = Teachers.query.filter_by(id=workshop.teacher_id).first_or_404()
+        return render_template(
+                'administration/workshop_detail.html',
+                workshop=workshop,
+                teacher=teacher
+        )
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -197,7 +210,5 @@ def workshop_add_student(workshop_id, student_id, permiso='students_index'):
 
 
 def can_add_student(student, workshop):
-    if student in workshop.students:
-        return False
-    else:
-        return True
+    can_add = True if student in Workshop.students else False
+    return can_add
