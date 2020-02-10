@@ -30,3 +30,4 @@ class CreateStudentsForm(Form):
     phone = StringField('teleforno')
     school = StringField('escuela', [validators.DataRequired()])
     level = SelectField('nivel', [validators.DataRequired()], choices=LEVEL_CHOICES)
+    tutor_name = StringField('apellido', [validators.DataRequired()])

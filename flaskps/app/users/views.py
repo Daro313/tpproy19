@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required
 from flask_user import current_user, roles_required, UserManager
@@ -19,25 +20,22 @@ def create(permiso='user_new'):
     """
     if current_user.have_permissions(permiso):
         form = CreateFormUser(request.form)
-        if request.method == 'POST' and form.validate():
-            user = User(
-                name=request.form.get('name'),
-                surname=request.form.get('surname'),
-                email=request.form.get('email'),
-                username=request.form.get('username'),
-            )
-            user.password = request.form.get('password')
-            roles = request.form.getlist('roles')
+        if request.method == 'POST':
+            if form.validate():
+                user = User.query.filter(or_(
+                    User.username == form.username.data,
+                    User.email == form.email.data,
+                )).all()
 
-            roles = Rol.query.filter(Rol.name.in_(roles)).all()
-            user.roles = roles
-            db.session.add(user)
-            try:
-                db.session.commit()
-            except:
-                db.session.rollback()
-                return render_template('users/create_user.html', msg= 'No se pudo crear el usuario'), 403
-            return redirect(url_for('users.detail', user_id=user.id))
+                if user:
+                    msg = "Error al crear usuario: Email o Nombre de usuario ya existente"
+                    return render_template(
+                            'users/create_user.html',
+                            msg=msg,
+                            form=form
+                    ), 403
+                user = User.create(form)
+                return redirect(url_for('users.detail', user_id=user.id))
         return render_template('users/create_user.html', form=form)
     else:
         flash('No tiene los permisos para acceder :(')
@@ -70,7 +68,7 @@ def list(page,permiso='user_index'):
 
 @users.route('/user/update/int:<user_id>', methods=['GET','POST'])
 @login_required
-def update(user_id,permiso='user_update'):
+def update(user_id, permiso='user_update'):
     if current_user.have_permissions(permiso):
         user = User.query.filter_by(id=user_id).first_or_404()
         roles = get_user_roles(user)
@@ -87,7 +85,7 @@ def update(user_id,permiso='user_update'):
 
 @users.route('/user/detail/<int:user_id>')
 @login_required
-def detail(user_id,permiso='user_show'):
+def detail(user_id, permiso='user_show'):
     if current_user.have_permissions(permiso):
         user = User.query.filter_by(id=user_id).first_or_404()
         return render_template('users/detail.html', user=user)
@@ -98,11 +96,9 @@ def detail(user_id,permiso='user_show'):
 
 @users.route('/user/delete/<user_id>', methods=['POST'])
 @login_required
-def delete(user_id,permiso='user_destroy'):
+def delete(user_id, permiso='user_destroy'):
     if current_user.have_permissions(permiso):
-        user = User.query.filter_by(id=user_id).first_or_404()
-        db.session.delete(user)
-        db.session.commit()
+        User.delete(user_id)
         return redirect(url_for('users.list'))
     else:
         flash('No tiene los permisos para acceder :(')
