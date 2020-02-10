@@ -22,7 +22,7 @@ class Students(db.Model):
     phone = db.Column(db.String(60))
     school = db.Column(db.String(60))
     level = db.Column(ChoiceType(LEVEL_CHOICES))
-    # tutor_name = db.Column(db.String(60))
+    tutor_name = db.Column(db.String(60))
 
     def __repr__(self):
         return '<Estudiante: %r>' % self.name
@@ -44,7 +44,7 @@ class Students(db.Model):
             phone=form.phone.data,
             school=form.school.data,
             level=form.level.data,
-            # tutor_name=form.tutor_name,
+            tutor_name=form.tutor_name,
         )
         db.session.add(instance)
         try:
