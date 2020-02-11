@@ -1,7 +1,7 @@
 ### CREDENCIALES ACCESO
 administrador
-usuario admin@admin.com
-pass admin
+usuario: admin@admin.com
+pass: admin
 
 docente
 usuario: usudocente@mail.com
@@ -115,7 +115,7 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
 * entrar a la consola de flask
 
 ```console
-sh runshell.sh
+sh flask_shell.sh
 
 db.create_all()
 

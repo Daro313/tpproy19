@@ -9,6 +9,9 @@
 <div class="divider black"></div><br>
 <div class="container">
   <div class="row">
+    {% if msg %}
+      {{ msg }}
+    {% endif %}
     {% if form.errors %}
       {{form.errors}}
     {% endif %}

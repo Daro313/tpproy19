@@ -17,10 +17,10 @@
            Localidad: {{ student.locality }}<br>
            Direccion: {{ student.address }}<br>
            Barrio:{{  student.neighborhood }}<br>
-           Gener o: {{ student.gender }}<br>
+           Genero: {{ student.gender }}<br>
            Tipo de documento: {{ student.document_type }}<br>
            Nro de documento: {{ student.document_number }}<br>
-           Tutor: {{ student.tutor }}<br>
+           Tutor: {{ student.tutor }}, {{ student.tutor_name }}<br>
            Telefono: {% if student.phone %} {{ student.phone }} {% endif %}<br>
            Colegio: {{ student.school }}<br>
            Nivel:{{ student.level }}

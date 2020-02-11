@@ -98,9 +98,9 @@ def update(instrument_id,permiso='administration_update'):
                 img_path = IMG_PATH+image_name
             else:
                 img_path = instrument.img_path
-            form = CreateInstrumentsForm(request.form,img_path)
+            form = CreateInstrumentsForm(request.form, img_path)
             if form.validate():
-                instrument.update(form,img_path)
+                instrument.update(form, img_path)
                 return redirect(url_for('instruments.detail', instrument_id=instrument.id))
         return render_template('instruments/edit.html', instrument=instrument), 200
     else:
@@ -110,12 +110,9 @@ def update(instrument_id,permiso='administration_update'):
 
 @instruments.route('/instruments/delete/<int:instrument_id>', methods=['POST'])
 @login_required
-def delete(instrument_id,permiso='administration_destroy'):
+def delete(instrument_id, permiso='administration_destroy'):
     if current_user.have_permissions(permiso):
-        instrument = Instrument.query.filter_by(id=instrument_id).first_or_404()
-        os.remove('%s/flaskps' % BASE_DIR+instrument.img_path)
-        db.session.delete(instrument)
-        db.session.commit()
+        Instrument.delete(instrument_id)
         return redirect(url_for('instruments.list'))
     else:
         flash('No tiene los permisos para acceder :(')

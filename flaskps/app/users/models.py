@@ -23,6 +23,31 @@ class User(db.Model, TimeStampedModel, UserMixin):
     def __repr__(self):
         return '<Usuario: %r>' % self.username
 
+    @classmethod
+    def create(cls, form):
+        username = form.name.data
+        name = form.name.data
+        surname = form.surname.data
+        email = form.email.data
+        password = form.password.data
+        roles = form.roles.raw_data
+        roles = Rol.query.filter(Rol.name.in_(roles)).all()
+
+        instance = cls(
+            name=name,
+            surname=surname,
+            username=username,
+            email=email,
+            password=password,
+            roles=roles,
+        )
+        db.session.add(instance)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        return instance
+
     def update(self, form):
         self.name = form.name.data
         self.surname = form.surname.data
@@ -37,6 +62,12 @@ class User(db.Model, TimeStampedModel, UserMixin):
         if not self.verify_password(form.password.data):
             self.password = form.password.data
 
+        db.session.commit()
+
+    @classmethod
+    def delete(cls, user_id):
+        user = User.query.filter_by(id=user_id).first_or_404()
+        db.session.delete(user)
         db.session.commit()
 
     def have_permissions(self, permission):

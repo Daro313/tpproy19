@@ -9,6 +9,9 @@
 <div class="divider black"></div><br>
 <div class="container">
   <div class="row">
+    {% if msg %}
+      {{ msg }}
+    {% endif %}
     {% if form.errors %}
       {{form.errors}}
     {% endif %}
@@ -92,6 +95,10 @@
             <option value="tutor">Tutor</option>
           </select>
           <label for="tutor">Responsable a cargo:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="tutor_name" name="tutor_name" type="text" class="validate">
+          <label for="tutor_name">Nombre del tutor</label>
         </div>
         <div class="input-field col s6">
           <input id="phone" name="phone" type="tel" class="validate">

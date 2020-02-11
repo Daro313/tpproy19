@@ -1,5 +1,6 @@
-from flaskps import db
+import os
 import datetime
+from flaskps import db, BASE_DIR
 
 class Instrument(db.Model):
     __tablename__ = 'instruments'
@@ -29,13 +30,19 @@ class Instrument(db.Model):
         img_path = path
         instance = cls(name=name,type=type,inventory_number=inventory_number,img_path=img_path)
 
-
         db.session.add(instance)
         try:
             db.session.commit()
         except:
             db.session.rollback()
         return instance
+
+    @classmethod
+    def delete(cls, instrument_id):
+        instrument = cls.query.filter_by(id=instrument_id).first_or_404()
+        os.remove('%s/flaskps' % BASE_DIR+instrument.img_path)
+        db.session.delete(instrument)
+        db.session.commit()
 
     def update(self, form, path):
         self.name = form.name.data

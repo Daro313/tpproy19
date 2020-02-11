@@ -5,13 +5,12 @@
 {% endblock %}
 
 {% block content %}
-<h4 class="center">Usuario Nuevo</h4>
-{% if msg %}
-  {{ msg }}
-{% endif %}
 <div class="divider black"></div><br>
 <div class="container">
   <div class="row">
+    {% if msg %}
+      <p>{{msg}}</p>
+    {% endif %}
     {% if form.errors %}
       {{form.errors}}
     {% endif %}

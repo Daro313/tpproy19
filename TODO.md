@@ -1,31 +1,8 @@
 # TODO LIST
 
-#### DOCENTES
-CRUD-DOCENTE
-
-
-#### Estudiantes
-
-Agregar api
-* tipo de documento
-* localidad
-
-
-#### Ciclo lectivo
-* crear modelo ciclo lectivo 
-* Crear vista de ciclo lectivo
-* template (agregar multiples talleres)
-
-
-#### Talleres
-
-* crear modelo
-	* atributos: (docente, estudiantes, nombre)
-* crear vista
-* crear template (permiete agregar varios estudiantes y docentes)
-
-
-
+# Ciclo lectivo (shool_year)
+  * en el template del edit cuando se guarda el mismo semestre guarda el VALUE y deveria quedarse con el nombre
+  
 
 
 # creacion de roles con sus permisos
@@ -62,3 +39,4 @@ user.roles.append(administrador)
 
 db.session.commit()
 ```
+>>>>>>> 42609108a9e38cbb309480b4a106c1564d4e1467
