@@ -44,7 +44,7 @@ class Students(db.Model):
             phone=form.phone.data,
             school=form.school.data,
             level=form.level.data,
-            tutor_name=form.tutor_name,
+            tutor_name=form.tutor_name.data,
         )
         db.session.add(instance)
         try:

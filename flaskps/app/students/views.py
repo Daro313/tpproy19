@@ -47,10 +47,11 @@ def create(permiso='students_new'):
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
-@students.route('/students/list/', methods=['GET'], defaults={'page':1})
+
+@students.route('/students/list/', methods=['GET'], defaults={'page': 1})
 @students.route('/students/list/<int:page>', methods=['GET'])
 @login_required
-def list(page,permiso='students_index'):
+def list(page, permiso='students_index'):
     if current_user.have_permissions(permiso):
         page = page
         conf = Configurations.query.first()
@@ -62,7 +63,7 @@ def list(page,permiso='students_index'):
         return render_template('home/dashboard.html')
 
 
-@students.route('/students/detail/<int:student_id>', methods=['GET','POST'])
+@students.route('/students/detail/<int:student_id>', methods=['GET', 'POST'])
 @login_required
 def detail(student_id, permiso='students_show'):
     if current_user.have_permissions(permiso):

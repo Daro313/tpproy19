@@ -70,7 +70,8 @@ def school_year_edit(school_year_id, permiso='administration_new'):
 def school_year_detail(school_year_id, permiso='administration_show'):
     if current_user.have_permissions(permiso):
         school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
-        return render_template('administration/school_year_detail.html', school_year=school_year)
+        return render_template(
+            'administration/school_year_detail.html', school_year=school_year)
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -165,11 +166,9 @@ def workshop_list():
 def show_workshop_students(workshop_id, permiso='students_index'):
     if current_user.have_permissions(permiso):
         workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
-        students = Students.query.all()
         return render_template(
                 'administration/workshop_show_students.html',
                 workshop=workshop,
-                students=students,
             )
     else:
         flash('No tiene los permisos para acceder :(')
@@ -203,12 +202,14 @@ def workshop_add_student(workshop_id, student_id, permiso='students_index'):
         else:
             msg = "el alumno {} no se agrego al taller".format(student.name)
         return redirect(
-                    url_for('administration.add_student', workshop_id=workshop.id, msg=msg))
+            url_for('administration.add_student', workshop_id=workshop.id, msg=msg))
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
 
 def can_add_student(student, workshop):
-    can_add = True if student in Workshop.students else False
-    return can_add
+    if student in workshop.students:
+        return False
+    else:
+        return True
