@@ -1,10 +1,11 @@
+from sqlalchemy import and_
 from flaskps import db
 from flask_login import login_required
 from flask import render_template, redirect, request, url_for, flash
 from flask_user import current_user
 
 from . import administration
-from .models import SchoolYear, Workshop
+from .models import SchoolYear, Workshop, Attend
 from .forms import CreateSchoolYearForm, WorkshopCreateForm
 from .contants import TALLERES
 from flaskps.app.configurations.models import Configurations
@@ -174,6 +175,7 @@ def show_workshop_students(workshop_id, permiso='students_index'):
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
+
 @administration.route('/workshop/add_student/<int:workshop_id>', methods=['GET', 'POST'])
 @login_required
 def add_student(workshop_id, permiso='students_index'):
@@ -189,6 +191,29 @@ def add_student(workshop_id, permiso='students_index'):
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
+
+@administration.route('/workshop/lesson_attend/', methods=['POST'])
+@login_required
+def attend(permiso='students_index'):  # TODO: ver permiso
+    if current_user.have_permissions(permiso):
+        student_id = request.json.get('student_id')
+        lesson_id = request.json.get('lesson_id')
+
+        attend = Attend.query.filter(
+            and_(
+                Attend.lesson_id == lesson_id,
+                Attend.student_id == student_id
+            )
+        ).first_or_404()
+        attend.attend()
+        workshop = Workshop.query.filter_by(id=attend.lesson.workshop_id).first_or_404()
+        return render_template(
+                'administration/workshop_show_students.html',
+                workshop=workshop,
+            )
+    else:
+        flash('No tiene los permisos para acceder :(')
+        return render_template('home/dashboard.html')
 
 @administration.route('/workshop/workshop_add_student/<int:workshop_id>/<int:student_id>', methods=['GET'])
 @login_required

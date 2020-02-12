@@ -144,6 +144,11 @@ class Attend(db.Model):
     student = db.relationship('Students', backref='attend')
     lesson = db.relationship('Lesson', backref='attend')
 
+    def attend(self):
+        self.has_attended = True if not self.has_attended else False
+        db.session.add(self)
+        db.session.commit()
+
 
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
