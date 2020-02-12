@@ -12,5 +12,5 @@ from wtforms import (
 from .constants import INSTRUMENT_TYPES
 
 class CreateInstrumentsForm(Form):
-    name = StringField('Nombre', [validators.DataRequired()])
-    type = SelectField('Tipo', [validators.DataRequired()], choices=INSTRUMENT_TYPES)
+    name = StringField('Nombre', [validators.DataRequired(message='Campo requerido')])
+    type = SelectField('Tipo', [validators.DataRequired(message='Campo requerido')], choices=INSTRUMENT_TYPES)

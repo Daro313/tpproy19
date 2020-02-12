@@ -6,7 +6,7 @@ from flask_user import current_user
 
 from flaskps import db
 from . import students
-from .models import Students
+from .models import Students, Level, School, Neighborhood
 from .forms import CreateStudentsForm
 from flaskps.app.configurations.models import Configurations
 
@@ -22,6 +22,9 @@ def create(permiso='students_new'):
         form = CreateStudentsForm(request.form)
         dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
         localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
+        levels = Level.query.filter_by()
+        neighborhoods = Neighborhood.query.filter_by()
+        schools = School.query.filter_by()
         if request.method == 'POST':
             if form.validate():
                 student = Students.query.filter(
@@ -42,7 +45,7 @@ def create(permiso='students_new'):
                     ), 403
                 student = Students.create(form)
                 return redirect(url_for('students.detail', student_id=student.id))
-        return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities)
+        return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities, levels=levels, neighborhoods=neighborhoods, schools=schools)
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -68,7 +71,10 @@ def list(page, permiso='students_index'):
 def detail(student_id, permiso='students_show'):
     if current_user.have_permissions(permiso):
         student = Students.query.filter_by(id=student_id).first_or_404()
-        return render_template('students/detail.html', student=student)
+        level = Level.query.filter_by(id=student.level_id).first_or_404()
+        neighborhood = Neighborhood.query.filter_by(id=student.neighborhood_id).first_or_404()
+        school = School.query.filter_by(id=student.school_id).first_or_404()
+        return render_template('students/detail.html', student=student, level=level, neighborhood=neighborhood, school=school)
     else:
         return render_template('home/dashboard.html')
 
@@ -90,12 +96,15 @@ def update(student_id, permiso='students_update'):
         student = Students.query.filter_by(id=student_id).first_or_404()
         dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
         localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
+        levels = Level.query.filter_by()
+        neighborhoods = Neighborhood.query.filter_by()
+        schools = School.query.filter_by()
         if request.method == "POST":
             form = CreateStudentsForm(request.form)
             if form.validate():
                 student.update(form)
                 return redirect(url_for('students.detail', student_id=student.id))
-        return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes, form=form), 200
+        return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes, form=form, levels=levels, neighborhoods=neighborhoods, schools=schools), 200
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

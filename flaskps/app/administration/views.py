@@ -10,7 +10,6 @@ from .forms import CreateSchoolYearForm, WorkshopCreateForm
 from .contants import TALLERES
 from flaskps.app.configurations.models import Configurations
 from flaskps.app.teachers.models import Teachers
-from flaskps.app.students.constants import NEIGHBORHOOD_CHOICES
 from flaskps.app.students.models import Students
 
 
@@ -103,6 +102,7 @@ def workshop_create(school_year_id, permiso='administration_new'):
     if current_user.have_permissions(permiso):
         sy = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
         teachers = Teachers.query.all()
+        nucleos = Neighborhood.query.all()
         form = WorkshopCreateForm(request.form)
         if request.method == "POST" and form.validate():
             workshop = Workshop.create(form, sy)
@@ -111,7 +111,7 @@ def workshop_create(school_year_id, permiso='administration_new'):
         return render_template(
                     'administration/workshop_create.html',
                     school_year=sy,
-                    nucleos=NEIGHBORHOOD_CHOICES,
+                    nucleos= nucleos,
                     teachers=teachers,
                     form=form,
                     talleres=TALLERES,
