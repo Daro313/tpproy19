@@ -10,7 +10,11 @@
 <div class="container">
   <div class="row">
     {% if form.errors %}
-      {{form.errors}}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
     {% endif %}
     <form class="col s12" method="POST" action="{{ url_for('users.update', user_id=user.id) }}">
       <div class="row">

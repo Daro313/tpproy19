@@ -12,7 +12,11 @@
       <p>{{msg}}</p>
     {% endif %}
     {% if form.errors %}
-      {{form.errors}}
+      {% for f in form._fields.items() %}
+        {% if f[0] in form.errors %}
+          {{ f[1].label.text }}: {{ f[1].errors[0] }}<br>
+        {% endif %}
+      {% endfor %}
     {% endif %}
     <form class="col s12" action="{{ url_for('users.create') }}" method="POST" >
       <div class="row">
