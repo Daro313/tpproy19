@@ -81,10 +81,9 @@
         </div>
         <div class="input-field col s6">
           <select name="neighborhood">
-            <option value="" selected></option>
-            <option value="1">Los Hornos</option>
-            <option value="2">San Carlos</option>
-            <option value="3">Villa Elvira</option>
+            {% for n in neighborhoods %}
+              <option value="{{ n.id }}">{{ n.name }}</option>
+            {% endfor %}
           </select>
           <label for="neighborhood">Barrio:</label>
         </div>
@@ -112,28 +111,17 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="school">
-            <option value="" selected></option>
-            <option value="nacion">Nacional</option>
-            <option value="normal">Normal</option>
-            <option value="albert thomas">Albert Thomas</option>
+            {% for s in schools %}
+              <option value="{{ s.id }}">{{ s.name }}</option>
+            {% endfor %}
           </select>
           <label for="school">Escuela</label>
         </div>
         <div class="input-field col s6">
           <select name="level">
-            <option value=""></option>
-            <option value="1">I</option>
-            <option value="2">II</option>
-            <option value="3">III</option>
-            <option value="4">IV</option>
-            <option value="5">V</option>
-            <option value="6">VI</option>
-            <option value="7">VII</option>
-            <option value="8">VIII</option>
-            <option value="9">IX</option>
-            <option value="10">X</option>
-            <option value="11">XI</option>
-            <option value="12">XII</option>
+            {% for l in levels %}
+              <option value="{{ l.id }}">{{ l.name }}</option>
+            {% endfor %}
           </select>
           <label for="level">Nivel</label>
         </div>
