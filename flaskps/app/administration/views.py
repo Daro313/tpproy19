@@ -64,13 +64,14 @@ def school_year_edit(school_year_id, permiso='administration_new'):
             if form.validate():
                 school_year = SchoolYear.query.filter_by(start_date=form.start_date.data).all()
                 if school_year:
-                    msg = "Error al editar, ya existe un ciclo lectivo con la misma fecha de inicio."
-                    return render_template(
-                        'administration/school_year_edit.html',
-                        form=form,
-                        msg=msg,
-                        school_year=school_year_edit
-                    )
+                    if not school_year_id == school_year[0].id:
+                        msg = "Error al editar, ya existe un ciclo lectivo con la misma fecha de inicio."
+                        return render_template(
+                            'administration/school_year_edit.html',
+                            form=form,
+                            msg=msg,
+                            school_year=school_year_edit
+                        )
                 school_year_edit.update(form)
                 return redirect(url_for('administration.school_year_detail', school_year_id=school_year_edit.id))
         return render_template('administration/school_year_edit.html', school_year=school_year_edit)
