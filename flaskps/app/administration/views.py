@@ -85,8 +85,9 @@ def school_year_edit(school_year_id, permiso='administration_new'):
 def school_year_detail(school_year_id, permiso='administration_show'):
     if current_user.have_permissions(permiso):
         school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
+        teachers = Teachers.query.all()
         return render_template(
-            'administration/school_year_detail.html', school_year=school_year)
+            'administration/school_year_detail.html', school_year=school_year, teachers=teachers)
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -122,7 +123,7 @@ def workshop_create(school_year_id, permiso='administration_new'):
         if request.method == "POST" and form.validate():
             workshop = Workshop.create(form, sy)
             return redirect(
-                    url_for('administration.workshop_detail', workshop_id=workshop.id))
+                    url_for('administration.workshop_detail', workshop_id=workshop.id, school_year_id=school_year_id))
         return render_template(
                     'administration/workshop_create.html',
                     school_year=sy,
@@ -136,16 +137,18 @@ def workshop_create(school_year_id, permiso='administration_new'):
         return render_template('home/dashboard.html')
 
 
-@administration.route('/workshop/detail/<int:workshop_id>', methods=['GET'])
+@administration.route('/workshop/detail/<int:workshop_id>/<int:school_year_id>', methods=['GET'])
 @login_required
-def workshop_detail(workshop_id, permiso='administration_show'):
+def workshop_detail(workshop_id, school_year_id,permiso='administration_show'):
     if current_user.have_permissions(permiso):
+        school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
         workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
         teacher = Teachers.query.filter_by(id=workshop.teacher_id).first_or_404()
         return render_template(
                 'administration/workshop_detail.html',
                 workshop=workshop,
-                teacher=teacher
+                teacher=teacher,
+                school_year=school_year
         )
     else:
         flash('No tiene los permisos para acceder :(')

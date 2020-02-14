@@ -5,20 +5,21 @@
 {% endblock %}
 
 {% block content %}
-  <h4 class="center">Detalles Taller:</h4>
+  <h4 class="center">Detalles taller perteneciente al</h4>
+  <h5 class="center"> Ciclo lectivo: {{school_year.start_date}} - {{school_year.semesters}} </h5>
   <div class="divider black"></div><br>
   <div class="container">
   <ul class="collection">
     <li class="collection-item avatar">
-      <p>nombre: {{ workshop.name }}</p>
-      <p>nombre corto: {{ workshop.short_name }}</p>
-      <p>Semestre: {{ workshop.semester.semesters}}</p>
-      <p>Profesor a cargo: {{ teacher.name }}, {{ teacher.surname }}</p>
-      <p>dias: {{ workshop.days }}</p>
-      <p>nucleo: {{ workshop.nucleo }}</p>
-      <p>direccion: {{ workshop.address }}</p>
-      <p>horaio: {{ workshop.horario }}</p>
-      <p>cantidad de clases: {{ workshop.cant_lessons }}</p>
+      <p><b>Nombre del taller:</b> {{ workshop.name }}</p>
+      <p><b>Nombre corto:</b> {{ workshop.short_name }}</p>
+      <p><b>Semestre:</b> {{ workshop.semester.semesters}}</p>
+      <p><b>Profesor a cargo:</b> {{ teacher.name }}, {{ teacher.surname }}</p>
+      <p><b>Dia:</b> {{ workshop.days }}</p>
+      <p><b>Nucleo:</b> {{ workshop.nucleo }}</p>
+      <p><b>Direccion:</b> {{ workshop.address }}</p>
+      <p><b>Hora:</b> {{ workshop.horario }}</p>
+      <p><b>Cantidad de clases:</b> {{ workshop.cant_lessons }}</p>
     </li>
   </ul>
 {% endblock %}

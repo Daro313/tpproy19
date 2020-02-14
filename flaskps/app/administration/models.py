@@ -100,7 +100,7 @@ class Workshop(db.Model):
         teacher_id = form.teacher.data
         nucleo = form.nucleo.data
         address = form.address.data
-        days = form.address.data
+        days = form.days.data
         horario = form.horario.data
         cant = form.clases.data
 
@@ -161,4 +161,3 @@ class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer)
     workshop_id = db.Column(db.Integer, db.ForeignKey('workshop.id'), nullable=False)
-

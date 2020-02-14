@@ -17,30 +17,35 @@
     </li>
   </ul>
   <h5 class="center">Talleres</h5>
-  <table class="responsive-table centered highlight teal lighten-4">
+  <div class="divider black"></div><br>
+  <table class="responsive-table centered highlight">
     <thead>
       <tr>
+        <th>Taller</th>
         <th>Nucleo</th>
         <th>Direccion</th>
         <th>Horario</th>
-        <th>Dias</th>
+        <th>Dia</th>
         <th>Docente</th>
-        <th>Taller</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       {% for workshop in school_year.workshops %}
         <tr>
+          <td>{{ workshop.name }}</td>
           <td>{{ workshop.nucleo }}</td>
           <td>{{ workshop.address }}</td>
           <td>{{ workshop.horario }}</td>
           <td>{{ workshop.days}}</td>
-          <td>{{ workshop.teacher_id }}</td>
-          <td>{{ workshop.name }}</td>
+          {% for t in teachers %}
+            {% if workshop.teacher_id == t.id %}
+              <td>{{ t.name }} {{ t.surname }}</td>
+            {% endif %}
+          {% endfor %}
           <td>
-            <a href="{{ url_for('administration.show_workshop_students',  workshop_id=workshop.id) }}" class="">Pasar asistencia</a> |
-            <a href="{{ url_for('administration.add_student',  workshop_id=workshop.id) }}" class="">Agregar alumnos</a>
+            <a href="{{ url_for('administration.show_workshop_students',  workshop_id=workshop.id) }}"><i class="tiny material-icons green-text text-lighten-1 tooltipped" data-position="right" data-tooltip="Pasar asistencias">check_box</i></a>
+            <a href="{{ url_for('administration.add_student',  workshop_id=workshop.id) }}"><i class="tiny material-icons blue-text text-darken-2 tooltipped" data-position="right" data-tooltip="Agregar alumnos al taller">person_add</i></a>
           </td>
         </tr>
       {% endfor %}

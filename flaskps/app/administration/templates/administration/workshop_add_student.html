@@ -1,31 +1,33 @@
 {% extends "base.html" %}
-{% block title %}agregar alumno{% endblock %}
+{% block title %}Agregar alumno{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
 
 {% block content %}
+<h4 class="center">Agregar alumnos al taller</h4>
 <div id="add_student" class="container">
   {% if msg %}
     {{ msg }}
   {% endif %}
+  <div class="divider black"></div><br>
   <table class="responsive-table centered highlight">
     <thead>
       <tr>
-        <th>TIPO</th>
-        <th>NUMERO</th>
-        <th>NOMBRE</th>
-        <th>APELLIDO</th>
-        <th>AGREGAR</th>
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Tipo de documento</th>
+        <th>Nro de documento</th>
+        <th>Accion</th>
       </tr>
     </thead>
     <tbody>
       {% for student in students %}
         <tr>
+          <td>{{ student.surname }}</td>
+          <td>{{ student.name }}</td>
           <td>{{ student.document_type }}</td>
           <td>{{ student.document_number }}</td>
-          <td>{{ student.name }}</td>
-          <td>{{ student.surname }}</td>
           <td>
             <!--
             <label>
