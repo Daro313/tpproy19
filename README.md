@@ -171,5 +171,15 @@ for n in ESCUELAS:
   escuela = School(name=n, address='Calle 123', phone='123123')
   db.session.add(escuela)
 
+n1 = Nucleos(name='Nucleo Berisso', longitud=-34.922763, latitude=-57.9860357)
+n2 = Nucleos(name='Nucleo Centro', longitud=-34.897606, latitude=-57.9653306)
+n3 = Nucleos(name='Nucleo Numero 1', longitud=-34.911029, latitude=-57.9547927)
+n4 = Nucleos(name='Nucleo Numero 2', longitud=-34.931573, latitude=-57.9341207)
+
+db.session.add(n1)
+db.session.add(n2)
+db.session.add(n3)
+db.session.add(n4)
+
 db.session.commit()
 ```
