@@ -21,6 +21,8 @@ grant all privileges on grupo8 .* to 'admin'@'localhost';
 ```
 
 ### crear tablas con sqlalchemy
+ Utilizamos sqlalchemy como ORB (Object-relational mapping) para facilitar el modelado y la manipulacion de datos.
+
 ```console
 sh runshell.sh
 >>> from flaskps import db
@@ -78,35 +80,35 @@ Home - tendra las declaradas las vistas de home y dashboard
 Admin - tendra todo lo relacionado con la administracion (dependiendo del roll) forms and views
 Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms and views
 
-└── dream-team
-    ├── flaskps
-    │   ├── __init__.py
-    │   ├── admin
-    │   │   ├── __init__.py
-    │   │   ├── forms.py
-    │   │   └── views.py
-    │   ├── auth
-    │   │   ├── __init__.py
-    │   │   ├── forms.py
-    │   │   └── views.py
-    │   ├── home
-    │   │   ├── __init__.py
-    │   │   └── views.py
-    │   ├── models.py
-    │   ├── static
-    │   └── templates
-    ├── config.py
-    ├── instance
-    │   └── config.py
-    ├── migrations
-    │   ├── README
-    │   ├── alembic.ini
-    │   ├── env.py
-    │   ├── script.py.mako
-    │   └── versions
-    │       └── a1a1d8b30202_.py
-    ├── requirements.txt
-    └── run.py
+> └── dream-team
+>     ├── flaskps
+>     │   ├── __init__.py
+>     │   ├── admin
+>     │   │   ├── __init__.py
+>     │   │   ├── forms.py
+>     │   │   └── views.py
+>     │   ├── auth
+>     │   │   ├── __init__.py
+>     │   │   ├── forms.py
+>     │   │   └── views.py
+>     │   ├── home
+>     │   │   ├── __init__.py
+>     │   │   └── views.py
+>     │   ├── models.py
+>     │   ├── static
+>     │   └── templates
+>     ├── config.py
+>     ├── instance
+>     │   └── config.py
+>     ├── migrations
+>     │   ├── README
+>     │   ├── alembic.ini
+>     │   ├── env.py
+>     │   ├── script.py.mako
+>     │   └── versions
+>     │       └── a1a1d8b30202_.py
+>     ├── requirements.txt
+>     └── run.py
 
 
 ### instanciar base de datos y crear Objetos inicial para el correcto funcionamiento
@@ -116,10 +118,14 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
 
 ```console
 sh flask_shell.sh
+```
 
+**set de datos bases**
+
+```python
+from flaskps import db
 db.create_all()
 
-from flaskps import db
 from flaskps.app.users.models import User, Rol
 from flaskps.app.users.constants import *
 from flaskps.app.configurations.models import Configurations

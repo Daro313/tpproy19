@@ -8,7 +8,7 @@ class Students(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     surname = db.Column(db.String(60))
     name = db.Column(db.String(60))
-    birth_date = db.Column(db.String(60))
+    birth_date = db.Column(db.Date())
     borned = db.Column(db.String(60))
     locality = db.Column(db.String(60))
     address = db.Column(db.String(60))
