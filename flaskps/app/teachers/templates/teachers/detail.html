@@ -12,12 +12,12 @@
 <li class="collection-item avatar">
       <i class="material-icons circle green">account_circle</i>
       <span class="title"><h5>{{ teacher.name }} {{ teacher.surname }}</h5></span>
-      <p><b>Fecha de nacimiento:</b> {{ student.birth_date.strftime('%d-%m-%Y') }}<br>
-         Localidad: {{ teacher.locality }}<br>
-         Direccion: {{ teacher.address }}<br>
-         Tipo de documento: {{ teacher.document_type }}<br>
-         Nro de documento: {{ teacher.document_number }}<br>
-         Telefono: {% if teacher.phone %} {{ teacher.phone }} {% endif %}
+      <p><b>Fecha de nacimiento:</b> {{ teacher.birth_date.strftime('%d-%m-%Y') }}<br>
+         <b>Localidad:</b> {{ teacher.locality }}<br>
+         <b>Direccion:</b> {{ teacher.address }}<br>
+         <b>Tipo de documento:</b> {{ teacher.document_type }}<br>
+         <b>Nro de documento:</b> {{ teacher.document_number }}<br>
+         <b>Telefono:</b> {% if teacher.phone %} {{ teacher.phone }} {% endif %}
       </p>
       <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
     </li>

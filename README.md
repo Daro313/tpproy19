@@ -131,6 +131,8 @@ from flaskps.app.users.constants import *
 from flaskps.app.configurations.models import Configurations
 from flaskps.app.students.constants import BARRIOS, ESCUELAS
 from flaskps.app.students.models import School, Neighborhood, Level
+from flaskps.app.administration.models import Nucleos
+
 # crea usuario
 user = User(
     username='superadmin',

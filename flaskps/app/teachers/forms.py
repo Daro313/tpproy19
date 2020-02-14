@@ -16,7 +16,6 @@ def validate_char(form, field):
         raise validators.ValidationError('No se permiten numeros en el campo')
 
 def validate_date(form, field):
-    import ipdb; ipdb.set_trace()
     if field.data > datetime.date.today():
         raise validators.ValidationError('La fecha no puede ser posterior a la actual')
 

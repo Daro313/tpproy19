@@ -11,7 +11,7 @@ from .forms import CreateSchoolYearForm, WorkshopCreateForm
 from .contants import TALLERES
 from flaskps.app.configurations.models import Configurations
 from flaskps.app.teachers.models import Teachers
-from flaskps.app.students.models import Students
+from flaskps.app.students.models import Students, Neighborhood
 
 
 
@@ -59,8 +59,9 @@ def school_year_delete(school_year_id, permiso='administration_destroy'):
 def school_year_edit(school_year_id, permiso='administration_new'):
     if current_user.have_permissions(permiso):
         school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
+        form = CreateSchoolYearForm(request.form)
         if request.method == "POST":
-            school_year.update(request.form)
+            school_year.update(form)
             return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
         return render_template('administration/school_year_edit.html', school_year=school_year)
     else:
