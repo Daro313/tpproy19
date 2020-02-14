@@ -25,7 +25,7 @@ class User(db.Model, TimeStampedModel, UserMixin):
 
     @classmethod
     def create(cls, form):
-        username = form.name.data
+        username = form.username.data
         name = form.name.data
         surname = form.surname.data
         email = form.email.data
