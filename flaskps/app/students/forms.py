@@ -14,10 +14,14 @@ from .constants import (
     GENDER_CHOICES,
 )
 
+def validate_char(form, field):
+    if any(char.isdigit() for char in field.data):
+        raise validators.ValidationError('No se permiten numeros en el campo')
+
 class CreateStudentsForm(Form):
-    surname = StringField('Apellido', [validators.DataRequired(message='Este es un campo requerido')])
-    name = StringField('Nombre', [validators.DataRequired(message='Este es un campo requerido')])
-    birth_date = DateField('Fecha de nacimiento', [validators.DataRequired(message='Este es un campo requerido')], format='%d-%m-%Y')
+    surname = StringField('Apellido', [validators.DataRequired(message='Este es un campo requerido'),validate_char])
+    name = StringField('Nombre', [validators.DataRequired(message='Este es un campo requerido'), validate_char])
+    birth_date = DateField('Fecha de nacimiento', [validators.DataRequired(message='Este es un campo requerido')], format='%Y-%m-%d')
     borned = StringField('Lugar de nacimiento')
     locality = StringField('Localidad', [validators.DataRequired(message='Este es un campo requerido')])
     address = StringField('Direccion', [validators.DataRequired(message='Este es un campo requerido')])
@@ -29,4 +33,4 @@ class CreateStudentsForm(Form):
     phone = IntegerField('Telefono', [validators.DataRequired(message='Solo se permite ingresar numeros')])
     school = StringField('Escuela', [validators.DataRequired(message='Este es un campo requerido')])
     level = StringField('Nivel', [validators.DataRequired(message='Este es un campo requerido')])
-    tutor_name = StringField('apellido', [validators.DataRequired(message='Este es un campo requerido')])
+    tutor_name = StringField('Nombre del tutor', [validators.DataRequired(message='Este es un campo requerido')])

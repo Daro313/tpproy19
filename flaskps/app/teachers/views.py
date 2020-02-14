@@ -97,9 +97,8 @@ def update(teacher_id,permiso='teachers_update'):
         teacher = Teachers.query.filter_by(id=teacher_id).first_or_404()
         dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
         localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
-
+        form = CreateTeachersForm(request.form)
         if request.method == "POST":
-            form = CreateTeachersForm(request.form)
             if form.validate():
                 teacher.update(form)
                 return redirect(url_for('teachers.detail', teacher_id=teacher.id))

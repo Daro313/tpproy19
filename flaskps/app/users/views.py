@@ -72,8 +72,8 @@ def update(user_id, permiso='user_update'):
     if current_user.have_permissions(permiso):
         user = User.query.filter_by(id=user_id).first_or_404()
         roles = get_user_roles(user)
+        form = CreateFormUser(request.form)
         if request.method == "POST":
-            form = CreateFormUser(request.form)
             if form.validate():
                 user.update(form)
                 return redirect(url_for('users.detail', user_id=user.id))

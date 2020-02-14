@@ -80,7 +80,7 @@
         </div>
         <div class="input-field col s6">
           <select name="neighborhood">
-            <option value="{{ student.neighborhood.id }}" selected> {{ student.neighborhood.id }}</option>
+            <option value="{{ student.neighborhood_id }}" selected> {{ student.neighborhood_id }}</option>
             {% for n in neighborhoods %}
               <option value="{{ n.id }}">{{ n.name }}</option>
             {% endfor %}
@@ -93,11 +93,15 @@
         <div class="input-field col s6">
           <select name="tutor">
             <option value="{{ student.tutor }}" selected> {{ student.tutor }}</option>
-            <option value="madre">Madre</option>
-            <option value="padre">Padre</option>
-            <option value="tutor">Tutor</option>
+            <option value="Madre">Madre</option>
+            <option value="Padre">Padre</option>
+            <option value="Tutor">Tutor</option>
           </select>
           <label for="tutor">Responsable a cargo:</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="tutor_name" name="tutor_name" type="text" value="{{ student.tutor_name }}" class="validate">
+          <label for="tutor_name">Nombre del tutor</label>
         </div>
         <div class="input-field col s6">
           <input id="phone" name="phone" type="tel" class="validate" value="{% if student.phone %}{{ student.phone }}{% endif %}">
@@ -107,18 +111,18 @@
       <div class="row">
         <div class="input-field col s6">
           <select name="school">
-            <option value="{{ student.school }}" selected>{{ student.school }}</option>
+            <option value="{{ student.school_id }}" selected>{{ student.school_id }}</option>
             {% for s in schools %}
-              <option value="{{ s.name }}">{{ s.name }}</option>
+              <option value="{{ s.id }}">{{ s.name }}</option>
             {% endfor %}
           </select>
           <label for="school">Escuela:</label>
         </div>
         <div class="input-field col s6">
           <select name="level">
-            <option value="{{ student.level.code }}" selected>{{ student.level }}</option>
+            <option value="{{ student.level_id }}" selected>{{ student.level_id }}</option>
             {% for l in levels %}
-              <option value="{{ l.name }}">{{ l.name }}</option>
+              <option value="{{ l.id }}">{{ l.name }}</option>
             {% endfor %}
           </select>
           <label for="level">Nivel:</label>

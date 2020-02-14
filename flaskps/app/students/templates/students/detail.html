@@ -12,18 +12,18 @@
   <li class="collection-item avatar">
         <i class="material-icons circle green">account_circle</i>
         <span class="title"><h5>{{ student.name }} {{ student.surname }}</h5></span>
-        <p>Fecha de nacimiento: {{ student.birth_date }}<br>
-           Lugar de nacimiento:{% if student.borned %} {{ student.borned }} {% endif %}<br>
-           Localidad: {{ student.locality }}<br>
-           Direccion: {{ student.address }}<br>
-           Barrio:{{  neighborhood.name }}<br>
-           Genero: {{ student.gender }}<br>
-           Tipo de documento: {{ student.document_type }}<br>
-           Nro de documento: {{ student.document_number }}<br>
-           Tutor: {{ student.tutor }}, {{ student.tutor_name }}<br>
-           Telefono: {% if student.phone %} {{ student.phone }} {% endif %}<br>
-           Colegio: {{ school.name }}<br>
-           Nivel:{{ level.name }}
+        <p><b>Fecha de nacimiento:</b> {{ student.birth_date }}<br>
+           <b>Lugar de nacimiento:</b>{% if student.borned %} {{ student.borned }} {% endif %}<br>
+           <b>Localidad:</b> {{ student.locality }}<br>
+           <b>Direccion:</b> {{ student.address }}<br>
+           <b>Barrio:</b>{{  neighborhood.name }}<br>
+           <b>Genero:</b> {{ student.gender }}<br>
+           <b>Tipo de documento:</b> {{ student.document_type }}<br>
+           <b>Nro de documento:</b> {{ student.document_number }}<br>
+           <b>Responsable:</b> {{ student.tutor }} <b>Nombre del responsable</b>: {{ student.tutor_name }}<br>
+           <b>Telefono:</b> {% if student.phone %} {{ student.phone }} {% endif %}<br>
+           <b>Colegio:</b> {{ school.name }}<br>
+           <b>Nivel:</b> {{ level.name }}
         </p>
         <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
       </li>
