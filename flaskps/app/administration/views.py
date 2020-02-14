@@ -1,4 +1,5 @@
 import datetime
+import json
 from sqlalchemy import and_
 from flaskps import db
 from flask_login import login_required
@@ -12,6 +13,7 @@ from .contants import TALLERES
 from flaskps.app.configurations.models import Configurations
 from flaskps.app.teachers.models import Teachers
 from flaskps.app.students.models import Students
+from flask import jsonify
 
 
 
@@ -58,11 +60,22 @@ def school_year_delete(school_year_id, permiso='administration_destroy'):
 @login_required
 def school_year_edit(school_year_id, permiso='administration_new'):
     if current_user.have_permissions(permiso):
-        school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
+        form = CreateSchoolYearForm(request.form)
+        school_year_edit = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
         if request.method == "POST":
-            school_year.update(request.form)
-            return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
-        return render_template('administration/school_year_edit.html', school_year=school_year)
+            if form.validate():
+                school_year = SchoolYear.query.filter_by(start_date=form.start_date.data).all()
+                if school_year:
+                    msg = "Error al editar, ya existe un ciclo lectivo con la misma fecha de inicio."
+                    return render_template(
+                        'administration/school_year_edit.html',
+                        form=form,
+                        msg=msg,
+                        school_year=school_year_edit
+                    )
+                school_year_edit.update(form)
+                return redirect(url_for('administration.school_year_detail', school_year_id=school_year_edit.id))
+        return render_template('administration/school_year_edit.html', school_year=school_year_edit)
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -138,7 +151,6 @@ def workshop_detail(workshop_id, permiso='administration_show'):
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
-
 
 @administration.route('/administration/map', methods=['GET'])
 @login_required

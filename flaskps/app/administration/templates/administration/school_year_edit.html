@@ -8,6 +8,9 @@
 <h4 class="center">Editar Ciclo lectivo</h4>
 <div class="divider black"></div><br>
 <div class="container">
+  {%if msg %}
+    {{ msg }}
+  {% endif %}
   <form class="col s12" action="{{ url_for('administration.school_year_edit', school_year_id=school_year.id) }}" method="POST">
     <div class="row">
       <div class="col s6">
