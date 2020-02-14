@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `grupo8`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `grupo8` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `grupo8`;
-
---
 -- Table structure for table `attend`
 --
 
@@ -47,6 +39,7 @@ CREATE TABLE `attend` (
 
 LOCK TABLES `attend` WRITE;
 /*!40000 ALTER TABLE `attend` DISABLE KEYS */;
+INSERT INTO `attend` VALUES (1,1,1),(0,1,2),(0,1,3),(0,1,4),(0,1,11),(0,1,12),(0,1,13),(0,1,14),(0,1,15),(0,1,16),(0,1,17),(0,1,18),(0,1,19),(0,1,20),(0,1,21),(0,1,22),(0,1,23),(0,1,24),(0,1,25),(0,1,26),(0,2,1),(1,2,2),(0,2,3),(1,2,4);
 /*!40000 ALTER TABLE `attend` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,9 +58,9 @@ CREATE TABLE `configurations` (
   `email` varchar(60) DEFAULT NULL,
   `offset_paginator` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `ix_configurations_email` (`email`),
-  KEY `ix_configurations_title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `ix_configurations_title` (`title`),
+  KEY `ix_configurations_email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,6 +69,7 @@ CREATE TABLE `configurations` (
 
 LOCK TABLES `configurations` WRITE;
 /*!40000 ALTER TABLE `configurations` DISABLE KEYS */;
+INSERT INTO `configurations` VALUES (3,1,'Escuela orquesta beriso','Escuela orquesta','escuela@orquesta.mail.com',5);
 /*!40000 ALTER TABLE `configurations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +113,7 @@ CREATE TABLE `lesson` (
   PRIMARY KEY (`id`),
   KEY `workshop_id` (`workshop_id`),
   CONSTRAINT `lesson_ibfk_1` FOREIGN KEY (`workshop_id`) REFERENCES `workshop` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +122,7 @@ CREATE TABLE `lesson` (
 
 LOCK TABLES `lesson` WRITE;
 /*!40000 ALTER TABLE `lesson` DISABLE KEYS */;
+INSERT INTO `lesson` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,1,2),(6,2,2),(7,3,2),(8,4,2),(9,5,2),(10,6,2),(11,1,3),(12,2,3),(13,3,3),(14,4,3),(15,5,3),(16,6,3),(17,7,3),(18,8,3),(19,9,3),(20,10,3),(21,11,3),(22,12,3),(23,13,3),(24,14,3),(25,15,3),(26,16,3),(27,1,4),(28,2,4),(29,3,4),(30,4,4),(31,5,4),(32,6,4),(33,7,4),(34,8,4),(35,9,4),(36,10,4),(37,11,4),(38,12,4),(39,13,4);
 /*!40000 ALTER TABLE `lesson` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +138,7 @@ CREATE TABLE `level` (
   `name` varchar(60) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +147,7 @@ CREATE TABLE `level` (
 
 LOCK TABLES `level` WRITE;
 /*!40000 ALTER TABLE `level` DISABLE KEYS */;
+INSERT INTO `level` VALUES (13,'1'),(22,'10'),(23,'11'),(14,'2'),(15,'3'),(16,'4'),(17,'5'),(18,'6'),(19,'7'),(20,'8'),(21,'9');
 /*!40000 ALTER TABLE `level` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +163,7 @@ CREATE TABLE `neighborhood` (
   `name` varchar(60) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,6 +172,7 @@ CREATE TABLE `neighborhood` (
 
 LOCK TABLES `neighborhood` WRITE;
 /*!40000 ALTER TABLE `neighborhood` DISABLE KEYS */;
+INSERT INTO `neighborhood` VALUES (5,'Barrio Bco. Pcia.'),(6,'Barrio J.B. Justo'),(1,'Barrio Náutico'),(2,'Barrio Obrero'),(4,'Barrio Solidaridad'),(3,'Berisso'),(7,'El Carmen'),(8,'El Labrador'),(9,'Ensenada'),(10,'La Hermosura'),(11,'La PLata'),(12,'Los Talas'),(13,'Ringuelet'),(14,'Tolosa'),(15,'Villa Alba'),(16,'Villa Arguello'),(17,'Villa B. C'),(18,'Villa Elvira'),(19,'Villa Nueva'),(20,'Villa Paula'),(21,'Villa Progreso'),(22,'Villa San Carlos'),(23,'Villa Zula');
 /*!40000 ALTER TABLE `neighborhood` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +198,7 @@ CREATE TABLE `nucleos` (
 
 LOCK TABLES `nucleos` WRITE;
 /*!40000 ALTER TABLE `nucleos` DISABLE KEYS */;
-INSERT INTO `nucleos` VALUES (1,'Nucleo Berisso',-34.8989,-57.3482),(2,'Nucleo Centro',-34.8976,-57.9653),(3,'Nucleo Numero 1',-34.911,-57.9548),(4,'Nucleo Numero 2',-34.9316,-57.9341);
+INSERT INTO `nucleos` VALUES (1,'Nucleo Berisso',-34.9228,-57.986),(2,'Nucleo Centro',-34.8976,-57.9653),(3,'Nucleo Numero 1',-34.911,-57.9548),(4,'Nucleo Numero 2',-34.9316,-57.9341);
 /*!40000 ALTER TABLE `nucleos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +215,7 @@ CREATE TABLE `roles` (
   `permisos` varchar(60000) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,6 +224,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'docente','students_index,students_update,students_show,teachers_index,teachers_show,administration_index,administration_show'),(2,'administrador','students_index,students_new,students_destroy,students_update,students_show,user_index,user_new,user_destroy,user_update,user_show,teachers_index,teachers_new,teachers_destroy,teachers_update,teachers_show,configurations_index,configurations_new,configurations_destroy,configurations_update,configurations_show,administration_index,administration_new,administration_destroy,administration_update,administration_show'),(3,'preceptor','students_index,students_update,students_show');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +242,7 @@ CREATE TABLE `school` (
   `phone` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,6 +251,7 @@ CREATE TABLE `school` (
 
 LOCK TABLES `school` WRITE;
 /*!40000 ALTER TABLE `school` DISABLE KEYS */;
+INSERT INTO `school` VALUES (1,'Nacional','Calle 123','123123'),(2,'Albert Thomas','Calle 123','123123'),(3,'Normal','Calle 123','123123'),(4,'Escuela 7','Calle 123','123123'),(5,'Escuela 501','Calle 123','123123');
 /*!40000 ALTER TABLE `school` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +270,7 @@ CREATE TABLE `school_year` (
   `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `start_date` (`start_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,6 +279,7 @@ CREATE TABLE `school_year` (
 
 LOCK TABLES `school_year` WRITE;
 /*!40000 ALTER TABLE `school_year` DISABLE KEYS */;
+INSERT INTO `school_year` VALUES (1,'2020-06-11','2020-08-01','1',1),(2,'2020-03-11','2020-12-18','2',1),(3,'2019-10-01','2020-03-12','1',1);
 /*!40000 ALTER TABLE `school_year` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,7 +314,7 @@ CREATE TABLE `students` (
   CONSTRAINT `students_ibfk_1` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`),
   CONSTRAINT `students_ibfk_2` FOREIGN KEY (`school_id`) REFERENCES `school` (`id`),
   CONSTRAINT `students_ibfk_3` FOREIGN KEY (`neighborhood_id`) REFERENCES `neighborhood` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,6 +323,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES (1,'Garcia','Carlos','2020-02-10','la Balandra','General San Martín','Calle falsa 123','male','DNI','12345678','Madre','23','Stella',13,1,10),(2,'shhsh','dgssg','2019-09-25','sgsgs ','Azul','gsfg sg451651','female','Pasaporte','2165165','Padre','65161565516','Victor',19,1,9);
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +345,7 @@ CREATE TABLE `teachers` (
   `document_number` varchar(60) DEFAULT NULL,
   `phone` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,6 +354,7 @@ CREATE TABLE `teachers` (
 
 LOCK TABLES `teachers` WRITE;
 /*!40000 ALTER TABLE `teachers` DISABLE KEYS */;
+INSERT INTO `teachers` VALUES (1,'Sanchez','Marta','2020-02-03','General Rodríguez','ssadsd 351365','DNI','12345678','6856165151'),(2,'Suarez','Adolfo','1970-02-11','Lobos','aosfaf 651651','Pasaporte','654165','516516815');
 /*!40000 ALTER TABLE `teachers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +374,7 @@ CREATE TABLE `user_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,6 +383,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
+INSERT INTO `user_roles` VALUES (1,1,2),(2,2,2);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +408,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,6 +417,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('2020-02-14',NULL,1,0,'superadmin','admin@admin.com',NULL,NULL,1,'pbkdf2:sha256:150000$H53M4BjI$c5db00a04f43c9ca8582e929f46c393e26f53a6e750da66f8cf667491595d098'),('2020-02-14','2020-02-14',2,0,'mmo','usu4edit@mail.com','OtroUser','ApOtroUser',0,'pbkdf2:sha256:150000$s7o2eFap$f3ffef75c652e1993c28d7d23af3f0ac4d79cb73d72be448580eb74aee367330');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,7 +444,7 @@ CREATE TABLE `workshop` (
   KEY `teacher_id` (`teacher_id`),
   CONSTRAINT `workshop_ibfk_1` FOREIGN KEY (`semester_id`) REFERENCES `school_year` (`id`),
   CONSTRAINT `workshop_ibfk_2` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -449,6 +453,7 @@ CREATE TABLE `workshop` (
 
 LOCK TABLES `workshop` WRITE;
 /*!40000 ALTER TABLE `workshop` DISABLE KEYS */;
+INSERT INTO `workshop` VALUES (1,'piano','Pi',1,2,3,'Barrio Náutico','Calle falsa 123','Calle falsa 123','10:00'),(2,'piano','pi2',1,2,5,'Barrio Náutico','Calle falsa 123','Calle falsa 123','18:00'),(3,'bateria','bt',2,1,15,'Villa Progreso','cal 9859','cal 9859','11:00'),(4,'trompeta','t1',2,2,12,'Barrio J.B. Justo','sadfaffa','sadfaffa','16:00');
 /*!40000 ALTER TABLE `workshop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,6 +480,7 @@ CREATE TABLE `workshop_students` (
 
 LOCK TABLES `workshop_students` WRITE;
 /*!40000 ALTER TABLE `workshop_students` DISABLE KEYS */;
+INSERT INTO `workshop_students` VALUES (1,1),(3,1),(1,2);
 /*!40000 ALTER TABLE `workshop_students` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -487,4 +493,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-14  0:46:07
+-- Dump completed on 2020-02-14  3:25:10
