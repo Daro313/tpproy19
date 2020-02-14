@@ -14,6 +14,11 @@ from flaskps.app.teachers.models import Teachers
 from flaskps.app.students.models import Students
 
 
+@administration.route('/nucleos/show', methods=['GET'])
+@login_required
+def show_nucleos():
+    pass
+
 @administration.route('/school-year/create', methods=['GET', 'POST'])
 @login_required
 def school_year_create(permiso='administration_new'):
