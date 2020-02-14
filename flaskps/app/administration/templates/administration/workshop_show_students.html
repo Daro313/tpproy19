@@ -7,13 +7,14 @@
 {% block content %}
 <div class="divider black"></div><br>
 <div id="app" class="container">
-  <h3>Taller de {{workshop.name}}</h3>
-  <table class="responsive-table centered highlight teal lighten-4">
+  <h3 class="center">Asistencias - Taller de {{workshop.name}}</h3>
+  <div class="divider black"></div><br>
+  <table class="responsive-table centered highlight">
     <thead>
       <tr>
-        <th>alumno</th>
+        <th>Alumno</th>
         {% for lesson in workshop.lessons %}
-          <th>{{ lesson.number }}</th>
+          <th>Clase {{ lesson.number }}</th>
         {% endfor %}
       </tr>
     </thead>

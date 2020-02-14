@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Detalles estudiante{% endblock %}
+{% block title %}Ciclos lectivos{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
 
 
 {% block content %}
+<h4 class="center">Ciclos lectivos</h4>
+    <div class="divider black"></div><br>
 <div class="container">
-  <table class="responsive-table centered highlight teal lighten-4">
+  <table class="responsive-table centered highlight">
     <thead>
       <tr>
-        <th>Anio</th>
+        <th>Año</th>
         <th>Fecha inicio</th>
         <th>Fecha fin</th>
         <th>Semestre</th>
@@ -28,6 +30,7 @@
             <a href="{{ url_for('administration.school_year_detail', school_year_id=sy.id) }}"><i class="tiny material-icons green-text text-darken-4 tooltipped" data-position="right" data-tooltip="Ver mas">visibility</i></a>
             <form method="GET" action="{{ url_for('administration.school_year_edit', school_year_id=sy.id) }}"><button class="btn-flat" type="submit"><i class="material-icons blue-text text-darken-4 tooltipped" data-position="right" data-tooltip="Editar">edit</i></button></form>
             <form method="POST" action="{{ url_for('administration.school_year_delete', school_year_id=sy.id) }}"><button class="btn-flat" type="submit"><i class="material-icons red-text text-darken-4 tooltipped" data-position="right" data-tooltip="Eliminar">delete_forever</i></button></form>
+            <a href="{{ url_for('administration.workshop_create',  school_year_id=sy.id) }}"><i class="tiny material-icons yellow-text text-darken-4 tooltipped" data-position="right" data-tooltip="Agregar taller">add_box</i></a>            
           </td>
         </tr>
       {% endfor %}

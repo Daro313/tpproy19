@@ -24,14 +24,12 @@ class CreateSchoolYearForm(Form):
 
 
 class WorkshopCreateForm(Form):
-    name = StringField('Nombre', [validators.DataRequired()])
-    short_name = StringField('Nombre corto', [validators.DataRequired()])
+    name = StringField('Nombre', [validators.DataRequired(message='Este es un campo requerido')])
+    short_name = StringField('Nombre corto', [validators.DataRequired(message='Este es un campo requerido')])
     # semester = StringField('semestre', [validators.DataRequired()])
-    teacher = StringField('Maestre', [validators.DataRequired()])
-    nucleo = StringField('Nucleo', [validators.DataRequired()])
-    address = StringField('Direccion', [validators.DataRequired()])
-    horario = StringField('Horario', [validators.DataRequired()])
-    days = StringField('dias', [validators.DataRequired()])
-    clases = IntegerField('clases', [validators.DataRequired()])
-
-
+    teacher = StringField('Profesor', [validators.DataRequired(message='Este es un campo requerido')])
+    nucleo = StringField('Nucleo', [validators.DataRequired(message='Este es un campo requerido')])
+    address = StringField('Direccion', [validators.DataRequired(message='Este es un campo requerido')])
+    horario = StringField('Horario', [validators.DataRequired(message='Este es un campo requerido')])
+    days = StringField('Dia', [validators.DataRequired(message='Este es un campo requerido')])
+    clases = IntegerField('Cantidad de clases', [validators.DataRequired(message='Este es un campo requerido')])
