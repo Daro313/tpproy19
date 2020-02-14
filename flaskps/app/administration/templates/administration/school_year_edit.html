@@ -22,7 +22,11 @@
     <div class="row">
       <div class="input-field col s6">
         <select name="semester">
-          <option value="{{school_year.semesters}}" selected>{{school_year.semesters}}</option>
+          {% if school_year.semesters == 'Primer Semestre' %}
+            <option value="1" selected>{{school_year.semesters}}</option>
+          {% else %}
+            <option value="2" selected>{{school_year.semesters}}</option>
+          {% endif %}
           <option value="1">Semestre I</option>
           <option value="2">Semestre II</option>
         </select>

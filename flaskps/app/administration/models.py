@@ -49,9 +49,9 @@ class SchoolYear(db.Model):
         db.session.commit()
 
     def update(self, form):
-        self.start_date = form.get('start_date')
-        self.end_date = form.get('end_date')
-        self.semesters = form.get('semester')
+        self.start_date = form.start_date.data
+        self.end_date = form.end_date.data
+        self.semesters = form.semester.data
         db.session.commit()
 
 

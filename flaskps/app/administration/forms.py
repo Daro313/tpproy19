@@ -11,9 +11,16 @@ from .contants import SCHOOL_YEAR_CHOICES
 
 
 class CreateSchoolYearForm(Form):
-    start_date = DateField('Fecha de inicio', [ validators.DataRequired() ])
-    end_date = DateField('Fecha de fin', [validators.DataRequired()])
-    semester = SelectField('Semestre', [validators.DataRequired()], choices=SCHOOL_YEAR_CHOICES)
+    start_date = DateField(
+        'Fecha de inicio',
+        [validators.DataRequired(message='Este es un campo requerido')])
+    end_date = DateField(
+        'Fecha de fin',
+        [validators.DataRequired(message='Este es un campo requerido')])
+    semester = SelectField(
+        'Semestre',
+        [validators.DataRequired(message='Este es un campo requerido')],
+        choices=SCHOOL_YEAR_CHOICES)
 
 
 class WorkshopCreateForm(Form):
@@ -26,7 +33,5 @@ class WorkshopCreateForm(Form):
     horario = StringField('Horario', [validators.DataRequired()])
     days = StringField('dias', [validators.DataRequired()])
     clases = IntegerField('clases', [validators.DataRequired()])
-
-    
 
 

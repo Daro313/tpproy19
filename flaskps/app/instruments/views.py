@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 import requests, os
 from flask_login import login_required
 from flask_user import current_user
@@ -61,7 +62,7 @@ def detail(instrument_id,permiso='administration_show'):
         return render_template('home/dashboard.html')
 
 
-@instruments.route('/instruments/list/', methods=['GET'], defaults={'page':1})
+@instruments.route('/instruments/list/', methods=['GET', 'POST'], defaults={'page':1})
 @instruments.route('/instruments/list/<int:page>', methods=['GET'])
 @login_required
 def list(page,permiso='administration_index'):
@@ -69,8 +70,26 @@ def list(page,permiso='administration_index'):
         page = page
         conf = Configurations.query.first()
         instruments = Instrument.query.filter_by()
+        msg_query = None
+        if request.method == 'POST':
+            form = dict(request.form)
+            instrument_name = form.get('instrument_name')
+            inventory_number = form.get('inventory_number')
+            if instrument_name or inventory_number:
+                instruments = Instrument.query.filter(
+                    or_(
+                        Instrument.name == instrument_name,
+                        Instrument.inventory_number == inventory_number
+                    )
+                )
+            if not instruments.all():
+                msg_query = "No se encontraron resultados"
         instruments = instruments.paginate(page, conf.offset_paginator, False)
-        return render_template('instruments/list.html', instruments=instruments)
+        return render_template(
+            'instruments/list.html',
+            instruments=instruments,
+            msg_query=msg_query
+        )
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -81,6 +100,7 @@ def list(page,permiso='administration_index'):
 def update(instrument_id,permiso='administration_update'):
     if current_user.have_permissions(permiso):
         instrument = Instrument.query.filter_by(id=instrument_id).first_or_404()
+        form = CreateInstrumentsForm(request.form)
         if request.method == "POST":
             if request.files["image"].filename:
                 image = request.files["image"]
@@ -98,11 +118,10 @@ def update(instrument_id,permiso='administration_update'):
                 img_path = IMG_PATH+image_name
             else:
                 img_path = instrument.img_path
-            form = CreateInstrumentsForm(request.form, img_path)
             if form.validate():
                 instrument.update(form, img_path)
                 return redirect(url_for('instruments.detail', instrument_id=instrument.id))
-        return render_template('instruments/edit.html', instrument=instrument), 200
+        return render_template('instruments/edit.html', instrument=instrument, form=form), 200
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
