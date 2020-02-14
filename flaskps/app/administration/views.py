@@ -6,7 +6,7 @@ from flask import render_template, redirect, request, url_for, flash
 from flask_user import current_user
 
 from . import administration
-from .models import SchoolYear, Workshop, Attend
+from .models import SchoolYear, Workshop, Attend, Nucleos
 from .forms import CreateSchoolYearForm, WorkshopCreateForm
 from .contants import TALLERES
 from flaskps.app.configurations.models import Configurations
@@ -14,10 +14,6 @@ from flaskps.app.teachers.models import Teachers
 from flaskps.app.students.models import Students
 
 
-@administration.route('/nucleos/show', methods=['GET'])
-@login_required
-def show_nucleos():
-    pass
 
 @administration.route('/school-year/create', methods=['GET', 'POST'])
 @login_required
@@ -147,8 +143,8 @@ def workshop_detail(workshop_id, permiso='administration_show'):
 @administration.route('/administration/map', methods=['GET'])
 @login_required
 def show_map():
-    return render_template('administration/map.html')
-
+    nucleos = Nucleos.query.filter_by().all()
+    return render_template('administration/map.html', nucleos=nucleos)
 
 
 @administration.route('/workshop/list', methods=['GET'])
