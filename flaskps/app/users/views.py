@@ -42,12 +42,12 @@ def create(permiso='user_new'):
         return render_template('home/dashboard.html')
 
 
-@users.route('/user/list/', methods=['GET', 'POST'], defaults={'page':1})
+@users.route('/user/list/', methods=['GET', 'POST'], defaults={'page': 1})
 @users.route('/user/list/<int:page>', methods=['GET', 'POST'])
 @login_required
-def list(page,permiso='user_index'):
+def list(page, permiso='user_index'):
     if current_user.have_permissions(permiso):
-        page=page
+        page = page
         users = User.query.filter_by()
         if request.method == 'POST':
             form = request.form

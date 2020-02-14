@@ -47,6 +47,5 @@ class Instrument(db.Model):
     def update(self, form, path):
         self.name = form.name.data
         self.type = form.type.data
-        self.inventory_number = form.inventory_number.data
         self.img_path = path
         db.session.commit()

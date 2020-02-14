@@ -6,6 +6,21 @@
 
 {% block content %}
 <h4 class="center">Instrumentos</h4>
+
+    <form class="col s12" action="{{ url_for('instruments.list') }}" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input type="text" name="instrument_name" id="instrument_name">
+          <label for="instrument_name">Nombre de instrumento:</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" name="inventory_number" id="iinventory_number">
+          <label for="inventory_number">Numero de inventario</label>
+        </div>
+      </div>
+        <button class="btn waves-effect waves-light right" type="submit">Buscar</button><br><br>
+    </form>
+
     <div class="divider black"></div><br>
     <div class="container">
       <div class="row">
@@ -19,6 +34,9 @@
             </tr>
           </thead>
           <tbody>
+            {% if msg_query %}
+              <p> {{ msg_querty }} </p>
+            {% endif %}
           {% for instrument in instruments.items %}
             <tr>
               <td>{{ instrument.name }}</td>

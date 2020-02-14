@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import and_
 from flaskps import db
 from flask_login import login_required
@@ -32,6 +33,7 @@ def school_year_create(permiso='administration_new'):
                         form=form,
                         msg=msg
                     )
+
                 school_year = SchoolYear.create(form)
                 return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
         return render_template('administration/school_year_create.html', form=form)
