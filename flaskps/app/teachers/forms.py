@@ -9,14 +9,21 @@ from wtforms import (
     IntegerField,
 )
 
+import datetime
+
 def validate_char(form, field):
     if any(char.isdigit() for char in field.data):
         raise validators.ValidationError('No se permiten numeros en el campo')
 
+def validate_date(form, field):
+    import ipdb; ipdb.set_trace()
+    if field.data > datetime.date.today():
+        raise validators.ValidationError('La fecha no puede ser posterior a la actual')
+
 class CreateTeachersForm(Form):
     surname = StringField('Apellido', [validators.DataRequired(message='Este es un campo requerido'), validate_char])
     name = StringField('Nombre', [validators.DataRequired(message='Este es un campo requerido'), validate_char])
-    birth_date = DateField('Fecha de nacimiento', [validators.DataRequired(message='Este es un campo requerido')], format='%Y-%m-%d')
+    birth_date = DateField('Fecha de nacimiento', [validators.DataRequired(message='Este es un campo requerido'), validate_date], format='%Y-%m-%d')
     locality = StringField('Localidad', [validators.DataRequired(message='Este es un campo requerido')])
     address = StringField('Direccion', [validators.DataRequired(message='Este es un campo requerido')])
     document_type = SelectField('Tipo de documento', choices=[('DNI', 'DNI'), ('LC', 'LC'), ('LE', 'LE'), ('Pasaporte', 'Pasaporte')])
