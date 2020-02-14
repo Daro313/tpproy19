@@ -80,9 +80,9 @@
         </div>
         <div class="input-field col s6">
           <select name="neighborhood">
-            <option value="{{ student.neighborhood.code }}" selected> {{ student.neighborhood }}</option>
+            <option value="{{ student.neighborhood.id }}" selected> {{ student.neighborhood.id }}</option>
             {% for n in neighborhoods %}
-              <option value="{{ n.name }}">{{ n.name }}</option>
+              <option value="{{ n.id }}">{{ n.name }}</option>
             {% endfor %}
           </select>
           <label for="neighborhood">Barrio:</label>
