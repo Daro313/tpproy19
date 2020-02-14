@@ -1,7 +1,7 @@
 ### CREDENCIALES ACCESO
 administrador
-usuario admin@admin.com
-pass admin
+usuario: admin@admin.com
+pass: admin
 
 docente
 usuario: usudocente@mail.com
@@ -115,7 +115,7 @@ Auth - tendra todo lo relacionado con la autenticacion (login, exepciones) forms
 * entrar a la consola de flask
 
 ```console
-sh runshell.sh
+sh flask_shell.sh
 
 db.create_all()
 
@@ -123,6 +123,8 @@ from flaskps import db
 from flaskps.app.users.models import User, Rol
 from flaskps.app.users.constants import *
 from flaskps.app.configurations.models import Configurations
+from flaskps.app.students.constants import BARRIOS, ESCUELAS
+from flaskps.app.students.models import School, Neighborhood, Level
 # crea usuario
 user = User(
     username='superadmin',
@@ -149,6 +151,19 @@ db.session.add(preceptor)
 
 user.roles.append(administrador)
 db.session.add(user)
+
+
+for n in range(1,12):
+  nivel = Level(name=n)
+  db.session.add(nivel)
+
+for n in BARRIOS:
+  barrio= Neighborhood(name=n)
+  db.session.add(barrio)
+
+for n in ESCUELAS:
+  escuela = School(name=n, address='Calle 123', phone='123123')
+  db.session.add(escuela)
 
 db.session.commit()
 ```

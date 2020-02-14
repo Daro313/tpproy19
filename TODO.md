@@ -1,44 +1,9 @@
 # TODO LIST
 
-#### DOCENTES
-CRUD-DOCENTE
+# Ciclo lectivo (shool_year)
+  * en el template del edit cuando se guarda el mismo semestre guarda el VALUE y deveria quedarse con el nombre
+  
 
-
-#### Estudiantes
-
-Agregar api
-* tipo de documento
-* localidad
-
-
-#### Ciclo lectivo
-* crear modelo ciclo lectivo 
-* Crear vista de ciclo lectivo
-* template (agregar multiples talleres)
-
-
-#### Talleres
-
-* crear modelo
-	* atributos: (docente, estudiantes, nombre)
-* crear vista
-* crear template (permiete agregar varios estudiantes y docentes)
-
-
-
-
-<<<<<<< HEAD
-### MEJORA
-
-USER verificar is__active:
-
-ALTA STUdiante
-  * agregar campo: nombre en tutor
-
-
-CONFIG 
-  * que se reflejen los cambios de los 
-=======
 
 # creacion de roles con sus permisos
 

@@ -16,14 +16,14 @@
            Lugar de nacimiento:{% if student.borned %} {{ student.borned }} {% endif %}<br>
            Localidad: {{ student.locality }}<br>
            Direccion: {{ student.address }}<br>
-           Barrio:{{  student.neighborhood }}<br>
-           Gener o: {{ student.gender }}<br>
+           Barrio:{{  neighborhood.name }}<br>
+           Genero: {{ student.gender }}<br>
            Tipo de documento: {{ student.document_type }}<br>
            Nro de documento: {{ student.document_number }}<br>
-           Tutor: {{ student.tutor }}<br>
+           Tutor: {{ student.tutor }}, {{ student.tutor_name }}<br>
            Telefono: {% if student.phone %} {{ student.phone }} {% endif %}<br>
-           Colegio: {{ student.school }}<br>
-           Nivel:{{ student.level }}
+           Colegio: {{ school.name }}<br>
+           Nivel:{{ level.name }}
         </p>
         <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
       </li>

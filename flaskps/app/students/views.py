@@ -1,11 +1,12 @@
 import requests
+from sqlalchemy import and_
 from flask_login import login_required
 from flask import render_template, redirect, request, url_for, flash
 from flask_user import current_user
 
 from flaskps import db
 from . import students
-from .models import Students
+from .models import Students, Level, School, Neighborhood
 from .forms import CreateStudentsForm
 from flaskps.app.configurations.models import Configurations
 
@@ -21,39 +22,39 @@ def create(permiso='students_new'):
         form = CreateStudentsForm(request.form)
         dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
         localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
-        if request.method == 'POST' and form.validate():
-            student = Students(
-                name=request.form.get('name'),
-                surname=request.form.get('surname'),
-                birth_date=request.form.get('birth_date'),
-                borned=request.form.get('borned'),
-                locality=request.form.get('locality'),
-                address=request.form.get('address'),
-                neighborhood=request.form.get('neighborhood'),
-                gender=request.form.get('gender'),
-                document_type=request.form.get('document_type'),
-                document_number=request.form.get('document_number'),
-                tutor=request.form.get('tutor'),
-                phone=request.form.get('phone'),
-                school=request.form.get('school'),
-                level=request.form.get('level'),
-            )
-            db.session.add(student)
-            try:
-                db.session.commit()
-            except:
-                db.session.rollback()
-                return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities), 403
-            return redirect(url_for('students.detail', student_id=student.id))
-        return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities)
+        levels = Level.query.filter_by()
+        neighborhoods = Neighborhood.query.filter_by()
+        schools = School.query.filter_by()
+        if request.method == 'POST':
+            if form.validate():
+                student = Students.query.filter(
+                    and_(
+                        Students.document_number == form.document_number.data,
+                        Students.document_type == form.document_type.data,
+                    )
+                ).all()
+
+                if student:
+                    msg = "Error al crear usuario: ya existe un usuario con el mismo documento y tipo"
+                    return render_template(
+                        'students/create.html',
+                        form=form,
+                        dniTypes=dniTypes,
+                        localities=localities,
+                        msg=msg,
+                    ), 403
+                student = Students.create(form)
+                return redirect(url_for('students.detail', student_id=student.id))
+        return render_template('students/create.html', form=form, dniTypes=dniTypes, localities=localities, levels=levels, neighborhoods=neighborhoods, schools=schools)
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
 
-@students.route('/students/list/', methods=['GET'], defaults={'page':1})
+
+@students.route('/students/list/', methods=['GET'], defaults={'page': 1})
 @students.route('/students/list/<int:page>', methods=['GET'])
 @login_required
-def list(page,permiso='students_index'):
+def list(page, permiso='students_index'):
     if current_user.have_permissions(permiso):
         page = page
         conf = Configurations.query.first()
@@ -65,22 +66,23 @@ def list(page,permiso='students_index'):
         return render_template('home/dashboard.html')
 
 
-@students.route('/students/detail/<int:student_id>', methods=['GET','POST'])
+@students.route('/students/detail/<int:student_id>', methods=['GET', 'POST'])
 @login_required
-def detail(student_id,permiso='students_show'):
+def detail(student_id, permiso='students_show'):
     if current_user.have_permissions(permiso):
         student = Students.query.filter_by(id=student_id).first_or_404()
-        return render_template('students/detail.html', student=student)
+        level = Level.query.filter_by(id=student.level_id).first_or_404()
+        neighborhood = Neighborhood.query.filter_by(id=student.neighborhood_id).first_or_404()
+        school = School.query.filter_by(id=student.school_id).first_or_404()
+        return render_template('students/detail.html', student=student, level=level, neighborhood=neighborhood, school=school)
     else:
         return render_template('home/dashboard.html')
 
 @students.route('/students/delete/<int:student_id>', methods=['POST'])
 @login_required
-def delete(student_id,permiso='students_destroy'):
+def delete(student_id, permiso='students_destroy'):
     if current_user.have_permissions(permiso):
-        student = Students.query.filter_by(id=student_id).first_or_404()
-        db.session.delete(student)
-        db.session.commit()
+        Students.delete(student_id)
         return redirect('/students/list')
     else:
         flash('No tiene los permisos para acceder :(')
@@ -89,17 +91,20 @@ def delete(student_id,permiso='students_destroy'):
 
 @students.route('/students/update/<int:student_id>', methods=['GET', 'POST'])
 @login_required
-def update(student_id,permiso='students_update'):
+def update(student_id, permiso='students_update'):
     if current_user.have_permissions(permiso):
         student = Students.query.filter_by(id=student_id).first_or_404()
         dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
         localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
         form = CreateStudentsForm(request.form)
+        levels = Level.query.filter_by()
+        neighborhoods = Neighborhood.query.filter_by()
+        schools = School.query.filter_by()
         if request.method == "POST":
             if form.validate():
                 student.update(form)
                 return redirect(url_for('students.detail', student_id=student.id))
-        return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes, form=form), 200
+        return render_template('students/edit.html', student=student, localities=localities, dniTypes=dniTypes, form=form, levels=levels, neighborhoods=neighborhoods, schools=schools), 200
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

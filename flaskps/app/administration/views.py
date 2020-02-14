@@ -1,15 +1,15 @@
+from sqlalchemy import and_
 from flaskps import db
 from flask_login import login_required
 from flask import render_template, redirect, request, url_for, flash
 from flask_user import current_user
 
 from . import administration
-from .models import SchoolYear, Workshop
+from .models import SchoolYear, Workshop, Attend
 from .forms import CreateSchoolYearForm, WorkshopCreateForm
 from .contants import TALLERES
 from flaskps.app.configurations.models import Configurations
 from flaskps.app.teachers.models import Teachers
-from flaskps.app.students.constants import NEIGHBORHOOD_CHOICES
 from flaskps.app.students.models import Students
 
 
@@ -22,9 +22,18 @@ def school_year_create(permiso='administration_new'):
     """
     if current_user.have_permissions(permiso):
         form = CreateSchoolYearForm(request.form)
-        if request.method == 'POST' and form.validate():
-            school_year = SchoolYear.create(form)
-            return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
+        if request.method == 'POST':
+            if form.validate():
+                school_year = SchoolYear.query.filter_by(start_date=form.start_date.data).all()
+                if school_year:
+                    msg = "Error al crear el ciclo lectivo ya existe uno creado con la misma fecha de inicio"
+                    return render_template(
+                        'administration/school_year_create.html',
+                        form=form,
+                        msg=msg
+                    )
+                school_year = SchoolYear.create(form)
+                return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
         return render_template('administration/school_year_create.html', form=form)
     else:
         flash('No tiene los permisos para acceder :(')
@@ -49,7 +58,6 @@ def school_year_edit(school_year_id, permiso='administration_new'):
         school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
         if request.method == "POST":
             school_year.update(request.form)
-            print('---------------------------------------------')
             return redirect(url_for('administration.school_year_detail', school_year_id=school_year.id))
         return render_template('administration/school_year_edit.html', school_year=school_year)
     else:
@@ -62,7 +70,8 @@ def school_year_edit(school_year_id, permiso='administration_new'):
 def school_year_detail(school_year_id, permiso='administration_show'):
     if current_user.have_permissions(permiso):
         school_year = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
-        return render_template('administration/school_year_detail.html', school_year=school_year)
+        return render_template(
+            'administration/school_year_detail.html', school_year=school_year)
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -93,6 +102,7 @@ def workshop_create(school_year_id, permiso='administration_new'):
     if current_user.have_permissions(permiso):
         sy = SchoolYear.query.filter_by(id=school_year_id).first_or_404()
         teachers = Teachers.query.all()
+        nucleos = Neighborhood.query.all()
         form = WorkshopCreateForm(request.form)
         if request.method == "POST" and form.validate():
             workshop = Workshop.create(form, sy)
@@ -101,7 +111,7 @@ def workshop_create(school_year_id, permiso='administration_new'):
         return render_template(
                     'administration/workshop_create.html',
                     school_year=sy,
-                    nucleos=NEIGHBORHOOD_CHOICES,
+                    nucleos= nucleos,
                     teachers=teachers,
                     form=form,
                     talleres=TALLERES,
@@ -116,7 +126,12 @@ def workshop_create(school_year_id, permiso='administration_new'):
 def workshop_detail(workshop_id, permiso='administration_show'):
     if current_user.have_permissions(permiso):
         workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
-        return render_template('administration/workshop_detail.html', workshop=workshop)
+        teacher = Teachers.query.filter_by(id=workshop.teacher_id).first_or_404()
+        return render_template(
+                'administration/workshop_detail.html',
+                workshop=workshop,
+                teacher=teacher
+        )
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
@@ -152,15 +167,14 @@ def workshop_list():
 def show_workshop_students(workshop_id, permiso='students_index'):
     if current_user.have_permissions(permiso):
         workshop = Workshop.query.filter_by(id=workshop_id).first_or_404()
-        students = Students.query.all()
         return render_template(
                 'administration/workshop_show_students.html',
                 workshop=workshop,
-                students=students,
             )
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')
+
 
 @administration.route('/workshop/add_student/<int:workshop_id>', methods=['GET', 'POST'])
 @login_required
@@ -178,6 +192,29 @@ def add_student(workshop_id, permiso='students_index'):
         return render_template('home/dashboard.html')
 
 
+@administration.route('/workshop/lesson_attend/', methods=['POST'])
+@login_required
+def attend(permiso='students_index'):  # TODO: ver permiso
+    if current_user.have_permissions(permiso):
+        student_id = request.json.get('student_id')
+        lesson_id = request.json.get('lesson_id')
+
+        attend = Attend.query.filter(
+            and_(
+                Attend.lesson_id == lesson_id,
+                Attend.student_id == student_id
+            )
+        ).first_or_404()
+        attend.attend()
+        workshop = Workshop.query.filter_by(id=attend.lesson.workshop_id).first_or_404()
+        return render_template(
+                'administration/workshop_show_students.html',
+                workshop=workshop,
+            )
+    else:
+        flash('No tiene los permisos para acceder :(')
+        return render_template('home/dashboard.html')
+
 @administration.route('/workshop/workshop_add_student/<int:workshop_id>/<int:student_id>', methods=['GET'])
 @login_required
 def workshop_add_student(workshop_id, student_id, permiso='students_index'):
@@ -190,7 +227,7 @@ def workshop_add_student(workshop_id, student_id, permiso='students_index'):
         else:
             msg = "el alumno {} no se agrego al taller".format(student.name)
         return redirect(
-                    url_for('administration.add_student', workshop_id=workshop.id, msg=msg))
+            url_for('administration.add_student', workshop_id=workshop.id, msg=msg))
     else:
         flash('No tiene los permisos para acceder :(')
         return render_template('home/dashboard.html')

@@ -9,10 +9,10 @@ from wtforms import (
 
 
 class CreateFormUser(Form):
-    email = StringField('Email', [validators.Email(), validators.InputRequired()])
-    username = StringField('Nombre de usuario', [validators.InputRequired()])
-    name =StringField('Nombre', [validators.InputRequired()])
-    surname = StringField('Apellido', [validators.InputRequired()])
-    password = StringField('Password', [validators.InputRequired()])
+    email = StringField('Email', [validators.Email(), validators.InputRequired(message='Campo requerido')])
+    username = StringField('Nombre de usuario', [validators.InputRequired(message='Campo requerido')])
+    name =StringField('Nombre', [validators.InputRequired(message='Campo requerido')])
+    surname = StringField('Apellido', [validators.InputRequired(message='Campo requerido')])
+    password = StringField('Password', [validators.InputRequired(message='Campo requerido')])
     active = BooleanField('Activo')
-    roles = StringField('Roles',[validators.InputRequired()])
+    roles = StringField('Roles',[validators.InputRequired(message='Campo requerido')])

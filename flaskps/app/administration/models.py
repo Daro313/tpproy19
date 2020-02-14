@@ -8,6 +8,7 @@ from flaskps.utils.functions import get_today
 __all__ = [
    'SchoolYear',
    'Workshop',
+   'Lesson',
 ]
 
 
@@ -60,9 +61,6 @@ workshop_students = db.Table('workshop_students',
         'workshop_id', db.Integer, db.ForeignKey('workshop.id'), primary_key=True),
     db.Column(
         'student_id', db.Integer, db.ForeignKey('students.id'), primary_key=True),
-    db.Column('attent_date', db.Date),
-    db.Column(
-        'lesson_id', db.Integer, db.ForeignKey('lesson.id'), primary_key=True),
 )
 
 
@@ -129,6 +127,9 @@ class Workshop(db.Model):
 
     def add_student(self, student):
         self.students.append(student)
+        for lesson in self.lessons:
+            attend = Attend(lesson=lesson, student=student)
+            db.session.add(attend)
         db.session.add(self)
         try:
             db.session.commit()
@@ -136,10 +137,21 @@ class Workshop(db.Model):
             db.session.rollback()
 
 
+class Attend(db.Model):
+    has_attended = db.Column(db.Boolean, default=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), primary_key=True)
+    lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'), primary_key=True)
+    student = db.relationship('Students', backref='attend')
+    lesson = db.relationship('Lesson', backref='attend')
+
+    def attend(self):
+        self.has_attended = True if not self.has_attended else False
+        db.session.add(self)
+        db.session.commit()
+
+
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=True)
     number = db.Column(db.Integer)
-    attend = db.Column(db.Boolean, default=False)
     workshop_id = db.Column(db.Integer, db.ForeignKey('workshop.id'), nullable=False)
 
