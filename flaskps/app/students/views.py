@@ -96,11 +96,11 @@ def update(student_id, permiso='students_update'):
         student = Students.query.filter_by(id=student_id).first_or_404()
         dniTypes = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento").json()
         localities = requests.get("https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad").json()
+        form = CreateStudentsForm(request.form)
         levels = Level.query.filter_by()
         neighborhoods = Neighborhood.query.filter_by()
         schools = School.query.filter_by()
         if request.method == "POST":
-            form = CreateStudentsForm(request.form)
             if form.validate():
                 student.update(form)
                 return redirect(url_for('students.detail', student_id=student.id))
